@@ -5,8 +5,8 @@ const ahijadoSchema = new Schema({
     nombre: { type: String, maxlength: 60, required: true },
     apellidos: { type: String, maxlength: 100, required: true },
     fecha_nacimiento: { type: String, maxlength: 60, required: true },
-    discapacidad: { type: String, maxlength: 60, required: true },
-    nivel_educacional: { type: String, maxlength: 60, required: true },
+    discapacidad: { type: String, maxlength: 60, required: false },
+    nivel_educacional: { type: String, maxlength: 60, required: false },
     // ---  ---
     carta_agradecimiento: { type: Number, default: 0 }, 
     carta_navidad: { type: Number, default: 0 },
