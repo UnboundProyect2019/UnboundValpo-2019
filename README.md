@@ -9,7 +9,8 @@
 	-UI con Vuetify
 	-Gestion de roles de usuario con JWT
 <h2 align="center">Patron de diseño</h2>
-En el presente proyecto se ocupo un patron de diseño BFF ó Backend for Frontend, desacoplando el codigo generando capas de componentes, altamente acopladas.<br>
+
+En el presente proyecto se ocupo un patron de diseño `BFF` ó `Backend for Frontend`, desacoplando el codigo generando capas de componentes, altamente acopladas.<br>
 
 - Dentro del backend se genero una **API REST**, en donde se separo los datos en:
 	-  Controladores
