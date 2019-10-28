@@ -18,7 +18,9 @@ En el presente proyecto se ocupo un patron de diseño BFF ó Backend for Fronten
     -  Rutas
     -  Servicios
 - En el frontend los componentes consumen los servicios de la api con la libreria **Axios**.
-<h2 align="center">Instalacion</h2>Para instalar el proyecto se necesita tener instalado Node.js, con su respectivo gestor de paquetes NPM.
+<h2 align="center">Instalacion</h2>
+
+Para instalar el proyecto se necesita tener `Node.js`, con su respectivo gestor de paquetes `NPM`.
 
 Ingresar por consola a las carpetas de "back-end" y "front-end" se debe ejecutar el comando :
 `$ npm install` 
