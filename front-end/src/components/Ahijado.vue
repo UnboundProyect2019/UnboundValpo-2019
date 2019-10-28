@@ -102,7 +102,39 @@
       >
         edit
       </v-icon>
-    </template>    
+      <template v-slot:item.estado="{ item }">
+      <!-- <div v-if="item.estado">
+        <span class="green--text">Activo</span>
+      </div>
+      <div v-else>
+        <span class="red--text">Egresado</span>
+      </div> -->
+      <template v-if="item.estado">
+      <!-- <v-icon
+        small
+        @click="activarDesactivarMostrar(2,item)"
+      >
+        block
+      </v-icon>  -->
+      <div>
+        <v-btn small @click="activarDesactivarMostrar(2,item)" >Activo</v-btn>   
+      </div>
+      </template>
+
+      <template v-else>
+        <!-- <v-icon
+            small
+            @click="activarDesactivarMostrar(1,item)"
+        >
+            check
+        </v-icon>  -->
+        <div>
+          <v-btn small @click="activarDesactivarMostrar(1,item)">Egresado</v-btn>
+        </div>
+      </template>
+    </template>
+    </template>
+
     </template>
     <!-- FIN TEMPLATE ACTIONS -->
     <!-- TEMLATE CARTA AGRADECIMIENTO -->
@@ -127,69 +159,43 @@
     </template> -->
     <!-- FIN TEMLATE CARTA AGRADECIMIENTO -->
     
-    <template v-slot:item.estado="{ item }">
-        <!-- <div v-if="item.estado">
-            <span class="green--text">Activo</span>
-        </div>
-        <div v-else>
-            <span class="red--text">Egresado</span>
-        </div> -->
-        <template v-if="item.estado">
-        <!-- <v-icon
-            small
-            @click="activarDesactivarMostrar(2,item)"
-        >
-            block
-        </v-icon>  -->
-        <v-btn small @click="activarDesactivarMostrar(2,item)" >Activo</v-btn>   
-      </template>
-      <template v-else>
-        <!-- <v-icon
-            small
-            @click="activarDesactivarMostrar(1,item)"
-        >
-            check
-        </v-icon>   -->
-        <v-btn small @click="activarDesactivarMostrar(1,item)">Egresado</v-btn>
-      </template>
-    </template>
+    
 
     <template v-slot:item.carta_agradecimiento="{ item }">
-        <div v-if="item.carta_agradecimiento">
-            <span class="green--text">Entregada</span>
-            <!-- <v-chip :color="getColor(item.estado)" dark>Activo</v-chip> -->
-        </div>
-        <div v-else>
-            <span class="red--text"> No Entregada</span>
-            <!-- <v-chip :color="getColor(item.estado)" dark>Inactivo</v-chip> -->
-        </div>
+      <div v-if="item.carta_agradecimiento">
+        <span class="green--text">Entregada</span>
+      </div>
+      <div v-else>
+        <span class="red--text"> No Entregada</span>
+      </div>
     </template>
+
     <template v-slot:item.carta_navidad="{ item }">
-        <div v-if="item.carta_navidad">
-            <span class="green--text">Entregada</span>
-            <!-- <v-chip :color="getColor(item.estado)" dark>Activo</v-chip> -->
-        </div>
-        <div v-else>
-            <span class="red--text"> No Entregada</span>
-            <!-- <v-chip :color="getColor(item.estado)" dark>Inactivo</v-chip> -->
-        </div>
+      <div v-if="item.carta_navidad">
+        <span class="green--text">Entregada</span>
+      </div>
+      <div v-else>
+        <span class="red--text"> No Entregada</span>
+      </div>
     </template>
+
     <template v-slot:item.carta_invierno="{ item }">
-        <div v-if="item.carta_invierno">
-            <span class="green--text">Entregada</span>
-            <!-- <v-chip :color="getColor(item.estado)" dark>Activo</v-chip> -->
-        </div>
-        <div v-else>
-            <span class="red--text"> No Entregada</span>
-            <!-- <v-chip :color="getColor(item.estado)" dark>Inactivo</v-chip> -->
-        </div>
+      <div v-if="item.carta_invierno">
+        <span class="green--text">Entregada</span>
+      </div>
+      <div v-else>
+        <span class="red--text"> No Entregada</span>
+      </div>
     </template>
+
     <template v-slot:item.data="{ item }">
-        <v-btn>datos</v-btn>
+      <v-btn>datos</v-btn>
     </template>
+
     <template v-slot:no-data>
       <v-btn color="primary" @click="listar()">Reset</v-btn>
     </template>
+
   </v-data-table>
 </template>
 <script>
