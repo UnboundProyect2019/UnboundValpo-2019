@@ -5,6 +5,7 @@ import Home from '../views/Home.vue'
 import Proyecto from '../components/Proyecto.vue'
 import Login from '../components/Login.vue'
 import Usuario from '../components/Usuario.vue'
+import Ahijado from '../components/Ahijado.vue'
 
 Vue.use(VueRouter)
 
@@ -43,6 +44,16 @@ const routes = [
       administrador: true
     }
   },
+  {
+    path: '/ahijado',
+    name: 'ahijado',
+    component: Ahijado,
+    meta: {
+      administrador:true,
+      lector:true,
+      asist_social:true
+    }
+  }
 ]
 
 const router = new VueRouter({

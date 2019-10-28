@@ -74,7 +74,7 @@
                 </v-list-item>
               </template>
               <template v-if="esAdministrador || esLector || esAsistSocial">
-                <v-list-item :to="{name:''}">
+                <v-list-item :to="{name:'ahijado'}">
                   <v-list-item-action>
                     <v-icon>mdi-folder</v-icon>
                   </v-list-item-action>
