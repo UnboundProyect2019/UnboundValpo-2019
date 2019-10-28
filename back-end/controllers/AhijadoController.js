@@ -88,9 +88,75 @@ export default {
             next(err);
         }
     },
+    activate_carta_agradecimiento: async (req, res, next) => {
+        try {
+            const reg = await models.Ahijado.findByIdAndUpdate({ _id: req.body._id }, { carta_agradecimiento: 1 });
+            res.status(200).json(reg);
+        } catch (err) {
+            res.status(500).send({
+                message: 'Ocurrio un error'
+            });
+            next(err);
+        }
+    },
+    activate_carta_navidad: async (req, res, next) => {
+        try {
+            const reg = await models.Ahijado.findByIdAndUpdate({ _id: req.body._id }, { carta_navidad: 1 });
+            res.status(200).json(reg);
+        } catch (err) {
+            res.status(500).send({
+                message: 'Ocurrio un error'
+            });
+            next(err);
+        }
+    },
+    activate_carta_invierno: async (req, res, next) => {
+        try {
+            const reg = await models.Ahijado.findByIdAndUpdate({ _id: req.body._id }, { carta_invierno: 1 });
+            res.status(200).json(reg);
+        } catch (err) {
+            res.status(500).send({
+                message: 'Ocurrio un error'
+            });
+            next(err);
+        }
+    },
     deactivate: async (req, res, next) => {
         try {
             const reg = await models.Ahijado.findByIdAndUpdate({ _id: req.body._id }, { estado: 0 });
+            res.status(200).json(reg);
+        } catch (err) {
+            res.status(500).send({
+                message: 'Ocurrio un error'
+            });
+            next(err);
+        }
+    },
+    deactivate_carta_agradecimiento: async (req, res, next) => {
+        try {
+            const reg = await models.Ahijado.findByIdAndUpdate({ _id: req.body._id }, { carta_agradecimiento: 0 });
+            res.status(200).json(reg);
+        } catch (err) {
+            res.status(500).send({
+                message: 'Ocurrio un error'
+            });
+            next(err);
+        }
+    },
+    deactivate_carta_navidad: async (req, res, next) => {
+        try {
+            const reg = await models.Ahijado.findByIdAndUpdate({ _id: req.body._id }, { carta_navidad: 0 });
+            res.status(200).json(reg);
+        } catch (err) {
+            res.status(500).send({
+                message: 'Ocurrio un error'
+            });
+            next(err);
+        }
+    },
+    deactivate_carta_invierno: async (req, res, next) => {
+        try {
+            const reg = await models.Ahijado.findByIdAndUpdate({ _id: req.body._id }, { carta_invierno: 0 });
             res.status(200).json(reg);
         } catch (err) {
             res.status(500).send({

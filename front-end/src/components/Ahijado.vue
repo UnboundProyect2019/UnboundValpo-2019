@@ -67,14 +67,14 @@
         <v-dialog v-model="adModal" max-width="290">
           <v-card>
             <v-card-title class="headline" v-if="adAccion==1">
-              Activar Proyecto
+              Ingresar Ahijado
             </v-card-title>
             <v-card-title class="headline" v-if="adAccion==2">
-              Desactivar Proyecto
+              Egresar Ahijado
             </v-card-title>
             <v-card-text>
-              Estas a punto de <span v-if="adAccion==1">activar</span><span v-if="adAccion==2">desactivar</span>
-              el item {{adNombre}}
+              Estas a punto de <span v-if="adAccion==1">activar</span><span v-if="adAccion==2">Egresar</span>
+              al ahijado {{adNombre}}
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -82,10 +82,10 @@
                   Cancelar
                 </v-btn>
                 <v-btn v-if="adAccion==1" @click="activar()" color="green darken-1" text large >
-                  Activar
+                  Ingresar
                 </v-btn>
                 <v-btn v-if="adAccion==2" @click="desactivar()" color="red darken-1" text large >
-                  Desctivar
+                  Egresar
                 </v-btn>
             </v-card-actions>
           </v-card>
@@ -93,6 +93,7 @@
         <!-- FIN DIALOG -->
       </v-toolbar>
     </template>
+    <!-- TEMPLATE ACTIONS -->
     <template v-slot:item.action="{ item }">
       <v-icon
         small
@@ -101,33 +102,58 @@
       >
         edit
       </v-icon>
-      <template v-if="item.estado">
-        <v-icon
+    </template>    
+    </template>
+    <!-- FIN TEMPLATE ACTIONS -->
+    <!-- TEMLATE CARTA AGRADECIMIENTO -->
+    <!-- <template v-slot:item.carta_agradecimiento="{ item }">
+        <template v-if="item.carta_agradecimiento">
+          <v-icon
+              small
+              @click="activarDesactivarMostrar(2,item)"
+          >
+              block
+          </v-icon> 
+          <v-btn depressed color="" @click="activarDesactivarMostrar(2,item)"></v-btn>
+        </template>
+        <template v-else>
+          <v-icon
+              small
+              @click="activarDesactivarMostrar(1,item)"
+          >
+              check
+          </v-icon>    
+        </template>    
+    </template> -->
+    <!-- FIN TEMLATE CARTA AGRADECIMIENTO -->
+    
+    <template v-slot:item.estado="{ item }">
+        <!-- <div v-if="item.estado">
+            <span class="green--text">Activo</span>
+        </div>
+        <div v-else>
+            <span class="red--text">Egresado</span>
+        </div> -->
+        <template v-if="item.estado">
+        <!-- <v-icon
             small
             @click="activarDesactivarMostrar(2,item)"
         >
             block
-        </v-icon>    
+        </v-icon>  -->
+        <v-btn small @click="activarDesactivarMostrar(2,item)" >Activo</v-btn>   
       </template>
       <template v-else>
-        <v-icon
+        <!-- <v-icon
             small
             @click="activarDesactivarMostrar(1,item)"
         >
             check
-        </v-icon>    
-      </template>    
+        </v-icon>   -->
+        <v-btn small @click="activarDesactivarMostrar(1,item)">Egresado</v-btn>
+      </template>
     </template>
-    <template v-slot:item.estado="{ item }">
-        <div v-if="item.estado">
-            <span class="green--text">Activo</span>
-            <!-- <v-chip :color="getColor(item.estado)" dark>Activo</v-chip> -->
-        </div>
-        <div v-else>
-            <span class="red--text">Inactivo</span>
-            <!-- <v-chip :color="getColor(item.estado)" dark>Inactivo</v-chip> -->
-        </div>
-    </template>
+
     <template v-slot:item.carta_agradecimiento="{ item }">
         <div v-if="item.carta_agradecimiento">
             <span class="green--text">Entregada</span>
@@ -175,8 +201,8 @@
       ahijados:[],
       headers: [
         { text: 'Actions', value: 'action', sortable: false },
-        { text: 'Proyecto', value: 'proyecto.nombre_proyecto', sortable: false },
         { text: 'Estado', value: 'estado',sortable: false }, 
+        { text: 'Proyecto', value: 'proyecto.nombre_proyecto', sortable: false },
         { text: 'Nombre', value: 'nombre',sortable: true  },
         { text: 'Apellidos', value: 'apellidos' ,sortable: true },
         { text: 'Carta Agradecimiento', value: 'carta_agradecimiento',sortable: false },
@@ -288,12 +314,12 @@
         } else {
           //guardar un nuevo registro
           axios.post('ahijado/add',{
-              'proyecto':this.proyecto, 
-              'nombre': this.nombre,
-              'apellidos': this.apellidos,
-              'fecha_nacimiento': this.fecha_nacimiento,
-              'discapacidad': this.discapacidad,
-              'nivel_educacional': this.nivel_educacional
+            'proyecto':this.proyecto, 
+            'nombre': this.nombre,
+            'apellidos': this.apellidos,
+            'fecha_nacimiento': this.fecha_nacimiento,
+            'discapacidad': this.discapacidad,
+            'nivel_educacional': this.nivel_educacional
             
             },configuracion)
           .then(function (response) {
@@ -339,50 +365,146 @@
         this.editedIndex=1;
       },
 
-     activarDesactivarMostrar(accion,item){
-       this.adModal=1;
-       this.adNombre=item.nombre_proyecto;
-       this.adId=item._id;
-       if (accion ==1) {
-         this.adAccion = 1;
-       } else if (accion == 2) {
-         this.adAccion = 2;
-       } else {
-         this.adModal=0;
-       }
+    activarDesactivarMostrar(accion,item){
+      this.adModal=1;
+      this.adNombre=item.nombre;
+      this.adId=item._id;
+      if (accion ==1) {
+        this.adAccion = 1;
+      } else if (accion == 2) {
+        this.adAccion = 2;
+      } else {
+        this.adModal=0;
+      }
+    }, 
+
+    activar(){
+      let me = this;
+      let header = {"Token": this.$store.state.token};
+      let configuracion = {headers:header}; //headers --> S
+      axios.put('ahijado/activate',{'_id':this.adId},configuracion)
+        .then(function (response) {
+          me.adModal=0;
+          me.adAccion=0;
+          me.adNombre='';
+          me.adId='';
+          me.listar();
+        }).catch(function (error) {
+          console.log(error);
+        });
      },
 
-     activar(){
-       let me = this;
-        let header = {"Token": this.$store.state.token};
-        let configuracion = {headers:header}; //headers --> S
-       axios.put('proyecto/activate',{'_id':this.adId},configuracion)
-          .then(function (response) {
-            me.adModal=0;
-            me.adAccion=0;
-            me.adNombre='';
-            me.adId='';
-            me.listar();
-          }).catch(function (error) {
-            console.log(error);
-          });
-     },
-     
-     desactivar(){
-       let me = this;
-        let header = {"Token": this.$store.state.token};
-        let configuracion = {headers:header}; //headers --> S
-       axios.put('proyecto/deactivate',{'_id':this.adId},configuracion)
-          .then(function (response) {
-            me.adModal=0;
-            me.adAccion=0;
-            me.adNombre='';
-            me.adId='';
-            me.listar();
-          }).catch(function (error) {
-            console.log(error);
-          });
-     },
+    activate_carta_agradecimiento(){
+      let me = this;
+      let header = {"Token": this.$store.state.token};
+      let configuracion = {headers:header}; //headers --> S
+      axios.put('ahijado/activateca',{'_id':this.adId},configuracion)
+      .then(function (response) {
+        me.adModal=0;
+        me.adAccion=0;
+        me.adNombre='';
+        me.adId='';
+        me.listar();
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+
+    activate_carta_navidad(){
+      let me = this;
+      let header = {"Token": this.$store.state.token};
+      let configuracion = {headers:header}; //headers --> S
+      axios.put('ahijado/activatecn',{'_id':this.adId},configuracion)
+      .then(function (response) {
+        me.adModal=0;
+        me.adAccion=0;
+        me.adNombre='';
+        me.adId='';
+        me.listar();
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+
+    activate_carta_invierno(){
+      let me = this;
+      let header = {"Token": this.$store.state.token};
+      let configuracion = {headers:header}; //headers --> S
+      axios.put('ahijado/activateci',{'_id':this.adId},configuracion)
+      .then(function (response) {
+        me.adModal=0;
+        me.adAccion=0;
+        me.adNombre='';
+        me.adId='';
+        me.listar();
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+
+    desactivar(){
+      let me = this;
+      let header = {"Token": this.$store.state.token};
+      let configuracion = {headers:header}; //headers --> S
+      axios.put('ahijado/deactivate',{'_id':this.adId},configuracion)
+      .then(function (response) {
+        me.adModal=0;
+        me.adAccion=0;
+        me.adNombre='';
+        me.adId='';
+        me.listar();
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+
+    deactivate_carta_agradecimiento(){
+      let me = this;
+      let header = {"Token": this.$store.state.token};
+      let configuracion = {headers:header}; //headers --> S
+      axios.put('ahijado/deactivateca',{'_id':this.adId},configuracion)
+      .then(function (response) {
+        me.adModal=0;
+        me.adAccion=0;
+        me.adNombre='';
+        me.adId='';
+        me.listar();
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+
+    deactivate_carta_navidad(){
+      let me = this;
+      let header = {"Token": this.$store.state.token};
+      let configuracion = {headers:header}; //headers --> S
+      axios.put('ahijado/deactivatecn',{'_id':this.adId},configuracion)
+      .then(function (response) {
+        me.adModal=0;
+        me.adAccion=0;
+        me.adNombre='';
+        me.adId='';
+        me.listar();
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+
+    deactivate_carta_invierno(){
+      let me = this;
+      let header = {"Token": this.$store.state.token};
+      let configuracion = {headers:header}; //headers --> S
+      axios.put('ahijado/deactivateci',{'_id':this.adId},configuracion)
+      .then(function (response) {
+        me.adModal=0;
+        me.adAccion=0;
+        me.adNombre='';
+        me.adId='';
+        me.listar();
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
 
       activarDesactivarCerrar(){
         this.adModal=0;
