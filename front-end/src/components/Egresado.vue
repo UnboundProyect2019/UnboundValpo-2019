@@ -7,7 +7,7 @@
   >
     <template v-slot:top>
       <v-toolbar flat color="white">
-        <v-toolbar-title>Ahijados</v-toolbar-title>
+        <v-toolbar-title>Ahijados Egresados</v-toolbar-title>
         <v-divider
           class="mx-4"
           inset
@@ -322,7 +322,7 @@
         let me = this;
         let header = {"Token": this.$store.state.token};
         let configuracion = {headers:header}; //headers --> S
-        axios.get('ahijado/listAhijados',configuracion).then(function (response) {
+        axios.get('ahijado/listEgresados',configuracion).then(function (response) {
             // console.log(response);
             me.ahijados = response.data;
         }).catch(function (error) {
