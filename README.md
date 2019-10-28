@@ -1,7 +1,5 @@
 # Inroduccion 
->Fundación Unbound es una ong internacional con sede en la quinta región, esta
-organización se encarga de crear un vínculo entre un niño que necesite ayuda y un padrino que lo tome como su ahijado.
-La organización busca almacenar la información de los ahijados, para esto se dispone a crear un software capaz de almacenar, editar y eliminar la información pertinente.
+>Fundación Unbound es una ong internacional con sede en la quinta región, la cual se encarga de crear un vínculo entre un niño que necesite ayuda y un padrino que lo tome como su ahijado.La organización busca almacenar la información de los ahijados, para esto se dispone a crear un software capaz de almacenar, editar y eliminar la información pertinente.
 
 <h2 align="center">Herramientas de desarollo</h2>
 
