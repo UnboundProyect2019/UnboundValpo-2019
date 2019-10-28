@@ -150,12 +150,14 @@
     </template>
     <template v-slot:item.carta_invierno="{ item }">
         <div v-if="item.carta_invierno">
-            <span class="green--text">Entregada</span>
-            <!-- <v-chip :color="getColor(item.estado)" dark>Activo</v-chip> -->
+          <v-btn small text color="success">Entregada</v-btn>
+          <!-- <span class="green--text">Entregada</span> -->
+          <!-- <v-chip :color="getColor(item.estado)" dark>Activo</v-chip> -->
         </div>
         <div v-else>
-            <span class="red--text"> No Entregada</span>
-            <!-- <v-chip :color="getColor(item.estado)" dark>Inactivo</v-chip> -->
+          <v-btn small text color="error">No entregada</v-btn>
+          <!-- <span class="red--text"> No Entregada</span> -->
+          <!-- <v-chip :color="getColor(item.estado)" dark>Inactivo</v-chip> -->
         </div>
     </template>
     <template v-slot:item.data="{ item }">
