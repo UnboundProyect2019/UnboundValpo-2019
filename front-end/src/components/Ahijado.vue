@@ -30,10 +30,10 @@
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="12" md="12">
-                    <v-text-field v-model="nombre" label="Nombre del Ahijado"></v-text-field>
+                    <v-text-field v-model="nombre" label="Nombre"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
-                    <v-text-field v-model="apellidos" label="Apellidos del Ahijado"></v-text-field>
+                    <v-text-field v-model="apellidos" label="Apellidos"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                       <v-select v-model="proyecto" :items="proyectos" label="Proyecto"></v-select>
@@ -42,10 +42,10 @@
                     <v-text-field v-model="fecha_nacimiento" label="Fecha de nacimiento"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="discapacidad" label="Apellidos del Ahijado"></v-text-field>
+                    <v-text-field v-model="discapacidad" label="Discapcidad"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="nivel_educacional" label="Apellidos del Ahijado"></v-text-field>
+                    <v-text-field v-model="nivel_educacional" label="Nivel educacional"></v-text-field>
                   </v-col>
 
                   <!-- VALIDACION DE MENSAJES -->
@@ -268,7 +268,16 @@
         }
         if (this.editedIndex > -1) {
           //editar los datos del regisro
-           axios.put('proyecto/update',{'_id':this._id,'nombre_proyecto':this.nombre_proyecto, 'sector': this.sector},configuracion)
+           axios.put('ahijado/update',{
+              '_id':this._id,
+              'proyecto':this.proyecto, 
+              'nombre': this.nombre,
+              'apellidos': this.apellidos,
+              'fecha_nacimiento': this.fecha_nacimiento,
+              'discapacidad': this.discapacidad,
+              'nivel_educacional': this.nivel_educacional
+            
+            },configuracion)
           .then(function (response) {
             me.limpiar();
             me.close();
@@ -320,8 +329,12 @@
 
       editItem (item) {
         this._id=item._id;
-        this.proyecto=item.proyecto._id;//llegue aqui de ahi sigo (AGREGAR Y ACTUALIZAR ARTICULOS(AHIJADOS))
-        this.sector=item.sector;
+        this.proyecto=item.proyecto._id;
+        this.nombre=item.nombre;
+        this.apellidos=item.apellidos;
+        this.fecha_nacimiento=item.fecha_nacimiento;
+        this.discapacidad=item.discapacidad;
+        this.nivel_educacional=item.nivel_educacional;
         this.dialog = true;
         this.editedIndex=1;
       },
