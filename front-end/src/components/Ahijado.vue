@@ -322,7 +322,7 @@
         let me = this;
         let header = {"Token": this.$store.state.token};
         let configuracion = {headers:header}; //headers --> S
-        axios.get('ahijado/list',configuracion).then(function (response) {
+        axios.get('ahijado/listAhijados',configuracion).then(function (response) {
             // console.log(response);
             me.ahijados = response.data;
         }).catch(function (error) {
