@@ -14,7 +14,7 @@
           vertical
         ></v-divider>
         <v-text-field class="text-xs-center" v-model="search" append-icon="search"
-                    label="Busqueda" single-line hide-details></v-text-field>
+          label="Busqueda" single-line hide-details></v-text-field>
         <v-spacer></v-spacer>
         <!-- INICIO DIALOG -->
         <v-dialog v-model="dialog" max-width="500px">
@@ -367,6 +367,7 @@
             console.log(error);
           });
      },
+     
      desactivar(){
        let me = this;
         let header = {"Token": this.$store.state.token};
