@@ -5,11 +5,11 @@ La organización busca almacenar la información de los ahijados, para esto se d
 
 <h2 align="center">Herramientas de desarollo</h2>
 
-	-	Backend con nodejs, express.
-	-	Mongo DB como base de datos NoSql.
-	-	Vuejs como framework del Frontend
-	-	UI con Vuetify
-	-	Gestion de roles de usuario con JWT
+	-Backend con nodejs, express.
+	-Mongo DB como base de datos NoSql.
+	-Vuejs como framework del Frontend
+	-UI con Vuetify
+	-Gestion de roles de usuario con JWT
 <h2 align="center">Patron de diseño</h2>
 En el presente proyecto se ocupo un patron de diseño BFF ó Backend for Frontend, desacoplando el codigo generando capas de componentes, altamente acopladas.<br>
 
@@ -27,4 +27,6 @@ Ingresar por consola a las carpetas de "back-end" y "front-end" se debe ejecutar
 para generar los modulos ocupados.
 Luego de esto se necesita estar corriendo de forma local/remoto un servidor de mongodb, al cual poder conectarse, y ingresar un usuario.(Con su respectivo token)
 
-<h2 align="center">Aclaracion</h2>Este proyecto se genera para continuar desarollandolo a futuro y **hacemos enfasis que falta un estudio de factibilidad legal del uso de datos dentro de la Fundacion  Unbound**.
+<h2 align="center">Aclaracion</h2>
+
+Este proyecto se genera para continuar desarollandolo a futuro y **hacemos enfasis que falta un estudio de factibilidad legal del uso de datos dentro de la Fundacion  Unbound**.
