@@ -30,10 +30,25 @@ export default {
             next(err);
         }
     },
-    list: async (req, res, next) => {
+    listAhijados: async (req, res, next) => {
         try {
             let valor= req.query.valor;
-            const reg = await models.Ahijado.find({ $or: [{ 'nombre': new RegExp(valor, 'i') }, { 'apellidos': new RegExp(valor, 'i') }] }, { fecha_ingreso:0})
+            const reg = await models.Ahijado.find({ $or: [{ 'nombre': new RegExp(valor, 'i') }, { 'apellidos': new RegExp(valor, 'i') }],'estado': 1}, { fecha_ingreso:0})
+            // const reg = await models.Ahijado.find({})
+            .populate('proyecto',{nombre_proyecto:1})
+            .sort({'fecha_ingreso':-1});
+            res.status(200).json(reg);
+        } catch (err) {
+            res.status(500).send({
+                message: 'Ocurrio un error'
+            });
+            next(err);
+        }
+    },
+    listEgresados: async (req, res, next) => {
+        try {
+            let valor= req.query.valor;
+            const reg = await models.Ahijado.find({ $or: [{ 'nombre': new RegExp(valor, 'i') }, { 'apellidos': new RegExp(valor, 'i') }],'estado': 0}, { fecha_ingreso:0})
             // const reg = await models.Ahijado.find({})
             .populate('proyecto',{nombre_proyecto:1})
             .sort({'fecha_ingreso':-1});
@@ -88,9 +103,75 @@ export default {
             next(err);
         }
     },
+    activate_carta_agradecimiento: async (req, res, next) => {
+        try {
+            const reg = await models.Ahijado.findByIdAndUpdate({ _id: req.body._id }, { carta_agradecimiento: 1 });
+            res.status(200).json(reg);
+        } catch (err) {
+            res.status(500).send({
+                message: 'Ocurrio un error'
+            });
+            next(err);
+        }
+    },
+    activate_carta_navidad: async (req, res, next) => {
+        try {
+            const reg = await models.Ahijado.findByIdAndUpdate({ _id: req.body._id }, { carta_navidad: 1 });
+            res.status(200).json(reg);
+        } catch (err) {
+            res.status(500).send({
+                message: 'Ocurrio un error'
+            });
+            next(err);
+        }
+    },
+    activate_carta_invierno: async (req, res, next) => {
+        try {
+            const reg = await models.Ahijado.findByIdAndUpdate({ _id: req.body._id }, { carta_invierno: 1 });
+            res.status(200).json(reg);
+        } catch (err) {
+            res.status(500).send({
+                message: 'Ocurrio un error'
+            });
+            next(err);
+        }
+    },
     deactivate: async (req, res, next) => {
         try {
             const reg = await models.Ahijado.findByIdAndUpdate({ _id: req.body._id }, { estado: 0 });
+            res.status(200).json(reg);
+        } catch (err) {
+            res.status(500).send({
+                message: 'Ocurrio un error'
+            });
+            next(err);
+        }
+    },
+    deactivate_carta_agradecimiento: async (req, res, next) => {
+        try {
+            const reg = await models.Ahijado.findByIdAndUpdate({ _id: req.body._id }, { carta_agradecimiento: 0 });
+            res.status(200).json(reg);
+        } catch (err) {
+            res.status(500).send({
+                message: 'Ocurrio un error'
+            });
+            next(err);
+        }
+    },
+    deactivate_carta_navidad: async (req, res, next) => {
+        try {
+            const reg = await models.Ahijado.findByIdAndUpdate({ _id: req.body._id }, { carta_navidad: 0 });
+            res.status(200).json(reg);
+        } catch (err) {
+            res.status(500).send({
+                message: 'Ocurrio un error'
+            });
+            next(err);
+        }
+    },
+    deactivate_carta_invierno: async (req, res, next) => {
+        try {
+            const reg = await models.Ahijado.findByIdAndUpdate({ _id: req.body._id }, { carta_invierno: 0 });
             res.status(200).json(reg);
         } catch (err) {
             res.status(500).send({

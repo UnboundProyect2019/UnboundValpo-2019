@@ -6,6 +6,7 @@ import Proyecto from '../components/Proyecto.vue'
 import Login from '../components/Login.vue'
 import Usuario from '../components/Usuario.vue'
 import Ahijado from '../components/Ahijado.vue'
+import Egresado from '../components/Egresado.vue'
 
 Vue.use(VueRouter)
 
@@ -48,6 +49,16 @@ const routes = [
     path: '/ahijado',
     name: 'ahijado',
     component: Ahijado,
+    meta: {
+      administrador:true,
+      lector:true,
+      asist_social:true
+    }
+  },
+  {
+    path: '/egresado',
+    name: 'egresado',
+    component: Egresado,
     meta: {
       administrador:true,
       lector:true,
