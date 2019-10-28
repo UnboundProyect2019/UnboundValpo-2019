@@ -64,6 +64,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+        <!-- Modal Activar / Egresar Ahijados -->
         <v-dialog v-model="adModal" max-width="290">
           <v-card>
             <v-card-title class="headline" v-if="adAccion==1">
@@ -90,7 +91,92 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-        <!-- FIN DIALOG -->
+        <!-- Fin modal acivar / egresar ahijados -->
+        <!-- Modal entregas de cartas de agradecimiento-->
+        <v-dialog v-model="adModalCA" max-width="450">
+          <v-card>
+            <v-card-title class="headline" v-if="adAccionCA==1">
+              Entregar Carta de agradecimiento
+            </v-card-title>
+            <v-card-title class="headline" v-if="adAccionCA==2">
+              Quitar Carta de agradecimiento
+            </v-card-title>
+            <v-card-text>
+              Estas a punto de <span v-if="adAccionCA==1">Ingresar</span><span v-if="adAccionCA==2">Quitar</span>
+              una carta de agradecimiento
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+               <v-btn @click="activarDesactivarCerrarCA()" color="dark darken-1" text large>
+                  Cancelar
+                </v-btn>
+                <v-btn v-if="adAccionCA==1" @click="activate_carta_agradecimiento()" color="green darken-1" text large >
+                  Ingresar
+                </v-btn>
+                <v-btn v-if="adAccionCA==2" @click="deactivate_carta_agradecimiento()" color="red darken-1" text large >
+                  Quitar
+                </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <!-- Fin modal cartas de agradecimiento-->
+        <!-- Modal entregas de cartas de navidad-->
+        <v-dialog v-model="adModalCN" max-width="350">
+          <v-card>
+            <v-card-title class="headline" v-if="adAccionCN==1">
+              Entregar Carta de navidad
+            </v-card-title>
+            <v-card-title class="headline" v-if="adAccionCN==2">
+              Quitar Carta de navidad
+            </v-card-title>
+            <v-card-text>
+              Estas a punto de <span v-if="adAccionCN==1">Ingresar</span><span v-if="adAccionCN==2">Quitar</span>
+              una carta de navidad
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+               <v-btn @click="activarDesactivarCerrarCN()" color="dark darken-1" text large>
+                  Cancelar
+                </v-btn>
+                <v-btn v-if="adAccionCN==1" @click="activate_carta_navidad()" color="green darken-1" text large >
+                  Ingresar
+                </v-btn>
+                <v-btn v-if="adAccionCN==2" @click="deactivate_carta_navidad()" color="red darken-1" text large >
+                  Quitar
+                </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <!-- Fin modal cartas de navidad-->
+        <!-- Modal entregas de cartas de invierno-->
+        <v-dialog v-model="adModalCI" max-width="350">
+          <v-card>
+            <v-card-title class="headline" v-if="adAccionCI==1">
+              Entregar Carta de invierno
+            </v-card-title>
+            <v-card-title class="headline" v-if="adAccionCI==2">
+              Quitar Carta de invierno
+            </v-card-title>
+            <v-card-text>
+              Estas a punto de <span v-if="adAccionCI==1">Ingresar</span><span v-if="adAccionCI==2">Quitar</span>
+              una carta de invierno
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+               <v-btn @click="activarDesactivarCerrarCI()" color="dark darken-1" text large>
+                  Cancelar
+                </v-btn>
+                <v-btn v-if="adAccionCI==1" @click="activate_carta_invierno()" color="green darken-1" text large >
+                  Ingresar
+                </v-btn>
+                <v-btn v-if="adAccionCI==2" @click="deactivate_carta_invierno()" color="red darken-1" text large >
+                  Quitar
+                </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <!-- Fin modal cartas de invierno-->
+        <!-- FIN DIALOGS -->
       </v-toolbar>
     </template>
     <!-- TEMPLATE ACTIONS -->
@@ -102,89 +188,43 @@
       >
         edit
       </v-icon>
-      <template v-slot:item.estado="{ item }">
-      <!-- <div v-if="item.estado">
-        <span class="green--text">Activo</span>
-      </div>
-      <div v-else>
-        <span class="red--text">Egresado</span>
-      </div> -->
-      <template v-if="item.estado">
-      <!-- <v-icon
-        small
-        @click="activarDesactivarMostrar(2,item)"
-      >
-        block
-      </v-icon>  -->
-      <div>
-        <v-btn small @click="activarDesactivarMostrar(2,item)" >Activo</v-btn>   
-      </div>
-      </template>
-
-      <template v-else>
-        <!-- <v-icon
-            small
-            @click="activarDesactivarMostrar(1,item)"
-        >
-            check
-        </v-icon>  -->
-        <div>
-          <v-btn small @click="activarDesactivarMostrar(1,item)">Egresado</v-btn>
-        </div>
-      </template>
-    </template>
-    </template>
-
     </template>
     <!-- FIN TEMPLATE ACTIONS -->
-    <!-- TEMLATE CARTA AGRADECIMIENTO -->
-    <!-- <template v-slot:item.carta_agradecimiento="{ item }">
-        <template v-if="item.carta_agradecimiento">
-          <v-icon
-              small
-              @click="activarDesactivarMostrar(2,item)"
-          >
-              block
-          </v-icon> 
-          <v-btn depressed color="" @click="activarDesactivarMostrar(2,item)"></v-btn>
-        </template>
-        <template v-else>
-          <v-icon
-              small
-              @click="activarDesactivarMostrar(1,item)"
-          >
-              check
-          </v-icon>    
-        </template>    
-    </template> -->
-    <!-- FIN TEMLATE CARTA AGRADECIMIENTO -->
     
-    
-
-    <template v-slot:item.carta_agradecimiento="{ item }">
-      <div v-if="item.carta_agradecimiento">
-        <span class="green--text">Entregada</span>
+    <template v-slot:item.estado="{ item }">
+      <div v-if="item.estado">
+        <!-- <span class="green--text">Activo</span> -->
+        <v-btn small text color="success" @click="activarDesactivarMostrar(2,item)">Activo</v-btn>
       </div>
       <div v-else>
-        <span class="red--text"> No Entregada</span>
+        <v-btn small text color="error" @click="activarDesactivarMostrar(1,item)">Egresado</v-btn>
+      </div>
+    </template>    
+    
+    <template v-slot:item.carta_agradecimiento="{ item }">
+      <div v-if="item.carta_agradecimiento">
+        <v-btn text small color="success" @click="activarDesactivarMostrarCA(2,item)">Entregada</v-btn>
+      </div>
+      <div v-else>
+        <v-btn text small color="error" @click="activarDesactivarMostrarCA(1,item)">No Entregada</v-btn>
       </div>
     </template>
 
     <template v-slot:item.carta_navidad="{ item }">
       <div v-if="item.carta_navidad">
-        <span class="green--text">Entregada</span>
+        <v-btn text small color="success" @click="activarDesactivarMostrarCN(2,item)">Entregada</v-btn>
       </div>
       <div v-else>
-        <span class="red--text"> No Entregada</span>
+        <v-btn text small color="error" @click="activarDesactivarMostrarCN(1,item)">No Entregada</v-btn>
       </div>
     </template>
 
     <template v-slot:item.carta_invierno="{ item }">
       <div v-if="item.carta_invierno">
-        <span class="green--text">Entregada</span>
+        <v-btn text small color="success" @click="activarDesactivarMostrarCI(2,item)">Entregada</v-btn>
       </div>
       <div v-else>
-        <span class="red--text"> No Entregada</span>
+        <v-btn text small color="error" @click="activarDesactivarMostrarCI(1,item)">No Entregada</v-btn>
       </div>
     </template>
 
@@ -230,7 +270,19 @@
       adModal:0, //gestionar el modal si desea activar o desactivar el registro
       adAccion:0, //dice que accion deseo realizar, si es 1 activar, si es 2 desactivar
       adNombre:'',//el nombre del proyecto que deseo activar o desactivar
-      adId:'' //obtengo el id del proyecto que deseo activar o desactivar
+      adId:'', //obtengo el id del proyecto que deseo activar o desactivar
+      
+      adModalCA:0,
+      adAccionCA:'',
+      adIdCA:'',
+
+      adModalCN:0,
+      adAccionCN:'',
+      adIdCN:'',
+
+      adModalCI:0,
+      adAccionCI:'',
+      adIdCI:'',
     }),
 
     computed: {
@@ -384,6 +436,45 @@
       }
     }, 
 
+    activarDesactivarMostrarCA(accion,item){
+      this.adModalCA=1;
+      // this.adNombre=item.nombre;
+      this.adIdCA=item._id;
+      if (accion ==1) {
+        this.adAccionCA = 1;
+      } else if (accion == 2) {
+        this.adAccionCA = 2;
+      } else {
+        this.adModalCA=0;
+      }
+    }, 
+
+    activarDesactivarMostrarCN(accion,item){
+      this.adModalCN=1;
+      // this.adNombre=item.nombre;
+      this.adIdCN=item._id;
+      if (accion ==1) {
+        this.adAccionCN = 1;
+      } else if (accion == 2) {
+        this.adAccionCN = 2;
+      } else {
+        this.adModalCN=0;
+      }
+    }, 
+
+    activarDesactivarMostrarCI(accion,item){
+      this.adModalCI=1;
+      // this.adNombre=item.nombre;
+      this.adIdCI=item._id;
+      if (accion ==1) {
+        this.adAccionCI = 1;
+      } else if (accion == 2) {
+        this.adAccionCI = 2;
+      } else {
+        this.adModalCI=0;
+      }
+    }, 
+
     activar(){
       let me = this;
       let header = {"Token": this.$store.state.token};
@@ -398,18 +489,18 @@
         }).catch(function (error) {
           console.log(error);
         });
-     },
-
+    },
+ 
     activate_carta_agradecimiento(){
       let me = this;
       let header = {"Token": this.$store.state.token};
       let configuracion = {headers:header}; //headers --> S
-      axios.put('ahijado/activateca',{'_id':this.adId},configuracion)
+      axios.put('ahijado/activateca',{'_id':this.adIdCA},configuracion)
       .then(function (response) {
-        me.adModal=0;
-        me.adAccion=0;
-        me.adNombre='';
-        me.adId='';
+        me.adModalCA=0;
+        me.adAccionCA=0;
+        // me.adNombre='';
+        me.adIdCA='';
         me.listar();
       }).catch(function (error) {
         console.log(error);
@@ -420,12 +511,12 @@
       let me = this;
       let header = {"Token": this.$store.state.token};
       let configuracion = {headers:header}; //headers --> S
-      axios.put('ahijado/activatecn',{'_id':this.adId},configuracion)
+      axios.put('ahijado/activatecn',{'_id':this.adIdCN},configuracion)
       .then(function (response) {
-        me.adModal=0;
-        me.adAccion=0;
-        me.adNombre='';
-        me.adId='';
+        me.adModalCN=0;
+        me.adAccionCN=0;
+        // me.adNombre='';
+        me.adIdCN='';
         me.listar();
       }).catch(function (error) {
         console.log(error);
@@ -436,12 +527,12 @@
       let me = this;
       let header = {"Token": this.$store.state.token};
       let configuracion = {headers:header}; //headers --> S
-      axios.put('ahijado/activateci',{'_id':this.adId},configuracion)
+      axios.put('ahijado/activateci',{'_id':this.adIdCI},configuracion)
       .then(function (response) {
-        me.adModal=0;
-        me.adAccion=0;
-        me.adNombre='';
-        me.adId='';
+        me.adModalCI=0;
+        me.adAccionCI=0;
+        // me.adNombre='';
+        me.adIdCI='';
         me.listar();
       }).catch(function (error) {
         console.log(error);
@@ -468,12 +559,12 @@
       let me = this;
       let header = {"Token": this.$store.state.token};
       let configuracion = {headers:header}; //headers --> S
-      axios.put('ahijado/deactivateca',{'_id':this.adId},configuracion)
+      axios.put('ahijado/deactivateca',{'_id':this.adIdCA},configuracion)
       .then(function (response) {
-        me.adModal=0;
-        me.adAccion=0;
-        me.adNombre='';
-        me.adId='';
+        me.adModalCA=0;
+        me.adAccionCA=0;
+        // me.adNombre='';
+        me.adIdCA='';
         me.listar();
       }).catch(function (error) {
         console.log(error);
@@ -484,12 +575,12 @@
       let me = this;
       let header = {"Token": this.$store.state.token};
       let configuracion = {headers:header}; //headers --> S
-      axios.put('ahijado/deactivatecn',{'_id':this.adId},configuracion)
+      axios.put('ahijado/deactivatecn',{'_id':this.adIdCN},configuracion)
       .then(function (response) {
-        me.adModal=0;
-        me.adAccion=0;
-        me.adNombre='';
-        me.adId='';
+        me.adModalCN=0;
+        me.adAccionCN=0;
+        // me.adNombre='';
+        me.adIdCN='';
         me.listar();
       }).catch(function (error) {
         console.log(error);
@@ -500,12 +591,12 @@
       let me = this;
       let header = {"Token": this.$store.state.token};
       let configuracion = {headers:header}; //headers --> S
-      axios.put('ahijado/deactivateci',{'_id':this.adId},configuracion)
+      axios.put('ahijado/deactivateci',{'_id':this.adIdCI},configuracion)
       .then(function (response) {
-        me.adModal=0;
-        me.adAccion=0;
-        me.adNombre='';
-        me.adId='';
+        me.adModalCI=0;
+        me.adAccionCI=0;
+        // me.adNombre='';
+        me.adIdCI='';
         me.listar();
       }).catch(function (error) {
         console.log(error);
@@ -516,6 +607,17 @@
         this.adModal=0;
       },
 
+      activarDesactivarCerrarCA(){
+        this.adModalCA=0;
+      },
+
+      activarDesactivarCerrarCN(){
+        this.adModalCN=0;
+      },
+
+      activarDesactivarCerrarCI(){
+        this.adModalCI=0;
+      },
       close () {
         this.dialog = false
       },
