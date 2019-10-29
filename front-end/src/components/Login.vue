@@ -1,30 +1,67 @@
 <template>
-    <v-layout align-center justify-center>
-        <v-flex cols="12" sm="8" md="6" lg5 x14 mt-12>
-            <v-card>
-                <v-toolbar dark color="blue darken-3">
-                    <v-toolbar-title>
-                        Acceso al sistema
-                    </v-toolbar-title>
-                </v-toolbar>
-                <v-card-text>
-                    <v-text-field autofocus v-model="email" color="accent" label="Email" aria-required>
-                    </v-text-field>
-                    <v-text-field v-model="password" type="password" color="accent" label="Password" required>
-                    </v-text-field>
-                    <v-flex class="red--text" v-if="errorM">
-                        {{errorM}}
+    <div id="app">
+        <v-app id="inspire">
+            <v-content>
+                <v-container fluid fill-height>
+                    <v-layout justify-center>
+                    <v-flex xs12 sm8 md4>
+                        <v-card class="elevation-12">
+                        <v-toolbar flat>
+                            <v-toolbar-title>Acceso al sistema</v-toolbar-title>
+                            <v-spacer></v-spacer>
+                            <!-- <v-tooltip bottom>
+                                <template v-slot:activator="{ on }">
+                                    <v-btn
+                                    :href="source"
+                                    icon
+                                    large
+                                    target="_blank"
+                                    v-on="on"
+                                    >
+                                    <v-icon>mdi-code-tags</v-icon>
+                                    </v-btn>
+                                </template>
+                                <span>Source</span>
+                            </v-tooltip> -->
+                        </v-toolbar>
+                        <v-card-text>
+                            <v-form>
+                                <v-text-field
+                                    autofocus
+                                    v-model="email"
+                                    label="E-mail"
+                                    name="login"
+                                    prepend-icon="person"
+                                    type="text"
+                                    aria-required
+                                ></v-text-field>
+
+                                <v-text-field
+                                    v-model="password"
+                                    label="Contraseña"
+                                    name="password"
+                                    prepend-icon="lock"
+                                    type="password"
+                                    required
+                                ></v-text-field>
+                            </v-form>
+                            <v-flex class="red--text" v-if="errorM">
+                                {{errorM}}
+                            </v-flex>
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn block outlined color="primary"  @click="ingresar()">Ingresar</v-btn>
+                        </v-card-actions>
+                        </v-card>
                     </v-flex>
-                    <v-card-actions class="px-3 pb-3">
-                        <v-flex text-xs-right>
-                            <v-btn @click="ingresar()" color="primary" class="btn-block">Ingresar</v-btn>
-                        </v-flex>
-                    </v-card-actions>
-                </v-card-text>
-            </v-card>
-        </v-flex>
-    </v-layout>
+                    </v-layout>
+                </v-container>
+            </v-content>
+        </v-app>
+    </div>
 </template>
+
 
 <script>
 import axios from 'axios';

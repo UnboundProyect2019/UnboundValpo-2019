@@ -97,7 +97,7 @@
           
           <template v-slot:append>
             <div class="pa-2">
-              <v-btn block @click="salir()">Salir</v-btn>
+              <v-btn block outlined @click="salir()" color="error">Salir</v-btn>
             </div>
           </template>
         </v-navigation-drawer>
@@ -125,7 +125,7 @@
     <!-- FIN CONTENIDO -->
     <!-- FOOTER -->
     <v-footer :inset="footer.inset" app>
-      <span class="px-4">&copy; {{ new Date().getFullYear() }}</span>
+      <span class="px-4">&copy; Fundacion Unbound Valparaiso - {{ new Date().getFullYear() }}</span>
     </v-footer>
     <!-- FIN FOOTER -->
   </v-app>
