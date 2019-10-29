@@ -7,26 +7,29 @@
   >
     <template v-slot:top>
       <v-toolbar flat color="white">
-        <v-toolbar-title>Ahijados</v-toolbar-title>
-        <v-divider class="mx-4" inset vertical ></v-divider>
+        <v-toolbar-title>Ahijados Egresados</v-toolbar-title>
+        <v-divider
+          class="mx-4"
+          inset
+          vertical
+        ></v-divider>
         <v-flex mt-8>
-          <v-select
-          :items="proyectosBusqueda"
-          label="Proyectos"
-          v-model="search"
-          solo
-        ></v-select>
+            <v-select
+            :items="proyectos"
+            label="Proyectos"
+            
+            solo
+          ></v-select>
         </v-flex>
-        <v-divider class="mx-4" inset vertical></v-divider>
+        <v-divider class="mx-4" inset vertical ></v-divider>
         <v-text-field class="text-xs-center" v-model="search" append-icon="search"
           label="Busqueda" solo hide-details></v-text-field>
-        
         <v-spacer></v-spacer>
         <!-- INICIO DIALOG -->
         <v-dialog v-model="dialog" max-width="500px">
-          <template v-slot:activator="{ on }">
+          <!-- <template v-slot:activator="{ on }">
             <v-btn color="primary" dark class="mb-2" v-on="on">Nuevo Ahijado</v-btn>
-          </template>
+          </template> -->
           <v-card>
             <v-card-title>
               <span class="headline">{{ formTitle }}</span>
@@ -116,10 +119,10 @@
                <v-btn @click="activarDesactivarCerrarCA()" color="dark darken-1" text large>
                   Cancelar
                 </v-btn>
-                <v-btn v-if="adAccionCA==1" @click="activate_carta_agradecimiento(), ejemplo()" color="green darken-1" text large >
+                <v-btn v-if="adAccionCA==1" @click="activate_carta_agradecimiento()" color="green darken-1" text large >
                   Ingresar
                 </v-btn>
-                <v-btn v-if="adAccionCA==2" @click="deactivate_carta_agradecimiento(), ejemplo()" color="red darken-1" text large >
+                <v-btn v-if="adAccionCA==2" @click="deactivate_carta_agradecimiento()" color="red darken-1" text large >
                   Quitar
                 </v-btn>
             </v-card-actions>
@@ -250,7 +253,6 @@
     data: () => ({
       dialog: false,
       search:'',
-      searchNombreProyecto:'',
       ahijados:[],
       headers: [
         { text: 'Actions', value: 'action', sortable: false },
@@ -261,13 +263,12 @@
         { text: 'Carta Agradecimiento', value: 'carta_agradecimiento',sortable: false },
         { text: 'Carta Navidad', value: 'carta_navidad',sortable: false },
         { text: 'Carta Invierno', value: 'carta_invierno',sortable: false },
-        // { text: 'Datos', value: 'data',sortable: false },
+        { text: 'Datos', value: 'data',sortable: false },
       ],
       editedIndex: -1,
       _id:'',
       proyecto:'',
       proyectos: [],
-      proyectosBusqueda:[],
       nombre:'',
       apellidos:'',
       fecha_nacimiento:'',
@@ -308,14 +309,10 @@
     created () {
       this.listar();
       this.selectProyecto();
-      this.selectProyectoBusqueda();
     },
 
     methods: {
-      ejemplo(){
-        console.log('Funciona &&');
-      },
-      selectProyecto(){ 
+      selectProyecto(){ //hacer disponible para asist social
         let me = this;
         let proyectoArray =[];
         let header = {"Token": this.$store.state.token};
@@ -330,26 +327,11 @@
           console.log(error);
         });
       },
-      selectProyectoBusqueda(){ 
-        let me = this;
-        let proyectoArray =[];
-        let header = {"Token": this.$store.state.token};
-        let configuracion = {headers:header}; //headers --> S
-        axios.get('proyecto/list',configuracion).then(function (response) { //OJO
-            // console.log(response);
-            proyectoArray = response.data;
-            proyectoArray.map(function (x) {
-                me.proyectosBusqueda.push({text:x.nombre_proyecto, value:x.nombre_proyecto});
-            })
-        }).catch(function (error) {
-          console.log(error);
-        });
-      },
       listar(){
         let me = this;
         let header = {"Token": this.$store.state.token};
         let configuracion = {headers:header}; //headers --> S
-        axios.get('ahijado/listAhijados',configuracion).then(function (response) {
+        axios.get('ahijado/listEgresados',configuracion).then(function (response) {
             // console.log(response);
             me.ahijados = response.data;
         }).catch(function (error) {
