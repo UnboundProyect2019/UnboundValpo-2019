@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store/index'
-import Home from '../views/Home.vue'
 import Proyecto from '../components/Proyecto.vue'
 import Login from '../components/Login.vue'
 import Usuario from '../components/Usuario.vue'
 import Ahijado from '../components/Ahijado.vue'
 import Egresado from '../components/Egresado.vue'
+import Home from '../components/Home.vue'
 
 Vue.use(VueRouter)
 
