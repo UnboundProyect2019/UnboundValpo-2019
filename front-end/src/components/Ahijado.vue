@@ -24,7 +24,7 @@
         <v-spacer></v-spacer>
         <!-- INICIO DIALOG -->
         <v-dialog v-model="dialog" max-width="500px">
-          <template v-slot:activator="{ on }">
+          <template v-slot:activator="{ on }" v-if="esAdministrador || esAsistSocial">
             <v-btn color="primary" dark class="mb-2" v-on="on">Nuevo Ahijado</v-btn>
           </template>
           <v-card>
@@ -297,6 +297,12 @@
       formTitle () {
         return this.editedIndex === -1 ? 'Nuevo Ahijado' : 'Editar Ahijado'
       },
+      esAdministrador(){
+        return this.$store.state.usuario && this.$store.state.usuario.rol == 'Administrador' 
+      },
+      esAsistSocial(){
+        return this.$store.state.usuario && this.$store.state.usuario.rol == 'Asist_Social' 
+      }
     },
 
     watch: {

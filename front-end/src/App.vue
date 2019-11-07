@@ -24,12 +24,29 @@
               </v-list-item-avatar>
             </v-list-item>
 
-            <v-list-item link>
-              <v-list-item-content>
-                <v-list-item-title class="title">Mostrar nombre del usuario</v-list-item-title>
-                <v-list-item-title>Rol :Usuario</v-list-item-title>
-                <v-list-item-subtitle>tenkla123@gmail.com</v-list-item-subtitle>
-              </v-list-item-content>
+            <v-list-item link >
+              <template v-if="esAdministrador">
+                <v-list-item-content>
+                  <v-list-item-title class="title">nombre del usuario</v-list-item-title>
+                  <v-list-item-title>Rol: Administrador</v-list-item-title>
+                  <v-list-item-subtitle>tenkla123@gmail.com</v-list-item-subtitle>
+                </v-list-item-content>
+              </template>
+              <template v-if="esLector">
+                <v-list-item-content>
+                  <v-list-item-title class="title">nombre del usuario</v-list-item-title>
+                  <v-list-item-title>Rol: Lector</v-list-item-title>
+                  <v-list-item-subtitle>tenkla123@gmail.com</v-list-item-subtitle>
+                </v-list-item-content>
+              </template>
+              <template v-if="esAsistSocial">
+                <v-list-item-content>
+                  <v-list-item-title class="title">nombre del usuario</v-list-item-title>
+                  <v-list-item-title>Rol : Asistente Social</v-list-item-title>
+                  <v-list-item-subtitle>tenkla123@gmail.com</v-list-item-subtitle>
+                </v-list-item-content>
+              </template>
+              
 
               <v-list-item-action>
                 <v-icon>mdi-menu-down</v-icon>
@@ -42,57 +59,57 @@
           <v-list dense>
 
       
-              <template v-if="esAdministrador || esLector || esAsistSocial">
-                <v-list-item :to="{name:'home'}">
-                  <v-list-item-action>
-                    <v-icon>home</v-icon>
-                  </v-list-item-action>
-                  <v-list-item-content>
-                  <v-list-item-title>Inicio</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </template>
+            <template v-if="esAdministrador || esLector || esAsistSocial">
+              <v-list-item :to="{name:'home'}">
+                <v-list-item-action>
+                  <v-icon>home</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                <v-list-item-title>Inicio</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </template>
               
-              <template v-if="esAdministrador"> 
-                <v-list-item :to="{name:'proyecto'}">
-                  <v-list-item-action>
-                    <v-icon>mdi-star</v-icon>
-                  </v-list-item-action>
-                  <v-list-item-content>
-                  <v-list-item-title>Proyectos</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </template>
-              <template v-if="esAdministrador">
-                <v-list-item :to="{name:'usuario'}">
-                  <v-list-item-action>
-                    <v-icon>mdi-account-group-outline</v-icon>
-                  </v-list-item-action>
-                  <v-list-item-content>
-                  <v-list-item-title>Usuarios</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </template>
-              <template v-if="esAdministrador || esLector || esAsistSocial">
-                <v-list-item :to="{name:'ahijado'}">
-                  <v-list-item-action>
-                    <v-icon>mdi-folder</v-icon>
-                  </v-list-item-action>
-                  <v-list-item-content>
-                  <v-list-item-title>Ahijados</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </template>
-              <template v-if="esAdministrador || esLector || esAsistSocial">
-                <v-list-item :to="{name:'egresado'}">
-                  <v-list-item-action>
-                    <v-icon>mdi-check-circle</v-icon>
-                  </v-list-item-action>
-                  <v-list-item-content>
-                  <v-list-item-title>Egresados</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </template>  
+            <template v-if="esAdministrador"> 
+              <v-list-item :to="{name:'proyecto'}">
+                <v-list-item-action>
+                  <v-icon>mdi-star</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                <v-list-item-title>Proyectos</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </template>
+            <template v-if="esAdministrador">
+              <v-list-item :to="{name:'usuario'}">
+                <v-list-item-action>
+                  <v-icon>mdi-account-group-outline</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                <v-list-item-title>Usuarios</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </template>
+            <template v-if="esAdministrador || esLector || esAsistSocial">
+              <v-list-item :to="{name:'ahijado'}">
+                <v-list-item-action>
+                  <v-icon>mdi-folder</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                <v-list-item-title>Ahijados</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </template>
+            <template v-if="esAdministrador || esLector || esAsistSocial">
+              <v-list-item :to="{name:'egresado'}">
+                <v-list-item-action>
+                  <v-icon>mdi-check-circle</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                <v-list-item-title>Egresados</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </template>  
           </v-list>
           
           <template v-slot:append>
@@ -134,6 +151,7 @@
 <script>
   export default {
     name: 'App',
+    user: {},
     data: () => ({
       drawers: true,
       primaryDrawer: {
@@ -147,13 +165,6 @@
         inset: true,
       },
       item: 0,
-      items: [
-        { text: 'Home', icon: 'home', to:{name: 'home'} },
-        { text: 'Proyectos', icon: 'mdi-star', to:{name: 'proyecto'} },
-        { text: 'Usuarios', icon: 'mdi-account-group-outline', to:{name: 'proyecto'} },//mdi-folder mdi-check-circle mdi-history 
-        { text: 'Ahijados', icon: 'mdi-folder', to:{name: 'proyecto'} },
-        { text: 'Egresados', icon: 'mdi-check-circle', to:{name: 'proyecto'} },
-      ],
     }),
     computed: {
       logueado(){
@@ -168,6 +179,11 @@
       esAsistSocial(){
         return this.$store.state.usuario && this.$store.state.usuario.rol == 'Asist_Social' 
       },
+      usuario(){
+        let usuario = this.$store.state.usuario;
+        console.log(usuario);
+        return usuario; 
+      }
      
     },
     created() {
