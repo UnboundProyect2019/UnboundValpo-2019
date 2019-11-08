@@ -100,7 +100,7 @@
                 </v-list-item-content>
               </v-list-item>
             </template>
-            <template v-if="esAdministrador || esLector || esAsistSocial">
+            <!-- <template v-if="esAdministrador || esLector || esAsistSocial">
               <v-list-item :to="{name:'egresado'}">
                 <v-list-item-action>
                   <v-icon>mdi-check-circle</v-icon>
@@ -109,7 +109,7 @@
                 <v-list-item-title>Egresados</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-            </template>  
+            </template>   -->
           </v-list>
           
           <template v-slot:append>

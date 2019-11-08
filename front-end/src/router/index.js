@@ -7,6 +7,8 @@ import Usuario from '../components/Usuario.vue'
 import Ahijado from '../components/Ahijado.vue'
 import Egresado from '../components/Egresado.vue'
 import Home from '../components/Home.vue'
+import DataAhijado from '../components/DataAhijado'
+import Padrino from '../components/Padrino'
 
 Vue.use(VueRouter)
 
@@ -59,6 +61,26 @@ const routes = [
     path: '/egresado',
     name: 'egresado',
     component: Egresado,
+    meta: {
+      administrador:true,
+      lector:true,
+      asist_social:true
+    }
+  },
+  {
+    path: '/dataahijado',
+    name: 'dataahijado',
+    component: DataAhijado,
+    meta: {
+      administrador:true,
+      lector:true,
+      asist_social:true
+    }
+  },
+  {
+    path: '/padrino',
+    name: 'padrino',
+    component: Padrino,
     meta: {
       administrador:true,
       lector:true,
