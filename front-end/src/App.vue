@@ -15,21 +15,21 @@
     <v-flex>
         <v-navigation-drawer permanent>
           <v-list >
-            <v-list-item>
+            <!-- <v-list-item>
               <v-list-item-avatar>
-                <!-- <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img> -->
+                <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
               <v-avatar color="indigo">
                 <v-icon dark>mdi-account-circle</v-icon>
               </v-avatar>
               </v-list-item-avatar>
-            </v-list-item>
+            </v-list-item> -->
 
             <v-list-item link >
               <template v-if="esAdministrador">
                 <v-list-item-content>
                   <v-list-item-title class="title">nombre del usuario</v-list-item-title>
                   <v-list-item-title>Rol: Administrador</v-list-item-title>
-                  <v-list-item-subtitle>tenkla123@gmail.com</v-list-item-subtitle>
+                  <v-list-item-subtitle>Email:  admin@test.com</v-list-item-subtitle>
                 </v-list-item-content>
               </template>
               <template v-if="esLector">

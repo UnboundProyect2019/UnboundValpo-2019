@@ -83,6 +83,11 @@
     <template v-slot:item.action="{ item }">
       <v-icon small class="mr-2" @click="editItem(item)"> edit </v-icon>
     </template>
+    
+    <!-- OJO con esto, importante para desarollar el adm de tareas -->
+    <template v-slot:item.createdAt="{ item }">
+      {{item.createdAt.slice(0,10)}}
+    </template>
 
     <template v-slot:item.estado="{ item }">
       <div v-if="item.estado">
@@ -111,12 +116,13 @@
         { text: 'Estado', value: 'estado' },
         { text: 'Nombre', value: 'nombre_proyecto',sortable: false  },
         { text: 'Sector', value: 'sector' ,sortable: false },
-        { text: 'Creacion', value: 'createdAt' },
+        { text: 'Creacion (AA-MM-DD)', value: 'createdAt' },
       ],
       editedIndex: -1,
       _id:'',
       nombre_proyecto:'',
       sector:'',
+      createdAt:'',
       valida:0, //me va a determinar si los datos ingresados no son correctos
       validaMensaje:[],
       adModal:0, //gestionar el modal si desea activar o desactivar el registro

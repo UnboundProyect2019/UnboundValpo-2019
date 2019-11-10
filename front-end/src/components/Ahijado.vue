@@ -9,10 +9,10 @@
       <template>
         <div>
           <v-tabs>
-          <v-tab :to="{name:'ahijado'}">Ahijados</v-tab>
-          <v-tab :to="{name:'egresado'}">Egresados</v-tab>
-          <v-tab :to="{name:'padrino'}">Padrinos</v-tab>
-        </v-tabs>
+            <v-tab :to="{name:'ahijado'}">Ahijados</v-tab>
+            <v-tab :to="{name:'egresado'}">Egresados</v-tab>
+            <v-tab :to="{name:'padrino'}">Padrinos</v-tab>
+          </v-tabs>
         </div>
       </template>
       <v-toolbar flat color="white">
@@ -34,7 +34,7 @@
         <!-- INICIO DIALOG -->
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on }" v-if="esAdministrador || esAsistSocial">
-            <v-btn color="primary" dark class="mb-2" v-on="on">Nuevo Ahijado</v-btn>
+            <v-btn color="primary" dark class="mb-2" v-on="on" @click="limpiar()">Nuevo Ahijado</v-btn>
           </template>
           <v-card>
             <v-card-title>
@@ -191,6 +191,78 @@
           </v-card>
         </v-dialog>
         <!-- Fin modal cartas de invierno-->
+        <!-- Modal Datos de ahijados-->
+        <v-dialog v-model="adModalDATA" max-width="500">
+          <v-card>
+            <v-contanier>
+              <v-card-title class="display-1">
+                Informacion de {{adNombreDATA}}
+              </v-card-title>
+              <v-divider></v-divider>
+
+                  <!-- <v-row>
+                    <v-col cols="12" sm="6" md="6">
+                      <h4><strong>Nombre : </strong>{{adNombreDATA}}</h4>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="6">
+                      <strong>Apellidos : </strong>{{adApellidosDATA}}
+                    </v-col>
+                    <v-col cols="12" sm="6" md="6">
+
+                    </v-col>
+                    <v-col cols="12" sm="6" md="6">
+
+                    </v-col>
+                  </v-row> -->
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-col cols="12" sm="12" md="12">
+                          <div class="subtitle-1">
+                            <strong >Nombre : </strong>{{adNombreDATA}}
+                          </div>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="12">
+                          <div class="subtitle-1">
+                            <strong>Apellidos : </strong>{{adApellidosDATA}}
+                          </div>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="12">
+                          <div class="subtitle-1">
+                            <strong>Fecha de nacimiento : </strong>{{adFecha_nacimientoDATA}}
+                          </div>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="12">
+                          <div class="subtitle-1">
+                            <strong>Discapacidad : </strong>{{adDiscapacidadDATA}}
+                          </div>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="12">
+                          <div class="subtitle-1">
+                            <strong>Nivel educacional : </strong>{{adNivel_educacionalDATA}}
+                          </div>
+                        </v-col>
+                      </v-row> 
+                    </v-container>
+                    <!-- <p><strong>Nombre : </strong>{{adNombreDATA}}</p>
+                    <p><strong>Apellidos : </strong>{{adApellidosDATA}}</p>
+                    <p><strong>Fecha de nacimiento : </strong>{{adFecha_nacimientoDATA}}</p>
+                    <p><strong>Discapacidad : </strong>{{adDiscapacidadDATA}}</p>
+                    <p><strong>Nivel educacional : </strong>{{adNivel_educacionalDATA}}</p> -->
+                  </v-card-text>
+                
+              
+              <v-divider></v-divider>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn @click="activarDesactivarCerrarDATA()" color="primary" text large >
+                Cerrar
+                </v-btn>
+              </v-card-actions>
+            </v-contanier>
+          </v-card>
+        </v-dialog>
+        <!-- Fin modal datos ahijados-->
         <!-- FIN DIALOGS -->
       </v-toolbar>
     </template>
@@ -244,7 +316,7 @@
     </template>
 
     <template v-slot:item.data="{ item }">
-      <v-btn text :to="{name:'dataahijado'}">datos</v-btn>
+      <v-btn text small @click="activarDesactivarMostrarDATA(item)">datos</v-btn>
     </template>
 
     <template v-slot:no-data>
@@ -266,7 +338,7 @@
         { text: 'Estado', value: 'estado',sortable: false }, 
         { text: 'Proyecto', value: 'proyecto.nombre_proyecto', sortable: false },
         { text: 'Nombre', value: 'nombre',sortable: true  },
-        { text: 'Apellidos', value: 'apellidos' ,sortable: true },
+        { text: 'Apellidos', value: 'apellidos' ,sortable: false },
         { text: 'Carta Agradecimiento', value: 'carta_agradecimiento',sortable: false },
         { text: 'Carta Navidad', value: 'carta_navidad',sortable: false },
         { text: 'Carta Invierno', value: 'carta_invierno',sortable: false },
@@ -300,6 +372,15 @@
       adModalCI:0,
       adAccionCI:'',
       adIdCI:'',
+
+      adModalDATA:0,
+      adAccionDATA:'',
+      adIdDATA:'',
+      adNombreDATA:'',
+      adApellidosDATA:'',
+      adFecha_nacimientoDATA:'',
+      adDiscapacidadDATA:'',
+      adNivel_educacionalDATA:'',
     }),
 
     computed: {
@@ -490,7 +571,7 @@
         this.adModalCA=0;
       }
     }, 
-
+   
     activarDesactivarMostrarCN(accion,item){
       this.adModalCN=1;
       // this.adNombre=item.nombre;
@@ -516,6 +597,41 @@
         this.adModalCI=0;
       }
     }, 
+
+    activarDesactivarMostrarDATA(item){
+      this.adModalDATA=1;
+      // this.adNombre=item.nombre;
+      this.adIdDATA=item._id;
+      this.adNombreDATA=item.nombre;
+      this.adApellidosDATA=item.apellidos;
+      this.adFecha_nacimientoDATA=item.fecha_nacimiento;
+      this.adDiscapacidadDATA=item.discapacidad;
+      this.adNivel_educacionalDATA=item.nivel_educacional;
+
+      // if (accion ==1) {
+      //   this.adAccionDATA = 1;
+      // } else if (accion == 2) {
+      //   this.adAccionDATA = 2;
+      // } else {
+      //   this.adModalDATA=0;
+      // }
+    }, 
+
+    mostrarDATA(){
+      let me = this;
+      let header = {"Token": this.$store.state.token};
+      let configuracion = {headers:header}; //headers --> S
+      axios.get('ahijado/query',{'_id':this.adIdDATA},configuracion)
+        .then(function (response) {
+          me.adModalDATA=0; //deberia mantenerse en 1 creo
+          // me.adAccion=0;
+          // me.adNombre='';
+          me.adIdDATA='';
+          me.listar();  
+        }).catch(function (error) {
+          console.log(error);
+        });
+    },
 
     activar(){
       let me = this;
@@ -660,6 +776,11 @@
       activarDesactivarCerrarCI(){
         this.adModalCI=0;
       },
+
+      activarDesactivarCerrarDATA(){
+        this.adModalDATA=0;
+      },
+
       close () {
         this.dialog = false
       },

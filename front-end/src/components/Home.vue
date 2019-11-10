@@ -116,21 +116,19 @@
       selectedEvent: {},
       selectedElement: null,
       selectedOpen: false,
-      events: [
-        // {
+      events: [],
+      name:'',
+      details:'',
+      color:'',
+      dialog:false,
+      currentlyEditing:null
+       // {
         //   name: 'Vacation',
         //   details: 'Going to the beach!',
         //   start: '2018-12-29',
         //   end: '2019-01-01',
         //   color: 'blue',
         // },
-         ],
-      name:'',
-      details:'',
-      color:'',
-      dialog:false,
-      currentlyEditing:null
-
     }),
     computed: {
       title () {
@@ -175,9 +173,13 @@
         let header = {"Token": this.$store.state.token};
         let configuracion = {headers:header}; //headers --> S
         axios.get('evento/list',configuracion).then(function (response) {
-            // console.log(response.data);
-            me.events = response.data;
-            console.log(me.events);
+            console.log(response.data);
+            // me.events = response.data;
+            // for (let i = 0; i < me.events.length; i++) {
+            //   me.events[i] = response.data[i];
+            // }
+            // me.events = response.data;
+            console.log(me.events); 
 
         }).catch(function (error) {
           console.log(error);
