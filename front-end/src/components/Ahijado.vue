@@ -32,11 +32,11 @@
         
         <v-spacer></v-spacer>
         <!-- INICIO DIALOG -->
-        <v-dialog v-model="dialog" max-width="500px">
+        <v-dialog v-model="dialog" max-width="600px">
           <template v-slot:activator="{ on }" v-if="esAdministrador || esAsistSocial">
             <v-btn color="primary" dark class="mb-2" v-on="on" @click="limpiar()">Nuevo Ahijado</v-btn>
           </template>
-          <v-card>
+          <v-card class="mx-auto">
             <v-card-title>
               <span class="headline">{{ formTitle }}</span>
             </v-card-title>
@@ -61,6 +61,28 @@
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field v-model="nivel_educacional" label="Nivel educacional"></v-text-field>
+                  </v-col>
+                  <v-divider></v-divider>
+                  <h3>Direcccion* (Informacion opcional)</h3>
+                  <v-col cols="12" sm="12" md="12">
+                    <v-text-field v-model="direccion_calle" label="Direccion Calle*"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="direccion_numero" label="Direccion Numero*"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="direccion_sector" label="Direccion Sector*"></v-text-field>
+                  </v-col>
+                  <v-divider></v-divider>
+                  <h3>Informacion de pago* (Informacion opcional)</h3>
+                  <v-col cols="12" sm="12" md="12">
+                    <v-text-field v-model="info_pago_tipo_cuenta" label="Tipo de cuenta*"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="info_pago_numero_cuenta" label="Numero de cuenta*"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="info_pago_banco" label="Banco*"></v-text-field>
                   </v-col>
 
                   <!-- VALIDACION DE MENSAJES -->
@@ -192,54 +214,69 @@
         </v-dialog>
         <!-- Fin modal cartas de invierno-->
         <!-- Modal Datos de ahijados-->
-        <v-dialog v-model="adModalDATA" max-width="500">
+        <v-dialog v-model="adModalDATA" max-width="700">
           <v-card>
             <v-contanier>
               <v-card-title class="display-1">
                 Informacion de {{adNombreDATA}}
               </v-card-title>
               <v-divider></v-divider>
-
-                  <!-- <v-row>
-                    <v-col cols="12" sm="6" md="6">
-                      <h4><strong>Nombre : </strong>{{adNombreDATA}}</h4>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="6">
-                      <strong>Apellidos : </strong>{{adApellidosDATA}}
-                    </v-col>
-                    <v-col cols="12" sm="6" md="6">
-
-                    </v-col>
-                    <v-col cols="12" sm="6" md="6">
-
-                    </v-col>
-                  </v-row> -->
                   <v-card-text>
                     <v-container>
                       <v-row>
                         <v-col cols="12" sm="12" md="12">
-                          <div class="subtitle-1">
-                            <strong >Nombre : </strong>{{adNombreDATA}}
+                          <div>
+                            <strong > - Nombre : </strong>{{adNombreDATA}}
                           </div>
                         </v-col>
                         <v-col cols="12" sm="12" md="12">
-                          <div class="subtitle-1">
-                            <strong>Apellidos : </strong>{{adApellidosDATA}}
+                          <div>
+                            <strong> - Apellidos : </strong>{{adApellidosDATA}}
                           </div>
                         </v-col>
                         <v-col cols="12" sm="12" md="12">
-                          <div class="subtitle-1">
-                            <strong>Fecha de nacimiento : </strong>{{adFecha_nacimientoDATA}}
+                          <div>
+                            <strong> - Fecha de nacimiento : </strong>{{adFecha_nacimientoDATA}}
                           </div>
                         </v-col>
                         <v-col cols="12" sm="12" md="12">
-                          <div class="subtitle-1">
-                            <strong>Discapacidad : </strong>{{adDiscapacidadDATA}}
+                          <div>
+                            <strong> - Discapacidad : </strong>{{adDiscapacidadDATA}}
                           </div>
                         </v-col>
                         <v-col cols="12" sm="12" md="12">
-                          <div class="subtitle-1">
-                            <strong>Nivel educacional : </strong>{{adNivel_educacionalDATA}}
+                          <div>
+                            <strong> - Nivel educacional : </strong>{{adNivel_educacionalDATA}}
+                          </div>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="12">
+                          <div>
+                            <strong> - Calle : </strong>{{adDireccion_calleDATA}}
+                          </div>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="12">
+                          <div>
+                            <strong> - Numero : </strong>{{adDireccion_numeroDATA}}
+                          </div>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="12">
+                          <div>
+                            <strong> - Sector : </strong>{{adDireccion_sectorDATA}}
+                          </div>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="12">
+                          <div>
+                            <strong> - Tipo de cuenta : </strong>{{adInfo_pago_tipo_cuentaDATA}}
+                          </div>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="12">
+                          <div>
+                            <strong> - N° de cuenta : </strong>{{adInfo_pago_numero_cuentaDATA}}
+                          </div>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="12">
+                          <div>
+                            <strong> - Banco : </strong>{{adInfo_pago_bancoDATA}}
                           </div>
                         </v-col>
                       </v-row> 
@@ -354,6 +391,12 @@
       fecha_nacimiento:'',
       discapacidad:'',
       nivel_educacional:'',
+      direccion_calle:'',
+      direccion_numero:'',
+      direccion_sector:'',
+      info_pago_tipo_cuenta:'',
+      info_pago_numero_cuenta:'',
+      info_pago_banco:'',
       valida:0, //me va a determinar si los datos ingresados no son correctos
       validaMensaje:[],
       adModal:0, //gestionar el modal si desea activar o desactivar el registro
@@ -381,11 +424,18 @@
       adFecha_nacimientoDATA:'',
       adDiscapacidadDATA:'',
       adNivel_educacionalDATA:'',
+      // add desde aqui info para ver en el modal
+      adDireccion_calleDATA:'',
+      adDireccion_numeroDATA:'',
+      adDireccion_sectorDATA:'',
+      adInfo_pago_tipo_cuentaDATA:'',
+      adInfo_pago_numero_cuentaDATA:'',
+      adInfo_pago_bancoDATA:'',
     }),
 
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'Nuevo Ahijado' : 'Editar Ahijado'
+        return this.editedIndex === -1 ? 'Agregar nuevo ahijado' : 'Editar Ahijado'
       },
       esAdministrador(){
         return this.$store.state.usuario && this.$store.state.usuario.rol == 'Administrador' 
@@ -461,6 +511,12 @@
         this.fecha_nacimiento='';
         this.discapacidad='';
         this.nivel_educacional='';
+        this.direccion_calle='';
+        this.direccion_numero='';
+        this.direccion_sector='';
+        this.info_pago_tipo_cuenta='';
+        this.info_pago_numero_cuenta='';
+        this.info_pago_banco='';
         this.valida=0;
         this.validaMensaje=[];
         this.editedIndex=-1;
@@ -482,7 +538,13 @@
               'apellidos': this.apellidos,
               'fecha_nacimiento': this.fecha_nacimiento,
               'discapacidad': this.discapacidad,
-              'nivel_educacional': this.nivel_educacional
+              'nivel_educacional': this.nivel_educacional,
+              'direccion_calle':this.direccion_calle,
+              'direccion_numero':this.direccion_numero,
+              'direccion_sector':this.direccion_sector,
+              'info_pago_tipo_cuenta':this.info_pago_tipo_cuenta,
+              'info_pago_numero_cuenta':this.info_pago_numero_cuenta,
+              'info_pago_banco':this.info_pago_banco
             
             },configuracion)
           .then(function (response) {
@@ -500,7 +562,13 @@
             'apellidos': this.apellidos,
             'fecha_nacimiento': this.fecha_nacimiento,
             'discapacidad': this.discapacidad,
-            'nivel_educacional': this.nivel_educacional
+            'nivel_educacional': this.nivel_educacional,
+            'direccion_calle':this.direccion_calle,
+            'direccion_numero':this.direccion_numero,
+            'direccion_sector':this.direccion_sector,
+            'info_pago_tipo_cuenta':this.info_pago_tipo_cuenta,
+            'info_pago_numero_cuenta':this.info_pago_numero_cuenta,
+            'info_pago_banco':this.info_pago_banco
             
             },configuracion)
           .then(function (response) {
@@ -542,6 +610,13 @@
         this.fecha_nacimiento=item.fecha_nacimiento;
         this.discapacidad=item.discapacidad;
         this.nivel_educacional=item.nivel_educacional;
+        this.direccion_calle=item.direccion_calle;
+        this.direccion_numero=item.direccion_numero;
+        this.direccion_sector=item.direccion_sector;
+        this.info_pago_tipo_cuenta=item.info_pago_tipo_cuenta;
+        this.info_pago_numero_cuenta=item.info_pago_numero_cuenta;
+        this.info_pago_banco=item.info_pago_banco;
+
         this.dialog = true;
         this.editedIndex=1;
       },
@@ -607,6 +682,12 @@
       this.adFecha_nacimientoDATA=item.fecha_nacimiento;
       this.adDiscapacidadDATA=item.discapacidad;
       this.adNivel_educacionalDATA=item.nivel_educacional;
+      this.adDireccion_calleDATA=item.direccion_calle;
+      this.adDireccion_numeroDATA=item.direccion_numero;
+      this.adDireccion_sectorDATA=item.direccion_sector;
+      this.adInfo_pago_tipo_cuentaDATA=item.info_pago_tipo_cuenta;
+      this.adInfo_pago_numero_cuentaDATA=item.info_pago_numero_cuenta;
+      this.adInfo_pago_bancoDATA=item.info_pago_banco;
 
       // if (accion ==1) {
       //   this.adAccionDATA = 1;

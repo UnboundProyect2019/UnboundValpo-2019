@@ -86,7 +86,7 @@
     
     <!-- OJO con esto, importante para desarollar el adm de tareas -->
     <template v-slot:item.createdAt="{ item }">
-      {{item.createdAt.slice(0,10)}}
+      {{ item.createdAt.slice(0,10) }}
     </template>
 
     <template v-slot:item.estado="{ item }">
