@@ -16,7 +16,7 @@
         </div>
       </template>
       <v-toolbar flat color="white">
-        <v-toolbar-title>Ahijados Egresados</v-toolbar-title>
+        <v-toolbar-title>Padrinos</v-toolbar-title>
         <v-divider
           class="mx-4"
           inset
@@ -264,15 +264,15 @@
       search:'',
       ahijados:[],
       headers: [
-        { text: 'Actions', value: 'action', sortable: false },
-        { text: 'Estado', value: 'estado',sortable: false }, 
-        { text: 'Proyecto', value: 'proyecto.nombre_proyecto', sortable: false },
-        { text: 'Nombre', value: 'nombre',sortable: true  },
-        { text: 'Apellidos', value: 'apellidos' ,sortable: true },
-        { text: 'Carta Agradecimiento', value: 'carta_agradecimiento',sortable: false },
-        { text: 'Carta Navidad', value: 'carta_navidad',sortable: false },
-        { text: 'Carta Invierno', value: 'carta_invierno',sortable: false },
-        { text: 'Datos', value: 'data',sortable: false },
+        // { text: 'Actions', value: 'action', sortable: false },
+        // { text: 'Estado', value: 'estado',sortable: false }, 
+        // { text: 'Proyecto', value: 'proyecto.nombre_proyecto', sortable: false },
+        // { text: 'Nombre', value: 'nombre',sortable: true  },
+        // { text: 'Apellidos', value: 'apellidos' ,sortable: true },
+        // { text: 'Carta Agradecimiento', value: 'carta_agradecimiento',sortable: false },
+        // { text: 'Carta Navidad', value: 'carta_navidad',sortable: false },
+        // { text: 'Carta Invierno', value: 'carta_invierno',sortable: false },
+        // { text: 'Datos', value: 'data',sortable: false },
       ],
       editedIndex: -1,
       _id:'',

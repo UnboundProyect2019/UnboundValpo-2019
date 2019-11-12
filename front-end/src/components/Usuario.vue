@@ -14,7 +14,7 @@
           vertical
         ></v-divider>
         <v-text-field class="text-xs-center" v-model="search" append-icon="search"
-                    label="Busqueda" single-line hide-details></v-text-field>
+                    label="Busqueda" solo hide-details></v-text-field>
         <v-spacer></v-spacer>
         <!-- INICIO DIALOG -->
         <v-dialog v-model="dialog" max-width="500px">
@@ -277,39 +277,40 @@
         this.editedIndex=1;
       },
 
-     activarDesactivarMostrar(accion,item){
-       this.adModal=1;
-       this.adNombre=item.nombre;
-       this.adId=item._id;
-       if (accion ==1) {
-         this.adAccion = 1;
-       } else if (accion == 2) {
-         this.adAccion = 2;
-       } else {
-         this.adModal=0;
-       }
+      activarDesactivarMostrar(accion,item){
+        this.adModal=1;
+        this.adNombre=item.nombre;
+        this.adId=item._id;
+        if (accion ==1) {
+          this.adAccion = 1;
+        } else if (accion == 2) {
+          this.adAccion = 2;
+        } else {
+          this.adModal=0;
+        }
      },
 
      activar(){
-       let me = this;
-        let header = {"Token": this.$store.state.token};
-        let configuracion = {headers:header}; //headers --> S
-       axios.put('usuario/activate',{'_id':this.adId},configuracion)
-          .then(function (response) {
-            me.adModal=0;
-            me.adAccion=0;
-            me.adNombre='';
-            me.adId='';
-            me.listar();
-          }).catch(function (error) {
-            console.log(error);
-          });
+      let me = this;
+      let header = {"Token": this.$store.state.token};
+      let configuracion = {headers:header}; //headers --> S
+      axios.put('usuario/activate',{'_id':this.adId},configuracion)
+        .then(function (response) {
+          me.adModal=0;
+          me.adAccion=0;
+          me.adNombre='';
+          me.adId='';
+          me.listar();
+        }).catch(function (error) {
+          console.log(error);
+        });
      },
+
      desactivar(){
-       let me = this;
+        let me = this;
         let header = {"Token": this.$store.state.token};
         let configuracion = {headers:header}; //headers --> S
-       axios.put('usuario/deactivate',{'_id':this.adId},configuracion)
+        axios.put('usuario/deactivate',{'_id':this.adId},configuracion)
           .then(function (response) {
             me.adModal=0;
             me.adAccion=0;
@@ -318,7 +319,7 @@
             me.listar();
           }).catch(function (error) {
             console.log(error);
-          });
+        });
      },
 
       activarDesactivarCerrar(){
