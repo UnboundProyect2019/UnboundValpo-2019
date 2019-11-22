@@ -3,11 +3,11 @@ import ahijadoController from '../controllers/AhijadoController';
 import auth from '../middlewares/auth';
 
 const router = routerx();
-
+//ver error aca
 router.post('/add',auth.verifyAsistSocial ,ahijadoController.add);
 router.get('/query', auth.verifyAsistSocial , ahijadoController.query);
-router.get('/listAhijados', auth.verifyAsistSocial , ahijadoController.listAhijados);
-router.get('/listEgresados', auth.verifyAsistSocial , ahijadoController.listEgresados);
+router.get('/listAhijados', auth.verifyAsistSocial, ahijadoController.listAhijados);
+router.get('/listEgresados', auth.verifyAsistSocial, ahijadoController.listEgresados);
 router.put('/update', auth.verifyAsistSocial , ahijadoController.update);
 router.delete('/remove', auth.verifyAsistSocial , ahijadoController.remove);
 router.put('/activate', auth.verifyAsistSocial , ahijadoController.activate);

@@ -79,41 +79,26 @@
         <!-- FIN DIALOG -->
       </v-toolbar>
     </template>
+
     <template v-slot:item.action="{ item }">
-      <v-icon
-        small
-        class="mr-2"
-        @click="editItem(item)"
-      >
-        edit
-      </v-icon>
-      <template v-if="item.estado">
-        <v-icon
-            small
-            @click="activarDesactivarMostrar(2,item)"
-        >
-            block
-        </v-icon>    
-      </template>
-      <template v-else>
-        <v-icon
-            small
-            @click="activarDesactivarMostrar(1,item)"
-        >
-            check
-        </v-icon>    
-      </template>    
+      <v-icon small class="mr-2" @click="editItem(item)"> edit </v-icon>
     </template>
-       <template v-slot:item.estado="{ item }">
-          <div v-if="item.estado">
-              <span class="green--text">Activo</span>
-              <!-- <v-chip :color="getColor(item.estado)" dark>Activo</v-chip> -->
-          </div>
-          <div v-else>
-              <span class="red--text">Inactivo</span>
-              <!-- <v-chip :color="getColor(item.estado)" dark>Inactivo</v-chip> -->
-          </div>
-      </template>
+    
+    <!-- OJO con esto, importante para desarollar el adm de tareas -->
+    <template v-slot:item.createdAt="{ item }">
+      {{ item.createdAt.slice(0,10) }}
+    </template>
+
+    <template v-slot:item.estado="{ item }">
+      <div v-if="item.estado">
+        <!-- <span class="green--text">Activo</span> -->
+        <v-btn small text color="success" @click="activarDesactivarMostrar(2,item)">Activo</v-btn>
+      </div>
+      <div v-else>
+        <v-btn small text color="error" @click="activarDesactivarMostrar(1,item)">Egresado</v-btn>
+      </div>
+    </template>
+
     <template v-slot:no-data>
       <v-btn color="primary" @click="listar()">Reset</v-btn>
     </template>
@@ -128,15 +113,16 @@
       proyectos:[],
       headers: [
         { text: 'Actions', value: 'action', sortable: false },
+        { text: 'Estado', value: 'estado' },
         { text: 'Nombre', value: 'nombre_proyecto',sortable: false  },
         { text: 'Sector', value: 'sector' ,sortable: false },
-        { text: 'Estado', value: 'estado' },
-        { text: 'Creacion', value: 'createdAt' },
+        { text: 'Creacion (AA-MM-DD)', value: 'createdAt' },
       ],
       editedIndex: -1,
       _id:'',
       nombre_proyecto:'',
       sector:'',
+      createdAt:'',
       valida:0, //me va a determinar si los datos ingresados no son correctos
       validaMensaje:[],
       adModal:0, //gestionar el modal si desea activar o desactivar el registro
@@ -158,10 +144,11 @@
     },
 
     created () {
-      this.listar()
+      this.listar();
     },
 
     methods: {
+
       listar(){
         let me = this;
         let header = {"Token": this.$store.state.token};
@@ -192,7 +179,7 @@
         }
         if (this.editedIndex > -1) {
           //editar los datos del regisro
-           axios.put('proyecto/update',{'_id':this._id,'nombre_proyecto':this.nombre_proyecto, 'sector': this.sector},configuracion)
+            axios.put('proyecto/update',{'_id':this._id,'nombre_proyecto':this.nombre_proyecto, 'sector': this.sector},configuracion)
           .then(function (response) {
             me.limpiar();
             me.close();
@@ -236,49 +223,50 @@
         this.editedIndex=1;
       },
 
-     activarDesactivarMostrar(accion,item){
-       this.adModal=1;
-       this.adNombre=item.nombre_proyecto;
-       this.adId=item._id;
-       if (accion ==1) {
-         this.adAccion = 1;
-       } else if (accion == 2) {
-         this.adAccion = 2;
-       } else {
-         this.adModal=0;
-       }
-     },
+      activarDesactivarMostrar(accion,item){
+        this.adModal=1;
+        this.adNombre=item.nombre_proyecto;
+        this.adId=item._id;
+        if (accion ==1) {
+          this.adAccion = 1;
+        } else if (accion == 2) {
+          this.adAccion = 2;
+        } else {
+          this.adModal=0;
+        }
+      },
 
-     activar(){
-       let me = this;
+      activar(){
+        let me = this;
         let header = {"Token": this.$store.state.token};
         let configuracion = {headers:header}; //headers --> S
-       axios.put('proyecto/activate',{'_id':this.adId},configuracion)
-          .then(function (response) {
-            me.adModal=0;
-            me.adAccion=0;
-            me.adNombre='';
-            me.adId='';
-            me.listar();
-          }).catch(function (error) {
-            console.log(error);
-          });
-     },
-     desactivar(){
-       let me = this;
+        axios.put('proyecto/activate',{'_id':this.adId},configuracion)
+        .then(function (response) {
+          me.adModal=0;
+          me.adAccion=0;
+          me.adNombre='';
+          me.adId='';
+          me.listar();
+        }).catch(function (error) {
+          console.log(error);
+        });
+      },
+
+      desactivar(){
+        let me = this;
         let header = {"Token": this.$store.state.token};
         let configuracion = {headers:header}; //headers --> S
-       axios.put('proyecto/deactivate',{'_id':this.adId},configuracion)
-          .then(function (response) {
-            me.adModal=0;
-            me.adAccion=0;
-            me.adNombre='';
-            me.adId='';
-            me.listar();
-          }).catch(function (error) {
-            console.log(error);
-          });
-     },
+        axios.put('proyecto/deactivate',{'_id':this.adId},configuracion)
+        .then(function (response) {
+          me.adModal=0;
+          me.adAccion=0;
+          me.adNombre='';
+          me.adId='';
+          me.listar();
+        }).catch(function (error) {
+          console.log(error);
+        });
+      },
 
       activarDesactivarCerrar(){
         this.adModal=0;

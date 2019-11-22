@@ -1,142 +1,327 @@
 <template>
-  <v-container>
-    <v-layout
-      text-center
-      wrap
-    >
-      <v-flex xs12>
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        ></v-img>
-      </v-flex>
-
-      <v-flex mb-4>
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify
-        </h1>
-        <p class="subheading font-weight-regular">
-          For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a href="https://community.vuetifyjs.com" target="_blank">Discord Community</a>
-        </p>
-      </v-flex>
-
-      <v-flex
-        mb-5
-        xs12
-      >
-        <h2 class="headline font-weight-bold mb-3">What's next?</h2>
-
-        <v-layout justify-center>
-          <a
-            v-for="(next, i) in whatsNext"
-            :key="i"
-            :href="next.href"
-            class="subheading mx-3"
-            target="_blank"
+  <v-row class="fill-height">
+    <v-col>
+      <v-sheet height="64">
+        <v-toolbar flat color="white">
+          <v-btn outlined class="mr-4" @click="setToday">
+            Today
+          </v-btn>
+          <v-btn fab text small @click="prev">
+            <v-icon small>mdi-chevron-left</v-icon>
+          </v-btn>
+          <v-btn fab text small @click="next">
+            <v-icon small>mdi-chevron-right</v-icon>
+          </v-btn>
+          <v-toolbar-title>{{ title }}</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-menu bottom right>
+            <template v-slot:activator="{ on }">
+              <v-btn
+                outlined
+                v-on="on"
+              >
+                <span>{{ typeToLabel[type] }}</span>
+                <v-icon right>mdi-menu-down</v-icon>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item @click="type = 'day'">
+                <v-list-item-title>Day</v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="type = 'week'">
+                <v-list-item-title>Week</v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="type = 'month'">
+                <v-list-item-title>Month</v-list-item-title>
+              </v-list-item>
+              
+            </v-list>
+          </v-menu>
+        </v-toolbar>
+      </v-sheet>
+      <v-sheet height="600">
+        <v-calendar
+          ref="calendar"
+          v-model="focus"
+          color="primary"
+          :events="events"
+          :event-color="getEventColor"
+          :event-margin-bottom="3"
+          :now="today"
+          :type="type"
+          @click:event="showEvent"
+          @click:more="viewDay"
+          @click:date="viewDay"
+          @change="updateRange"
+        ></v-calendar>
+        <v-menu
+          v-model="selectedOpen"
+          :close-on-content-click="false"
+          :activator="selectedElement"
+          full-width
+          offset-x
+        >
+          <v-card
+            color="grey lighten-4"
+            min-width="350px"
+            flat
           >
-            {{ next.text }}
-          </a>
-        </v-layout>
-      </v-flex>
-
-      <v-flex
-        xs12
-        mb-5
-      >
-        <h2 class="headline font-weight-bold mb-3">Important Links</h2>
-
-        <v-layout justify-center>
-          <a
-            v-for="(link, i) in importantLinks"
-            :key="i"
-            :href="link.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ link.text }}
-          </a>
-        </v-layout>
-      </v-flex>
-
-      <v-flex
-        xs12
-        mb-5
-      >
-        <h2 class="headline font-weight-bold mb-3">Ecosystem</h2>
-
-        <v-layout justify-center>
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ eco.text }}
-          </a>
-        </v-layout>
-      </v-flex>
-    </v-layout>
-  </v-container>
+            <v-toolbar
+              :color="selectedEvent.color"
+              dark
+            >
+              <v-btn icon>
+                <v-icon>mdi-pencil</v-icon>
+              </v-btn>
+              <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-btn icon>
+                <v-icon>mdi-heart</v-icon>
+              </v-btn>
+              <v-btn icon>
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </v-toolbar>
+            <v-card-text>
+              <span v-html="selectedEvent.details"></span>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn
+                text
+                color="secondary"
+                @click="selectedOpen = false"
+              >
+                Cancel
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-menu>
+      </v-sheet>
+    </v-col>
+  </v-row>
 </template>
-
 <script>
-export default {
-  data: () => ({
-    ecosystem: [
-      {
-        text: 'vuetify-loader',
-        href: 'https://github.com/vuetifyjs/vuetify-loader',
+  export default {
+    data: () => ({
+      today: '2019-01-01',
+      focus: '2019-01-01',
+      type: 'month',
+      typeToLabel: {
+        month: 'Month',
+        week: 'Week',
+        day: 'Day',
       },
-      {
-        text: 'github',
-        href: 'https://github.com/vuetifyjs/vuetify',
+      start: null,
+      end: null,
+      selectedEvent: {},
+      selectedElement: null,
+      selectedOpen: false,
+      events: [
+        {
+          name: 'Vacation',
+          details: 'Going to the beach!',
+          start: '2018-12-29',
+          end: '2019-01-01',
+          color: 'blue',
+        },
+        {
+          name: 'Meeting',
+          details: 'Spending time on how we do not have enough time',
+          start: '2019-01-07 09:00',
+          end: '2019-01-07 09:30',
+          color: 'indigo',
+        },
+        {
+          name: 'Large Event',
+          details: 'This starts in the middle of an event and spans over multiple events',
+          start: '2018-12-31',
+          end: '2019-01-04',
+          color: 'deep-purple',
+        },
+        {
+          name: '3rd to 7th',
+          details: 'Testing',
+          start: '2019-01-03',
+          end: '2019-01-07',
+          color: 'cyan',
+        },
+        {
+          name: 'Big Meeting',
+          details: 'A very important meeting about nothing',
+          start: '2019-01-07 08:00',
+          end: '2019-01-07 11:30',
+          color: 'red',
+        },
+        {
+          name: 'Another Meeting',
+          details: 'Another important meeting about nothing',
+          start: '2019-01-07 10:00',
+          end: '2019-01-07 13:30',
+          color: 'brown',
+        },
+        {
+          name: '7th to 8th',
+          start: '2019-01-07',
+          end: '2019-01-08',
+          color: 'blue',
+        },
+        {
+          name: 'Lunch',
+          details: 'Time to feed',
+          start: '2019-01-07 12:00',
+          end: '2019-01-07 15:00',
+          color: 'deep-orange',
+        },
+        {
+          name: '30th Birthday',
+          details: 'Celebrate responsibly',
+          start: '2019-01-03',
+          color: 'teal',
+        },
+        {
+          name: 'New Year',
+          details: 'Eat chocolate until you pass out',
+          start: '2019-01-01',
+          end: '2019-01-02',
+          color: 'green',
+        },
+        {
+          name: 'Conference',
+          details: 'The best time of my life',
+          start: '2019-01-21',
+          end: '2019-01-28',
+          color: 'grey darken-1',
+        },
+        {
+          name: 'Hackathon',
+          details: 'Code like there is no tommorrow',
+          start: '2019-01-30 23:00',
+          end: '2019-02-01 08:00',
+          color: 'black',
+        },
+        {
+          name: 'event 1',
+          start: '2019-01-14 18:00',
+          end: '2019-01-14 19:00',
+          color: '#4285F4',
+        },
+        {
+          name: 'event 2',
+          start: '2019-01-14 18:00',
+          end: '2019-01-14 19:00',
+          color: '#4285F4',
+        },
+        {
+          name: 'event 5',
+          start: '2019-01-14 18:00',
+          end: '2019-01-14 19:00',
+          color: '#4285F4',
+        },
+        {
+          name: 'event 3',
+          start: '2019-01-14 18:30',
+          end: '2019-01-14 20:30',
+          color: '#4285F4',
+        },
+        {
+          name: 'event 4',
+          start: '2019-01-14 19:00',
+          end: '2019-01-14 20:00',
+          color: '#4285F4',
+        },
+        {
+          name: 'event 6',
+          start: '2019-01-14 21:00',
+          end: '2019-01-14 23:00',
+          color: '#4285F4',
+        },
+        {
+          name: 'event 7',
+          start: '2019-01-14 22:00',
+          end: '2019-01-14 23:00',
+          color: '#4285F4',
+        },
+      ],
+    }),
+    computed: {
+      title () {
+        const { start, end } = this
+        if (!start || !end) {
+          return ''
+        }
+
+        const startMonth = this.monthFormatter(start)
+        const endMonth = this.monthFormatter(end)
+        const suffixMonth = startMonth === endMonth ? '' : endMonth
+
+        const startYear = start.year
+        const endYear = end.year
+        const suffixYear = startYear === endYear ? '' : endYear
+
+        const startDay = start.day + this.nth(start.day)
+        const endDay = end.day + this.nth(end.day)
+
+        switch (this.type) {
+          case 'month':
+            return `${startMonth} ${startYear}`
+          case 'week':
+          case 'day':
+            return `${startMonth} ${startDay} ${startYear}`
+        }
+        return ''
       },
-      {
-        text: 'awesome-vuetify',
-        href: 'https://github.com/vuetifyjs/awesome-vuetify',
+      monthFormatter () {
+        return this.$refs.calendar.getFormatter({
+          timeZone: 'UTC', month: 'long',
+        })
       },
-    ],
-    importantLinks: [
-      {
-        text: 'Documentation',
-        href: 'https://vuetifyjs.com',
+    },
+    mounted () {
+      this.$refs.calendar.checkChange()
+    },
+    methods: {
+      viewDay ({ date }) {
+        this.focus = date
+        this.type = 'day'
       },
-      {
-        text: 'Chat',
-        href: 'https://community.vuetifyjs.com',
+      getEventColor (event) {
+        return event.color
       },
-      {
-        text: 'Made with Vuetify',
-        href: 'https://madewithvuejs.com/vuetify',
+      setToday () {
+        this.focus = this.today
       },
-      {
-        text: 'Twitter',
-        href: 'https://twitter.com/vuetifyjs',
+      prev () {
+        this.$refs.calendar.prev()
       },
-      {
-        text: 'Articles',
-        href: 'https://medium.com/vuetify',
+      next () {
+        this.$refs.calendar.next()
       },
-    ],
-    whatsNext: [
-      {
-        text: 'Explore components',
-        href: 'https://vuetifyjs.com/components/api-explorer',
+      showEvent ({ nativeEvent, event }) {
+        const open = () => {
+          this.selectedEvent = event
+          this.selectedElement = nativeEvent.target
+          setTimeout(() => this.selectedOpen = true, 10)
+        }
+
+        if (this.selectedOpen) {
+          this.selectedOpen = false
+          setTimeout(open, 10)
+        } else {
+          open()
+        }
+
+        nativeEvent.stopPropagation()
       },
-      {
-        text: 'Select a layout',
-        href: 'https://vuetifyjs.com/layout/pre-defined',
+      updateRange ({ start, end }) {
+        // You could load events from an outside source (like database) now that we have the start and end dates on the calendar
+        this.start = start
+        this.end = end
       },
-      {
-        text: 'Frequently Asked Questions',
-        href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
+      nth (d) {
+        return d > 3 && d < 21
+          ? 'th'
+          : ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th'][d % 10]
       },
-    ],
-  }),
-};
+    },
+  }
 </script>
