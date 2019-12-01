@@ -152,21 +152,21 @@
               :color="selectedEvent.color"
               dark
             >
-            <!-- Item especifico -->
-            <template v-slot:item.evento="{ item }">
+            <!-- Item especifico OJOOOOOOOO -->
+            <template>
               <v-btn icon>
-                <v-icon @click="editItem(item)">mdi-pencil</v-icon>
+                <v-icon @click="console.log(selectedEvent)">mdi-pencil</v-icon>
               </v-btn>
             </template>
     
               <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
               <v-spacer></v-spacer>
               <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
+                <v-icon>delete</v-icon>
               </v-btn>
-              <v-btn icon>
+              <!-- <v-btn icon>
                 <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
+              </v-btn> -->
             </v-toolbar>
             <v-card-text>
               <span v-html="selectedEvent.details"></span>
@@ -415,8 +415,8 @@
         this.end1=item.end1;
         this.color=item.color;
         
-        this.dialog = true;
-        this.editedIndex=1;
+        this.adModalEvent = 1;
+        this.editedIndex= -1;
       },
       viewDay ({ date }) {
         this.focus = date
