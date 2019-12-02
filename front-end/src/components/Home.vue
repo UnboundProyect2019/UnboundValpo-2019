@@ -152,7 +152,7 @@
               :color="selectedEvent.color"
               dark
             >
-            <!-- Item especifico OJOOOOOOOO -->
+            <!-- Item especifico OJOOOOOOOO0000 -->
             <template>
               <v-btn icon>
                 <v-icon @click="console.log(selectedEvent)">mdi-pencil</v-icon>
