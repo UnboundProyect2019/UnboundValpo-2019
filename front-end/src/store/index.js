@@ -16,6 +16,9 @@ export default new Vuex.Store({
     },
     setUsuario(state,usuario){
       state.usuario=usuario;
+    },
+    obtenerUsuario(state, payload){
+      //obtener informacion del usuario
     }
   },
   actions: {

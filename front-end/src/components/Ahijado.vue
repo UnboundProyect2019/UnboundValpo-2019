@@ -11,7 +11,7 @@
           <v-tabs>
             <v-tab :to="{name:'ahijado'}">Ahijados</v-tab>
             <v-tab :to="{name:'egresado'}">Egresados</v-tab>
-            <v-tab :to="{name:'padrino'}">Padrinos</v-tab>
+            <v-tab :to="{name:'padrino'}">Familias</v-tab>
           </v-tabs>
         </div>
       </template>
@@ -354,6 +354,7 @@
 
     <template v-slot:item.data="{ item }">
       <v-btn text small @click="activarDesactivarMostrarDATA(item)">datos</v-btn>
+      <!-- <v-btn text small :to="{name:'datoahijado'}">datos</v-btn> -->
     </template>
 
     <template v-slot:no-data>
@@ -364,6 +365,8 @@
 </template>
 <script>
   import axios from 'axios';
+  import Vuex from 'vuex'
+
   export default {
     data: () => ({
       dialog: false,
