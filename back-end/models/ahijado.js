@@ -1,5 +1,25 @@
 import mongoose, { Schema } from 'mongoose';
 
+const CartaSchema = new Schema({
+    estado: {
+        type: Number, 
+        default: 1
+    }, 
+    envio: {
+        type: String
+    }, 
+    año: {
+        type: String, 
+        unique: true
+    }, 
+    fecha_envio: {
+        type: String
+    }
+});
+
+
+
+
 const ahijadoSchema = new Schema({
     proyecto: { type: Schema.ObjectId, ref:'proyecto', required: true },
     nombre: { type: String, maxlength: 60, required: true },
@@ -13,24 +33,10 @@ const ahijadoSchema = new Schema({
     carta_invierno: { type: Number, default: 0 },
     estado: { type: Number, default: 1 }, //si esta activo ó egresado el ahijado
 
-    carta_agradecimientoDos: [{
-        estado: { type: Number, default: 1}, 
-        envio: String, 
-        año: {type: String, unique: true},
-        fecha_envio: String,
-    }],
-    carta_navidadDos: [{
-        estado: { type: Number, default: 1}, 
-        envio: String, 
-        año: {type: String, unique: true},
-        fecha_envio: String,
-    }],
-    carta_inviernoDos: [{
-        estado: { type: Number, default: 1}, 
-        envio: String, 
-        año: {type: String, unique: true},
-        fecha_envio: String,
-    }],
+    carta_agradecimientoDos: [CartaSchema],
+    carta_navidadDos: [CartaSchema], 
+    carta_inviernoDos: [CartaSchema],
+    
     direccion_calle:{type:String, maxlength:30},
     direccion_numero:{type:String, maxlength:5},
     direccion_sector:{type:String, maxlength:60}, 
