@@ -25,28 +25,12 @@
             </v-list-item> -->
 
             <v-list-item link >
-              <template v-if="esAdministrador">
-                <v-list-item-content>
-                  <v-list-item-title class="title">nombre del usuario</v-list-item-title>
-                  <v-list-item-title>Rol: Administrador</v-list-item-title>
-                  <v-list-item-subtitle>Email:  admin@test.com</v-list-item-subtitle>
-                </v-list-item-content>
-              </template>
-              <template v-if="esLector">
-                <v-list-item-content>
-                  <v-list-item-title class="title">nombre del usuario</v-list-item-title>
-                  <v-list-item-title>Rol: Lector</v-list-item-title>
-                  <v-list-item-subtitle>tenkla123@gmail.com</v-list-item-subtitle>
-                </v-list-item-content>
-              </template>
-              <template v-if="esAsistSocial">
-                <v-list-item-content>
-                  <v-list-item-title class="title">nombre del usuario</v-list-item-title>
-                  <v-list-item-title>Rol : Asistente Social</v-list-item-title>
-                  <v-list-item-subtitle>tenkla123@gmail.com</v-list-item-subtitle>
-                </v-list-item-content>
-              </template>
               
+              <v-list-item-content>
+                  <v-list-item-title class="title">nombre del usuario</v-list-item-title>
+                  <v-list-item-title>Rol : {{ usuario.rol }}</v-list-item-title>
+                  <v-list-item-subtitle>{{ usuario.email }}</v-list-item-subtitle>
+              </v-list-item-content>
 
               <v-list-item-action>
                 <v-icon>mdi-menu-down</v-icon>
@@ -149,6 +133,7 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   export default {
     name: 'App',
     user: {},
@@ -179,11 +164,7 @@
       esAsistSocial(){
         return this.$store.state.usuario && this.$store.state.usuario.rol == 'Asist_Social' 
       },
-      usuario(){
-        let usuario = this.$store.state.usuario;
-        console.log(usuario);
-        return usuario; 
-      }
+      ...mapState(['usuario'])
      
     },
     created() {

@@ -2,13 +2,17 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import decode from 'jwt-decode'
 import router from '../router/index'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    token:null,
-    usuario:null
+    token: localStorage.getItem('token') || null, //added
+    usuario:null,
+    numero:11, //ejemplo
+    itemStore: null,
+    // idAhijado: null
   },
   mutations: {
     setToken(state, token){
@@ -17,9 +21,12 @@ export default new Vuex.Store({
     setUsuario(state,usuario){
       state.usuario=usuario;
     },
-    obtenerUsuario(state, payload){
-      //obtener informacion del usuario
-    }
+    setAhijado(state,ahijado){ 
+      state.itemStore = ahijado;
+    },
+    // setId(state,_id){
+    //   state.idAhijado = _id;
+    // }
   },
   actions: {
     guardarToken({commit},token){
@@ -40,7 +47,10 @@ export default new Vuex.Store({
       commit("setUsuario",null);
       localStorage.removeItem("token");
       router.push({name:'login'});
-    }
+    },
+    obtenerAhijado({commit},item){ //revisar
+      commit("setAhijado",item)
+    },
   },
   modules: {
   }

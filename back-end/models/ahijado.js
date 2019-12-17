@@ -13,12 +13,22 @@ const ahijadoSchema = new Schema({
     carta_invierno: { type: Number, default: 0 },
     estado: { type: Number, default: 1 }, //si esta activo ó egresado el ahijado
 
-    direccion_calle:{type:String, maxlength:30},
-    direccion_numero:{type:String, maxlength:5},
-    direccion_sector:{type:String, maxlength:60}, 
-    info_pago_tipo_cuenta: { type: String, maxlength: 30},
-    info_pago_numero_cuenta: { type: String, maxlength: 30},
-    info_pago_banco: { type: String, maxlength: 30},
+    // direccion_calle:{type:String, maxlength:30},
+    // direccion_numero:{type:String, maxlength:5},
+    // direccion_sector:{type:String, maxlength:60}, 
+    // info_pago_tipo_cuenta: { type: String, maxlength: 30},
+    // info_pago_numero_cuenta: { type: String, maxlength: 30},
+    // info_pago_banco: { type: String, maxlength: 30},
+    direccion:{
+        calle:{type:String, maxlength:30},
+        numero:{type:String, maxlength:5},
+        sector:{type:String, maxlength:60}, 
+    },
+    info_pago:{
+        tipo_cuenta: { type: String, maxlength: 30},
+        numero_cuenta: { type: String, maxlength: 30},
+        pago_banco: { type: String, maxlength: 30},
+    },
     fecha_ingreso: { type: Date, default: Date.now }
 });
 const Ahijado = mongoose.model('ahijado', ahijadoSchema);

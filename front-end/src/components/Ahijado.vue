@@ -223,58 +223,64 @@
               <v-divider></v-divider>
                   <v-card-text>
                     <v-container>
+                      <v-btn>Agregar Familia</v-btn>
                       <v-row>
-                        <v-col cols="12" sm="12" md="12">
+                        <v-col cols="12" sm="6" md="6">
+                          <div>
+                            <strong > - Id : </strong>{{adIdDATA}}
+                          </div>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="6">
                           <div>
                             <strong > - Nombre : </strong>{{adNombreDATA}}
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="12" md="12">
+                        <v-col cols="12" sm="6" md="6">
                           <div>
                             <strong> - Apellidos : </strong>{{adApellidosDATA}}
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="12" md="12">
+                        <v-col cols="12" sm="6" md="6">
                           <div>
                             <strong> - Fecha de nacimiento : </strong>{{adFecha_nacimientoDATA}}
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="12" md="12">
+                        <v-col cols="12" sm="6" md="6">
                           <div>
                             <strong> - Discapacidad : </strong>{{adDiscapacidadDATA}}
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="12" md="12">
+                        <v-col cols="12" sm="6" md="6">
                           <div>
                             <strong> - Nivel educacional : </strong>{{adNivel_educacionalDATA}}
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="12" md="12">
+                        <v-col cols="12" sm="6" md="6">
                           <div>
                             <strong> - Calle : </strong>{{adDireccion_calleDATA}}
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="12" md="12">
+                        <v-col cols="12" sm="6" md="6">
                           <div>
                             <strong> - Numero : </strong>{{adDireccion_numeroDATA}}
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="12" md="12">
+                        <v-col cols="12" sm="6" md="6">
                           <div>
                             <strong> - Sector : </strong>{{adDireccion_sectorDATA}}
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="12" md="12">
+                        <v-col cols="12" sm="6" md="6">
                           <div>
                             <strong> - Tipo de cuenta : </strong>{{adInfo_pago_tipo_cuentaDATA}}
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="12" md="12">
+                        <v-col cols="12" sm="6" md="6">
                           <div>
                             <strong> - N° de cuenta : </strong>{{adInfo_pago_numero_cuentaDATA}}
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="12" md="12">
+                        <v-col cols="12" sm="6" md="6">
                           <div>
                             <strong> - Banco : </strong>{{adInfo_pago_bancoDATA}}
                           </div>
@@ -316,6 +322,9 @@
     <!-- FIN TEMPLATE ACTIONS -->
     
     <template v-slot:item.estado="{ item }">
+      <template>
+        <!-- ver si es admin o asist social -->
+      </template>
       <div v-if="item.estado">
         <!-- <span class="green--text">Activo</span> -->
         <v-btn small text color="success" @click="activarDesactivarMostrar(2,item)">Activo</v-btn>
@@ -353,8 +362,13 @@
     </template>
 
     <template v-slot:item.data="{ item }">
-      <v-btn text small @click="activarDesactivarMostrarDATA(item)">datos</v-btn>
-      <!-- <v-btn text small :to="{name:'datoahijado'}">datos</v-btn> -->
+      <!-- en este item esta los datos del ahijado que quiero mostrar en el componente -->
+      <!-- <v-btn text small @click="activarDesactivarMostrarDATA(item)">{{item._id}}</v-btn> -->
+      <v-list-item :to="{name:'datoahijado'}">
+        <v-btn text small @click="guardarAhijado(item)">datos</v-btn>
+      </v-list-item>
+      <!-- <v-btn text small :to="{name:'datoahijado'}" @click="guardarAhijado(item)">datos</v-btn> -->
+      <!-- :to="{name:'datoahijado'}" -->
     </template>
 
     <template v-slot:no-data>
@@ -365,7 +379,8 @@
 </template>
 <script>
   import axios from 'axios';
-  import Vuex from 'vuex'
+  // import Vuex from 'vuex'
+  import { mapState,mapMutations,mapActions } from 'vuex';
 
   export default {
     data: () => ({
@@ -434,6 +449,8 @@
       adInfo_pago_tipo_cuentaDATA:'',
       adInfo_pago_numero_cuentaDATA:'',
       adInfo_pago_bancoDATA:'',
+
+      item2:{}
     }),
 
     computed: {
@@ -461,8 +478,24 @@
     },
 
     methods: {
-      ejemplo(){
-        console.log('Funciona &&');
+      // ...mapMutations(['setAhijado']),
+      // ...mapState(['obtenerAhijado']),
+      ...mapActions(['obtenerAhijado']),
+      guardarAhijado(item){
+        // console.log(item);
+        this.$store.dispatch("obtenerAhijado",item);
+        
+
+        // let me = this;
+        // let header = {"Token": this.$store.state.token};
+        // let configuracion = {headers:header};
+        // axios.get('ahijado/query',{'_id':item._id},configuracion).then(data => {
+        //   console.log(data);
+        //   this.$store.dispatch("obtenerAhijado",data);
+        // }).catch(function(error){
+        //   console.log(error);
+        // });
+        
       },
       selectProyecto(){ 
         let me = this;
@@ -624,7 +657,7 @@
         this.editedIndex=1;
       },
 
-    activarDesactivarMostrar(accion,item){
+     activarDesactivarMostrar(accion,item){
       this.adModal=1;
       this.adNombre=item.nombre;
       this.adId=item._id;
@@ -692,13 +725,6 @@
       this.adInfo_pago_numero_cuentaDATA=item.info_pago_numero_cuenta;
       this.adInfo_pago_bancoDATA=item.info_pago_banco;
 
-      // if (accion ==1) {
-      //   this.adAccionDATA = 1;
-      // } else if (accion == 2) {
-      //   this.adAccionDATA = 2;
-      // } else {
-      //   this.adModalDATA=0;
-      // }
     }, 
 
     mostrarDATA(){
