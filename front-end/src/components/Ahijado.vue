@@ -318,6 +318,14 @@
       >
         edit
       </v-icon>
+      <!-- Implementar el eliminar -->
+      <v-icon
+        small
+        class="mr-2"
+        @click="deleteItem(item)"
+      >
+        delete
+      </v-icon>
     </template>
     <!-- FIN TEMPLATE ACTIONS -->
     
@@ -365,7 +373,7 @@
       <!-- en este item esta los datos del ahijado que quiero mostrar en el componente -->
       <!-- <v-btn text small @click="activarDesactivarMostrarDATA(item)">{{item._id}}</v-btn> -->
       <v-list-item :to="{name:'datoahijado'}">
-        <v-btn text small @click="guardarAhijado(item)">datos</v-btn>
+        <v-btn  x-large @click="guardarAhijado(item)">datos</v-btn>
       </v-list-item>
       <!-- <v-btn text small :to="{name:'datoahijado'}" @click="guardarAhijado(item)">datos</v-btn> -->
       <!-- :to="{name:'datoahijado'}" -->
@@ -485,7 +493,6 @@
         // console.log(item);
         this.$store.dispatch("obtenerAhijado",item);
         
-
         // let me = this;
         // let header = {"Token": this.$store.state.token};
         // let configuracion = {headers:header};
@@ -566,7 +573,7 @@
           return;
         }
         if (this.editedIndex > -1) {
-          //editar los datos del regisro
+          //editar los datos del regisro -------------------> OJO CON EL NUEVO MODELO AHIJADO
            axios.put('ahijado/update',{
               '_id':this._id,
               'proyecto':this.proyecto, 
@@ -575,12 +582,12 @@
               'fecha_nacimiento': this.fecha_nacimiento,
               'discapacidad': this.discapacidad,
               'nivel_educacional': this.nivel_educacional,
-              'direccion_calle':this.direccion_calle,
-              'direccion_numero':this.direccion_numero,
-              'direccion_sector':this.direccion_sector,
-              'info_pago_tipo_cuenta':this.info_pago_tipo_cuenta,
-              'info_pago_numero_cuenta':this.info_pago_numero_cuenta,
-              'info_pago_banco':this.info_pago_banco
+              'direccion.calle':this.direccion_calle,
+              'direccion.numero':this.direccion_numero,
+              'direccion.sector':this.direccion_sector,
+              'info_pago.tipo_cuenta':this.info_pago_tipo_cuenta,
+              'info_pago.numero_cuenta':this.info_pago_numero_cuenta,
+              'info_pago.pago_banco':this.info_pago_banco
             
             },configuracion)
           .then(function (response) {
@@ -592,19 +599,19 @@
           });
         } else {
           //guardar un nuevo registro
-          axios.post('ahijado/add',{
+          axios.post('ahijado/add',{ //puse un punto para acceder al obreto direccion y infro pago del objeto
             'proyecto':this.proyecto, 
             'nombre': this.nombre,
             'apellidos': this.apellidos,
             'fecha_nacimiento': this.fecha_nacimiento,
             'discapacidad': this.discapacidad,
             'nivel_educacional': this.nivel_educacional,
-            'direccion_calle':this.direccion_calle,
-            'direccion_numero':this.direccion_numero,
-            'direccion_sector':this.direccion_sector,
-            'info_pago_tipo_cuenta':this.info_pago_tipo_cuenta,
-            'info_pago_numero_cuenta':this.info_pago_numero_cuenta,
-            'info_pago_banco':this.info_pago_banco
+            'direccion.calle':this.direccion_calle,
+            'direccion.numero':this.direccion_numero,
+            'direccion.sector':this.direccion_sector,
+            'info_pago.tipo_cuenta':this.info_pago_tipo_cuenta,
+            'info_pago.numero_cuenta':this.info_pago_numero_cuenta,
+            'info_pago.pago_banco':this.info_pago_banco
             
             },configuracion)
           .then(function (response) {
@@ -646,12 +653,12 @@
         this.fecha_nacimiento=item.fecha_nacimiento;
         this.discapacidad=item.discapacidad;
         this.nivel_educacional=item.nivel_educacional;
-        this.direccion_calle=item.direccion_calle;
-        this.direccion_numero=item.direccion_numero;
-        this.direccion_sector=item.direccion_sector;
-        this.info_pago_tipo_cuenta=item.info_pago_tipo_cuenta;
-        this.info_pago_numero_cuenta=item.info_pago_numero_cuenta;
-        this.info_pago_banco=item.info_pago_banco;
+        this.direccion_calle=item.direccion.calle;
+        this.direccion_numero=item.direccion.numero;
+        this.direccion_sector=item.direccion.sector;
+        this.info_pago_tipo_cuenta=item.info_pago.tipo_cuenta;
+        this.info_pago_numero_cuenta=item.info_pago.numero_cuenta;
+        this.info_pago_banco=item.info_pago.pago_banco;
 
         this.dialog = true;
         this.editedIndex=1;
