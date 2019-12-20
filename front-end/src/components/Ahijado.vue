@@ -287,11 +287,6 @@
                         </v-col>
                       </v-row> 
                     </v-container>
-                    <!-- <p><strong>Nombre : </strong>{{adNombreDATA}}</p>
-                    <p><strong>Apellidos : </strong>{{adApellidosDATA}}</p>
-                    <p><strong>Fecha de nacimiento : </strong>{{adFecha_nacimientoDATA}}</p>
-                    <p><strong>Discapacidad : </strong>{{adDiscapacidadDATA}}</p>
-                    <p><strong>Nivel educacional : </strong>{{adNivel_educacionalDATA}}</p> -->
                   </v-card-text>
                 
               
