@@ -11,7 +11,7 @@
           <v-tabs>
             <v-tab :to="{name:'ahijado'}">Ahijados</v-tab>
             <v-tab :to="{name:'egresado'}">Egresados</v-tab>
-            <v-tab :to="{name:'padrino'}">Familias</v-tab>
+            <v-tab :to="{name:'familia'}">Familias</v-tab>
           </v-tabs>
         </div>
       </template>

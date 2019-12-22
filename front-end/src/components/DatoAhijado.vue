@@ -1,69 +1,93 @@
 <template>
 
   <v-simple-table >
-      <!-- INICIO DIALOG -->
-    <v-dialog v-model="dialog" max-width="600px">
-        <!-- <template v-slot:activator="{ on }" v-if="esAdministrador || esAsistSocial">
-            <v-btn color="primary" dark class="mb-2" v-on="on" @click="limpiar()">Agregar datos Familiares</v-btn>
-        </template> -->
-        <v-card class="mx-auto">
-        <v-card-title>
-            <span class="headline">Agregar Datos Familiares</span>
-        </v-card-title>
 
-        <v-card-text>
-            <v-container>
-            <v-row>
-                <v-col cols="12" sm="12" md="12">
-                    <v-text-field v-model="ficha_familiar" label="Ficha familiar"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="12" md="12">
-                    <v-text-field v-model="alimentacion" label="Alimentacion"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="arriendo" label="Arriendo"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="luz" label="Luz"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="agua" label="Agua"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="gas" label="Gas"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="movilizacion" label="Movilizacion"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="otro" label="Otro"></v-text-field>
-                </v-col>
-                
-                <!-- VALIDACION DE MENSAJES -->
-                <!-- <v-col cols="12" sm="12" md="12" v-show="valida">
-                <div class="red--text" v-for="v in validaMensaje" :key="v" v-text="v">
-                </div> 
-                </v-col> -->
-            </v-row>
-            </v-container>
-        </v-card-text>
-
-        <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="close">Cancelar</v-btn>
-            <!-- <v-btn color="blue darken-1" text @click="guardar">Guardar</v-btn> -->
-        </v-card-actions>
-        </v-card>
-    </v-dialog>
-    <!-- Final del modal -->
     <template v-slot:default>
       <thead>
         <v-container>
             <v-btn color="primary" :to="{name:'ahijado'}"> Atras</v-btn>
         </v-container>
-        <v-container>
-            <v-btn color="success" @click="abrirModal()"> Agregar familia</v-btn>
-        </v-container>
+        <template>
+            <div class="text-center">
+                <v-dialog
+                v-model="dialog"
+                width="600"
+                >
+                <template v-slot:activator="{ on }">
+                    <v-btn
+                    color="green"
+                    dark
+                    v-on="on"
+                    >
+                    Agregar datos familiares
+                    </v-btn>
+                </template>
+                <!-- <template v-slot:activator="{ on }">
+                    <v-btn
+                    color="yelow"
+                    dark
+                    v-on="on"
+                    >
+                    Editar datos familiares
+                    </v-btn>
+                </template> -->
+
+                <v-card>
+                    <v-card-title
+                    class="headline grey lighten-2"
+                    primary-title
+                    >
+                    {{ formTitle }}
+                    </v-card-title>
+
+                    <v-card-text>
+                        <v-container>
+                            <v-row>
+                                <v-col cols="12" sm="12" md="12">
+                                    <v-text-field v-model="ficha_familiar" label="Ficha familiar"></v-text-field>
+                                </v-col>
+                                <v-col cols="12" sm="12" md="12">
+                                    <v-text-field v-model="alimentacion" label="Alimentacion"></v-text-field>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="6">
+                                    <v-text-field v-model="arriendo" label="Arriendo"></v-text-field>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="6">
+                                    <v-text-field v-model="luz" label="Luz"></v-text-field>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="6">
+                                    <v-text-field v-model="agua" label="Agua"></v-text-field>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="6">
+                                    <v-text-field v-model="gas" label="Gas"></v-text-field>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="6">
+                                    <v-text-field v-model="movilizacion" label="Movilizacion"></v-text-field>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="6">
+                                    <v-text-field v-model="otro" label="Otro"></v-text-field>
+                                </v-col>
+                                
+                                <!-- VALIDACION DE MENSAJES -->
+                                <!-- <v-col cols="12" sm="12" md="12" v-show="valida">
+                                <div class="red--text" v-for="v in validaMensaje" :key="v" v-text="v">
+                                </div> 
+                                </v-col> -->
+                            </v-row>
+                        </v-container>
+                    </v-card-text>
+
+                    <v-divider></v-divider>
+
+                    <v-card-actions>
+                    <v-spacer></v-spacer>
+                        <v-btn color="red" text @click="dialog = false"> Cerrar</v-btn>
+                        <v-btn color="green" text @click="guardar" > Guardar </v-btn>
+                    </v-card-actions>
+                </v-card>
+                </v-dialog>
+            </div>
+        </template>
         <tr>
           <th class="text-center">Datos</th>
           <th class="text-center">Informacion</th>
@@ -157,18 +181,23 @@
 </template>
 <script>
 import { mapState } from 'vuex' //estudiar metodos de vuex
+import axios from 'axios';
+
 
 export default {
     data: () => ({
-        dialog:false,
-        ficha_familiar:'',
-        alimentacion:'',
-        arriendo:'',
-        luz:'',
-        agua:'',
-        gas:'',
-        movilizacion:'',
-        otro:''
+        dialog : false,
+        adAction : 0,
+        idAhijado: '',
+        editedIndex: -1,
+        ficha_familiar : '',
+        alimentacion : '',
+        arriendo : '',
+        luz : '',
+        agua : '',
+        gas : '',
+        movilizacion : '',
+        otro : ''
 
     }),
     methods:{
@@ -177,15 +206,97 @@ export default {
             else if (calories > 200) return 'orange'
             else return 'green'
         },
-        abrirModal() {
+        close () {
+            this.dialog = 0
+        },
+         limpiar(){
+            this.idAhijado = '',
+            this.ficha_familiar='';
+            this.alimentacion='';
+            this.arriendo='';
+            this.luz='';
+            this.agua='';
+            this.gas='';
+            this.movilizacion='';
+            this.otro='';
+            this.editedIndex=-1;
+        },
+        editItem (item) {
+            this.idAhijado=this.$store.state.itemStore._id;
+            this.ficha_familiar=this.$store.state.itemStore.ficha_familiar;
+            this.alimentacion=this.$store.state.itemStore.alimentacion;
+            this.arriendo=this.$store.state.itemStore.arriendo;
+            this.luz=this.$store.state.itemStore.luz;
+            this.agua=this.$store.state.itemStore.agua;
+            this.gas=this.$store.state.itemStore.gas;
+            this.movilizacion=this.$store.state.itemStore.movilizacion;
+            this.otro=this.$store.state.itemStore.otro;
+            
             this.dialog = true;
+            this.editedIndex = 1;
+        },
+        guardar(){
+            let me = this;
+            let idAhijado = this.$store.state.itemStore._id;
+            let header = {"Token": this.$store.state.token};
+            let configuracion = {headers:header}; //headers --> S          
+            // if (this.validar()) {
+            //     return;
+            // }
+            if (this.editedIndex > -1) {
+            //editar los datos del regisro 
+            axios.put('familia/update',{
+                    '_id':idAhijado,
+                    'ficha_familiar':this.ficha_familiar, 
+                    'alimentacion': this.alimentacion,
+                    'arriendo': this.arriendo,
+                    'luz': this.luz,
+                    'agua': this.agua,
+                    'gas': this.gas,
+                    'movilizacion':this.movilizacion,
+                    'otro':this.otro,
+                    
+                    },configuracion)
+                .then(function (response) {
+                    me.limpiar();
+                    me.close();
+                    // me.listar();
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            } else {
+            //guardar un nuevo registro
+                axios.post('familia/add',{ 
+                    'ahijado':idAhijado,
+                    'ficha_familiar':this.ficha_familiar, 
+                    'alimentacion': this.alimentacion,
+                    'arriendo': this.arriendo,
+                    'luz': this.luz,
+                    'agua': this.agua,
+                    'gas': this.gas,
+                    'movilizacion':this.movilizacion,
+                    'otro':this.otro,
+
+                    },configuracion)
+                .then(function (response) {
+                    me.limpiar();
+                    me.close();
+                    // me.listar();
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
         },
         close () {
             this.dialog = false
         },
+
     },
     computed:{
-        ...mapState(['numero','itemStore','usuario','idAhijado']),
+        ...mapState(['numero','itemStore','usuario']),
+        formTitle () {
+            return this.editedIndex === -1 ? 'Agregar datos familiares' : 'Editar Datos'
+        },
         esAdministrador(){
             return this.$store.state.usuario && this.$store.state.usuario.rol == 'Administrador' 
         },

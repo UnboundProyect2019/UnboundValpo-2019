@@ -11,12 +11,12 @@
           <v-tabs>
           <v-tab :to="{name:'ahijado'}">Ahijados</v-tab>
           <v-tab :to="{name:'egresado'}">Egresados</v-tab>
-          <v-tab :to="{name:'padrino'}">Padrinos</v-tab>
+          <v-tab :to="{name:'familia'}">Familias</v-tab>
         </v-tabs>
         </div>
       </template>
       <v-toolbar flat color="white">
-        <v-toolbar-title>Padrinos</v-toolbar-title>
+        <v-toolbar-title>Familias</v-toolbar-title>
         <v-divider
           class="mx-4"
           inset

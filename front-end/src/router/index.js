@@ -8,7 +8,7 @@ import Ahijado from '../components/Ahijado.vue'
 import Egresado from '../components/Egresado.vue'
 import Home from '../components/Home.vue'
 import DatoAhijado from '../components/DatoAhijado'
-import Padrino from '../components/Padrino'
+import Familia from '../components/Familia'
 
 Vue.use(VueRouter)
 
@@ -78,9 +78,9 @@ const routes = [
     }
   },
   {
-    path: '/padrino',
-    name: 'padrino',
-    component: Padrino,
+    path: '/familias',
+    name: 'familia',
+    component: Familia,
     meta: {
       administrador:true,
       lector:true,
