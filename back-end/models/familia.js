@@ -2,28 +2,12 @@ import mongoose,{Schema} from 'mongoose';
 
 /*
 const IntegranteSchema = new Schema({
-    nombre_completo: {
-        type: Number, 
-        default: 1
-    }, 
-    parentesco: {
-        type: String
-    }, 
-    edad: {
-        type: String, 
-        unique: true
-    }, 
-    nivel_educacional: {
-        type: String
-    }, 
-    ocupacion: {
-        type: String, 
-        unique: true
-    }, 
-    ingresos: {
-        type: String, 
-        unique: true
-    }
+    nombre_completo: { type: Number, default: 1}, 
+    parentesco: { type: String}, 
+    edad: {type: String, unique: true}, 
+    nivel_educacional: {type: String}, 
+    ocupacion: {type: String, unique: true}, 
+    ingresos: {type: String, unique: true}
 });
 
 */

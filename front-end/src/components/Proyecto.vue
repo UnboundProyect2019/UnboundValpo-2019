@@ -95,7 +95,7 @@
         <v-btn small text color="success" @click="activarDesactivarMostrar(2,item)">Activo</v-btn>
       </div>
       <div v-else>
-        <v-btn small text color="error" @click="activarDesactivarMostrar(1,item)">Egresado</v-btn>
+        <v-btn small text color="error" @click="activarDesactivarMostrar(1,item)">Inactivo</v-btn>
       </div>
     </template>
 

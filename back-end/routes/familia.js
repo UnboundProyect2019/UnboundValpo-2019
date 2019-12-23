@@ -6,12 +6,11 @@ const router = routerx();
  
 router.post('/add', auth.verifyAdministrador, familiaController.add);
 router.get('/query', auth.verifyAdministrador,familiaController.query);
-router.get('/list', auth.verifyAdministrador && auth.verifyAsistSocial && auth.verifyLector, familiaController.list);
+router.get('/list', auth.verifyUsuario, familiaController.list);
 router.put('/update', auth.verifyAdministrador, familiaController.update);
 router.delete('/remove', auth.verifyAdministrador,familiaController.remove);
 router.put('/activate', auth.verifyAdministrador, familiaController.activate);
 router.put('/deactivate', auth.verifyAdministrador, familiaController.deactivate);
-
 
 
 export default router;

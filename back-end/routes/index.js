@@ -11,6 +11,6 @@ router.use('/proyecto',proyectoRouter);
 router.use('/ahijado',ahijadoRouter);
 router.use('/usuario',usuarioRouter);
 router.use('/evento',eventoRouter);
-router.use('/familia', familiaRouter);
+router.use('/familia',familiaRouter);
 
 export default router;
