@@ -1,7 +1,7 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="ahijados"
+    :items="familias"
     :search="search"
     class="elevation-1"
   >
@@ -22,179 +22,12 @@
           inset
           vertical
         ></v-divider>
-        <v-flex mt-8>
-            <v-select
-            :items="proyectos"
-            label="Proyectos"
-            
-            solo
-          ></v-select>
-        </v-flex>
-        <v-divider class="mx-4" inset vertical ></v-divider>
+        
+        <!-- <v-divider class="mx-4" inset vertical ></v-divider> -->
         <v-text-field class="text-xs-center" v-model="search" append-icon="search"
           label="Busqueda" solo hide-details></v-text-field>
         <v-spacer></v-spacer>
-        <!-- INICIO DIALOG -->
-        <v-dialog v-model="dialog" max-width="500px">
-          <!-- <template v-slot:activator="{ on }">
-            <v-btn color="primary" dark class="mb-2" v-on="on">Nuevo Ahijado</v-btn>
-          </template> -->
-          <v-card>
-            <v-card-title>
-              <span class="headline">{{ formTitle }}</span>
-            </v-card-title>
-
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="12" sm="12" md="12">
-                    <v-text-field v-model="nombre" label="Nombre"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="12" md="12">
-                    <v-text-field v-model="apellidos" label="Apellidos"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="6">
-                      <v-select v-model="proyecto" :items="proyectos" label="Proyecto"></v-select>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="fecha_nacimiento" label="Fecha de nacimiento"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="discapacidad" label="Discapcidad"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="nivel_educacional" label="Nivel educacional"></v-text-field>
-                  </v-col>
-
-                  <!-- VALIDACION DE MENSAJES -->
-                  <v-col cols="12" sm="12" md="12" v-show="valida">
-                    <div class="red--text" v-for="v in validaMensaje" :key="v" v-text="v">
-                    </div> 
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="close">Cancelar</v-btn>
-              <v-btn color="blue darken-1" text @click="guardar">Guardar</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <!-- Modal Activar / Egresar Ahijados -->
-        <v-dialog v-model="adModal" max-width="290">
-          <v-card>
-            <v-card-title class="headline" v-if="adAccion==1">
-              Ingresar Ahijado
-            </v-card-title>
-            <v-card-title class="headline" v-if="adAccion==2">
-              Egresar Ahijado
-            </v-card-title>
-            <v-card-text>
-              Estas a punto de <span v-if="adAccion==1">activar</span><span v-if="adAccion==2">Egresar</span>
-              al ahijado {{adNombre}}
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-               <v-btn @click="activarDesactivarCerrar()" color="dark darken-1" text large>
-                  Cancelar
-                </v-btn>
-                <v-btn v-if="adAccion==1" @click="activar()" color="green darken-1" text large >
-                  Ingresar
-                </v-btn>
-                <v-btn v-if="adAccion==2" @click="desactivar()" color="red darken-1" text large >
-                  Egresar
-                </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <!-- Fin modal acivar / egresar ahijados -->
-        <!-- Modal entregas de cartas de agradecimiento-->
-        <v-dialog v-model="adModalCA" max-width="450">
-          <v-card>
-            <v-card-title class="headline" v-if="adAccionCA==1">
-              Entregar Carta de agradecimiento
-            </v-card-title>
-            <v-card-title class="headline" v-if="adAccionCA==2">
-              Quitar Carta de agradecimiento
-            </v-card-title>
-            <v-card-text>
-              Estas a punto de <span v-if="adAccionCA==1">Ingresar</span><span v-if="adAccionCA==2">Quitar</span>
-              una carta de agradecimiento
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-               <v-btn @click="activarDesactivarCerrarCA()" color="dark darken-1" text large>
-                  Cancelar
-                </v-btn>
-                <v-btn v-if="adAccionCA==1" @click="activate_carta_agradecimiento()" color="green darken-1" text large >
-                  Ingresar
-                </v-btn>
-                <v-btn v-if="adAccionCA==2" @click="deactivate_carta_agradecimiento()" color="red darken-1" text large >
-                  Quitar
-                </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <!-- Fin modal cartas de agradecimiento-->
-        <!-- Modal entregas de cartas de navidad-->
-        <v-dialog v-model="adModalCN" max-width="350">
-          <v-card>
-            <v-card-title class="headline" v-if="adAccionCN==1">
-              Entregar Carta de navidad
-            </v-card-title>
-            <v-card-title class="headline" v-if="adAccionCN==2">
-              Quitar Carta de navidad
-            </v-card-title>
-            <v-card-text>
-              Estas a punto de <span v-if="adAccionCN==1">Ingresar</span><span v-if="adAccionCN==2">Quitar</span>
-              una carta de navidad
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-               <v-btn @click="activarDesactivarCerrarCN()" color="dark darken-1" text large>
-                  Cancelar
-                </v-btn>
-                <v-btn v-if="adAccionCN==1" @click="activate_carta_navidad()" color="green darken-1" text large >
-                  Ingresar
-                </v-btn>
-                <v-btn v-if="adAccionCN==2" @click="deactivate_carta_navidad()" color="red darken-1" text large >
-                  Quitar
-                </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <!-- Fin modal cartas de navidad-->
-        <!-- Modal entregas de cartas de invierno-->
-        <v-dialog v-model="adModalCI" max-width="350">
-          <v-card>
-            <v-card-title class="headline" v-if="adAccionCI==1">
-              Entregar Carta de invierno
-            </v-card-title>
-            <v-card-title class="headline" v-if="adAccionCI==2">
-              Quitar Carta de invierno
-            </v-card-title>
-            <v-card-text>
-              Estas a punto de <span v-if="adAccionCI==1">Ingresar</span><span v-if="adAccionCI==2">Quitar</span>
-              una carta de invierno
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-               <v-btn @click="activarDesactivarCerrarCI()" color="dark darken-1" text large>
-                  Cancelar
-                </v-btn>
-                <v-btn v-if="adAccionCI==1" @click="activate_carta_invierno()" color="green darken-1" text large >
-                  Ingresar
-                </v-btn>
-                <v-btn v-if="adAccionCI==2" @click="deactivate_carta_invierno()" color="red darken-1" text large >
-                  Quitar
-                </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <!-- Fin modal cartas de invierno-->
-        <!-- FIN DIALOGS -->
+      
       </v-toolbar>
     </template>
     <!-- TEMPLATE ACTIONS -->
@@ -209,13 +42,13 @@
     </template>
     <!-- FIN TEMPLATE ACTIONS -->
     
-    <template v-slot:item.estado="{ item }">
-      <div v-if="item.estado">
+    <template v-slot:item.ahijado.estado="{ item }">
+      <div v-if="item.ahijado.estado">
         <!-- <span class="green--text">Activo</span> -->
-        <v-btn small text color="success" @click="activarDesactivarMostrar(2,item)">Activo</v-btn>
+        <v-btn small text color="success" >Ahijado Activo</v-btn>
       </div>
       <div v-else>
-        <v-btn small text color="error" @click="activarDesactivarMostrar(1,item)">Egresado</v-btn>
+        <v-btn small text color="error">Ahijado Egresado</v-btn>
       </div>
     </template>    
     
@@ -262,14 +95,14 @@
     data: () => ({
       dialog: false,
       search:'',
-      ahijados:[],
+      familias:[],
       headers: [
-        // { text: 'Actions', value: 'action', sortable: false },
-        // { text: 'Estado', value: 'estado',sortable: false }, 
-        // { text: 'Proyecto', value: 'proyecto.nombre_proyecto', sortable: false },
-        // { text: 'Nombre', value: 'nombre',sortable: true  },
-        // { text: 'Apellidos', value: 'apellidos' ,sortable: true },
-        // { text: 'Carta Agradecimiento', value: 'carta_agradecimiento',sortable: false },
+        { text: 'Nombre familia', value: 'nombre_familia', sortable: false },
+        { text: 'Padre', value: 'padre',sortable: false }, 
+        { text: 'Madre', value: 'madre', sortable: false },
+        { text: 'Ahijado', value: 'ahijado.nombre',sortable: true  },
+        { text: 'Estado', value: 'ahijado.estado' ,sortable: true },
+        { text: 'Ficha Familiar', value: 'ficha_familiar',sortable: false },
         // { text: 'Carta Navidad', value: 'carta_navidad',sortable: false },
         // { text: 'Carta Invierno', value: 'carta_invierno',sortable: false },
         // { text: 'Datos', value: 'data',sortable: false },
@@ -340,9 +173,9 @@
         let me = this;
         let header = {"Token": this.$store.state.token};
         let configuracion = {headers:header}; //headers --> S
-        axios.get('ahijado/listEgresados',configuracion).then(function (response) {
+        axios.get('familia/list',configuracion).then(function (response) {
             // console.log(response);
-            me.ahijados = response.data;
+            me.familias = response.data;
         }).catch(function (error) {
           console.log(error);
         });

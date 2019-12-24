@@ -31,7 +31,8 @@ export default {
     },
     list: async (req, res, next) => {
         try {
-            const reg = await models.Familia.find({});
+            const reg = await models.Familia.find({})
+            .populate('ahijado',{nombre:1, apellidos:1, estado:1, proyecto:1});
             res.status(200).json(reg);
         } catch (err) {
             res.status(500).send({
@@ -47,6 +48,12 @@ export default {
             {
 
                 ficha_familiar: req.body.ficha_familiar,
+                nombre_familia: req.body.nombre_familia,
+                padre: req-body.padre,
+                madre: req.body.madre,
+                ingresos: req.body.ingresos,
+                egresos: req.body.egresos,
+                total: req.body.total,
                 alimentacion: req.body.alimentacion,
                 arriendo: req.body.arriendo,
                 luz: req.body.luz,
