@@ -5,7 +5,7 @@
         <v-toolbar flat color="white">
     
           <v-dialog v-model="adModalEvent" max-width="450">
-            <template v-slot:activator="{ on }" v-if="esAdministrador">
+            <template v-slot:activator="{ on }" v-if="!esLector">
               <v-btn color="primary" dark class="mb-2" v-on="on" @click="limpiar()">Nuevo evento</v-btn>
             </template>
             <v-card>
@@ -305,23 +305,9 @@
           timeZone: 'UTC', month: 'long',
         })
       },
-      logueado(){
-        return this.$store.state.usuario;
-      },
-      esAdministrador(){
-        return this.$store.state.usuario && this.$store.state.usuario.rol == 'Administrador' 
-      },
       esLector(){
         return this.$store.state.usuario && this.$store.state.usuario.rol == 'Lector' 
       },
-      esAsistSocial(){
-        return this.$store.state.usuario && this.$store.state.usuario.rol == 'Asist_Social' 
-      },
-      usuario(){
-        let usuario = this.$store.state.usuario;
-        console.log(usuario);
-        return usuario; 
-      }
     },
     mounted () {
       this.$refs.calendar.checkChange();

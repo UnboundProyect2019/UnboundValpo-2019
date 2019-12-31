@@ -325,43 +325,81 @@
     <!-- FIN TEMPLATE ACTIONS -->
     
     <template v-slot:item.estado="{ item }">
-      <template>
-        <!-- ver si es admin o asist social -->
+      <template v-if="esLector">
+        <div v-if="item.estado">
+          <span class="green--text">Activo</span>
+        </div>
+        <div v-else>
+          <span class="red--text">Egresado</span>
+        </div>
       </template>
-      <div v-if="item.estado">
-        <!-- <span class="green--text">Activo</span> -->
-        <v-btn small text color="success" @click="activarDesactivarMostrar(2,item)">Activo</v-btn>
-      </div>
-      <div v-else>
-        <v-btn small text color="error" @click="activarDesactivarMostrar(1,item)">Inactivo</v-btn>
-      </div>
+      <template v-else>
+        <div v-if="item.estado">
+          <!-- <span class="green--text">Activo</span> -->
+          <v-btn small text color="success" @click="activarDesactivarMostrar(2,item)">Activo</v-btn>
+        </div>
+        <div v-else>
+          <v-btn small text color="error" @click="activarDesactivarMostrar(1,item)">Inactivo</v-btn>
+        </div>
+      </template>
+     
     </template> 
     
     <template v-slot:item.carta_agradecimiento="{ item }">
-      <div v-if="item.carta_agradecimiento">
-        <v-btn text small color="success" @click="activarDesactivarMostrarCA(2,item)">Entregada</v-btn>
-      </div>
-      <div v-else>
-        <v-btn text small color="error" @click="activarDesactivarMostrarCA(1,item)">No Entregada</v-btn>
-      </div>
+      <template v-if="esLector">
+          <div v-if="item.carta_agradecimiento">
+            <span class="green--text">Entregada</span>
+          </div>
+          <div v-else>
+            <span class="red--text">No entregada</span>
+          </div>
+      </template>
+      <template v-else>
+        <div v-if="item.carta_agradecimiento">
+          <v-btn text small color="success" @click="activarDesactivarMostrarCA(2,item)">Entregada</v-btn>
+        </div>
+        <div v-else>
+          <v-btn text small color="error" @click="activarDesactivarMostrarCA(1,item)">No Entregada</v-btn>
+        </div>
+      </template>
     </template>
 
     <template v-slot:item.carta_navidad="{ item }">
-      <div v-if="item.carta_navidad">
-        <v-btn text small color="success" @click="activarDesactivarMostrarCN(2,item)">Entregada</v-btn>
-      </div>
-      <div v-else>
-        <v-btn text small color="error" @click="activarDesactivarMostrarCN(1,item)">No Entregada</v-btn>
-      </div>
+      <template v-if="esLector">
+          <div v-if="item.carta_navidad">
+            <span class="green--text">Entregada</span>
+          </div>
+          <div v-else>
+            <span class="red--text">No entregada</span>
+          </div>
+      </template>
+      <template v-else>
+        <div v-if="item.carta_navidad">
+          <v-btn text small color="success" @click="activarDesactivarMostrarCA(2,item)">Entregada</v-btn>
+        </div>
+        <div v-else>
+          <v-btn text small color="error" @click="activarDesactivarMostrarCA(1,item)">No Entregada</v-btn>
+        </div>
+      </template>
     </template>
 
     <template v-slot:item.carta_invierno="{ item }">
-      <div v-if="item.carta_invierno">
-        <v-btn text small color="success" @click="activarDesactivarMostrarCI(2,item)">Entregada</v-btn>
-      </div>
-      <div v-else>
-        <v-btn text small color="error" @click="activarDesactivarMostrarCI(1,item)">No Entregada</v-btn>
-      </div>
+      <template v-if="esLector">
+          <div v-if="item.invierno">
+            <span class="green--text">Entregada</span>
+          </div>
+          <div v-else>
+            <span class="red--text">No entregada</span>
+          </div>
+      </template>
+      <template v-else>
+        <div v-if="item.invierno">
+          <v-btn text small color="success" @click="activarDesactivarMostrarCA(2,item)">Entregada</v-btn>
+        </div>
+        <div v-else>
+          <v-btn text small color="error" @click="activarDesactivarMostrarCA(1,item)">No Entregada</v-btn>
+        </div>
+      </template>
     </template>
 
     <template v-slot:item.data="{ item }">
@@ -472,13 +510,9 @@
       esAsistSocial(){
         return this.$store.state.usuario && this.$store.state.usuario.rol == 'Asist_Social' 
       },
-      usuario(){
-        let usuario = this.$store.state.usuario;
-        console.log(usuario);
-        return usuario; 
-      }
-
-
+      esLector(){
+        return this.$store.state.usuario && this.$store.state.usuario.rol == 'Lector' 
+      },
     },
 
     watch: {

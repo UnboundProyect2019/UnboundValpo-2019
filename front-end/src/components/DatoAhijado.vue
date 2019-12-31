@@ -13,7 +13,7 @@
                 v-model="dialog"
                 width="600"
                 >
-                <template v-slot:activator="{ on }">
+                <template v-slot:activator="{ on }" v-if="!esLector">
                     <v-btn
                     color="green"
                     dark
@@ -341,7 +341,10 @@ export default {
         },
         esAsistSocial(){
             return this.$store.state.usuario && this.$store.state.usuario.rol == 'Asist_Social' 
-        }
+        },
+        esLector(){
+            return this.$store.state.usuario && this.$store.state.usuario.rol == 'Lector' 
+        },
     }    
 }
 </script>
