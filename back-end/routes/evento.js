@@ -6,7 +6,7 @@ const router = routerx();
  
 router.post('/add', auth.verifyAdministrador, eventoController.add);
 router.get('/query', auth.verifyAdministrador,eventoController.query);
-router.get('/list', auth.verifyUsuario, eventoController.list);
+router.get('/list',  auth.verifyUsuario, eventoController.list); //arreglado
 router.put('/update', auth.verifyAdministrador, eventoController.update);
 router.delete('/remove', auth.verifyAdministrador,eventoController.remove);
 
