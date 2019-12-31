@@ -34,54 +34,7 @@
         <v-text-field class="text-xs-center" v-model="search" append-icon="search"
           label="Busqueda" solo hide-details></v-text-field>
         <v-spacer></v-spacer>
-        <!-- INICIO DIALOG -->
-        <v-dialog v-model="dialog" max-width="500px">
-          <!-- <template v-slot:activator="{ on }">
-            <v-btn color="primary" dark class="mb-2" v-on="on">Nuevo Ahijado</v-btn>
-          </template> -->
-          <v-card>
-            <v-card-title>
-              <span class="headline">{{ formTitle }}</span>
-            </v-card-title>
-
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="12" sm="12" md="12">
-                    <v-text-field v-model="nombre" label="Nombre"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="12" md="12">
-                    <v-text-field v-model="apellidos" label="Apellidos"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="6">
-                      <v-select v-model="proyecto" :items="proyectos" label="Proyecto"></v-select>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="fecha_nacimiento" label="Fecha de nacimiento"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="discapacidad" label="Discapcidad"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="nivel_educacional" label="Nivel educacional"></v-text-field>
-                  </v-col>
-
-                  <!-- VALIDACION DE MENSAJES -->
-                  <v-col cols="12" sm="12" md="12" v-show="valida">
-                    <div class="red--text" v-for="v in validaMensaje" :key="v" v-text="v">
-                    </div> 
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="close">Cancelar</v-btn>
-              <v-btn color="blue darken-1" text @click="guardar">Guardar</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+      
         <!-- Modal Activar / Egresar Ahijados -->
         <v-dialog v-model="adModal" max-width="290">
           <v-card>
@@ -208,42 +161,83 @@
       </v-icon>
     </template>
     <!-- FIN TEMPLATE ACTIONS -->
-    
+     
     <template v-slot:item.estado="{ item }">
-      <div v-if="item.estado">
-        <!-- <span class="green--text">Activo</span> -->
-        <v-btn small text color="success" @click="activarDesactivarMostrar(2,item)">Activo</v-btn>
-      </div>
-      <div v-else>
-        <v-btn small text color="error" @click="activarDesactivarMostrar(1,item)">Egresado</v-btn>
-      </div>
-    </template>    
+      <template v-if="esLector">
+        <div v-if="item.estado">
+          <span class="green--text">Activo</span>
+        </div>
+        <div v-else>
+          <span class="red--text">Egresado</span>
+        </div>
+      </template>
+      <template v-else>
+        <div v-if="item.estado">
+          <!-- <span class="green--text">Activo</span> -->
+          <v-btn small text color="success" @click="activarDesactivarMostrar(2,item)">Activo</v-btn>
+        </div>
+        <div v-else>
+          <v-btn small text color="error" @click="activarDesactivarMostrar(1,item)">Egresado</v-btn>
+        </div>
+      </template>
+     
+    </template> 
     
     <template v-slot:item.carta_agradecimiento="{ item }">
-      <div v-if="item.carta_agradecimiento">
-        <v-btn text small color="success" @click="activarDesactivarMostrarCA(2,item)">Entregada</v-btn>
-      </div>
-      <div v-else>
-        <v-btn text small color="error" @click="activarDesactivarMostrarCA(1,item)">No Entregada</v-btn>
-      </div>
+      <template v-if="esLector">
+          <div v-if="item.carta_agradecimiento">
+            <span class="green--text">Entregada</span>
+          </div>
+          <div v-else>
+            <span class="red--text">No entregada</span>
+          </div>
+      </template>
+      <template v-else>
+        <div v-if="item.carta_agradecimiento">
+          <v-btn text small color="success" @click="activarDesactivarMostrarCA(2,item)">Entregada</v-btn>
+        </div>
+        <div v-else>
+          <v-btn text small color="error" @click="activarDesactivarMostrarCA(1,item)">No Entregada</v-btn>
+        </div>
+      </template>
     </template>
 
     <template v-slot:item.carta_navidad="{ item }">
-      <div v-if="item.carta_navidad">
-        <v-btn text small color="success" @click="activarDesactivarMostrarCN(2,item)">Entregada</v-btn>
-      </div>
-      <div v-else>
-        <v-btn text small color="error" @click="activarDesactivarMostrarCN(1,item)">No Entregada</v-btn>
-      </div>
+      <template v-if="esLector">
+          <div v-if="item.carta_navidad">
+            <span class="green--text">Entregada</span>
+          </div>
+          <div v-else>
+            <span class="red--text">No entregada</span>
+          </div>
+      </template>
+      <template v-else>
+        <div v-if="item.carta_navidad">
+          <v-btn text small color="success" @click="activarDesactivarMostrarCA(2,item)">Entregada</v-btn>
+        </div>
+        <div v-else>
+          <v-btn text small color="error" @click="activarDesactivarMostrarCA(1,item)">No Entregada</v-btn>
+        </div>
+      </template>
     </template>
 
     <template v-slot:item.carta_invierno="{ item }">
-      <div v-if="item.carta_invierno">
-        <v-btn text small color="success" @click="activarDesactivarMostrarCI(2,item)">Entregada</v-btn>
-      </div>
-      <div v-else>
-        <v-btn text small color="error" @click="activarDesactivarMostrarCI(1,item)">No Entregada</v-btn>
-      </div>
+      <template v-if="esLector">
+          <div v-if="item.invierno">
+            <span class="green--text">Entregada</span>
+          </div>
+          <div v-else>
+            <span class="red--text">No entregada</span>
+          </div>
+      </template>
+      <template v-else>
+        <div v-if="item.invierno">
+          <v-btn text small color="success" @click="activarDesactivarMostrarCA(2,item)">Entregada</v-btn>
+        </div>
+        <div v-else>
+          <v-btn text small color="error" @click="activarDesactivarMostrarCA(1,item)">No Entregada</v-btn>
+        </div>
+      </template>
     </template>
 
     <template v-slot:item.data="{ item }">
@@ -306,6 +300,9 @@
     computed: {
       formTitle () {
         return this.editedIndex === -1 ? 'Nuevo Ahijado' : 'Editar Ahijado'
+      },
+      esLector(){
+        return this.$store.state.usuario && this.$store.state.usuario.rol == 'Lector' 
       },
     },
 

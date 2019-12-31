@@ -5,7 +5,7 @@
         <v-toolbar flat color="white">
     
           <v-dialog v-model="adModalEvent" max-width="450">
-            <template v-slot:activator="{ on }">
+            <template v-slot:activator="{ on }" v-if="!esLector">
               <v-btn color="primary" dark class="mb-2" v-on="on" @click="limpiar()">Nuevo evento</v-btn>
             </template>
             <v-card>
@@ -304,6 +304,9 @@
         return this.$refs.calendar.getFormatter({
           timeZone: 'UTC', month: 'long',
         })
+      },
+      esLector(){
+        return this.$store.state.usuario && this.$store.state.usuario.rol == 'Lector' 
       },
     },
     mounted () {
