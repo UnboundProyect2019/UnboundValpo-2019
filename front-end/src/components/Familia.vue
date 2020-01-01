@@ -42,15 +42,7 @@
     </template>
     <!-- FIN TEMPLATE ACTIONS -->
     
-    <template v-slot:item.ahijado.estado="{ item }">
-      <div v-if="item.ahijado.estado">
-        <!-- <span class="green--text">Activo</span> -->
-        <v-btn small text color="success" >Ahijado Activo</v-btn>
-      </div>
-      <div v-else>
-        <v-btn small text color="error">Ahijado Egresado</v-btn>
-      </div>
-    </template>    
+    
     
     <template v-slot:item.carta_agradecimiento="{ item }">
       <div v-if="item.carta_agradecimiento">
