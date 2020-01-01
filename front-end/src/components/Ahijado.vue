@@ -498,14 +498,8 @@
       formTitle () {
         return this.editedIndex === -1 ? 'Agregar nuevo ahijado' : 'Editar Ahijado'
       },
-      logueado(){
-        return this.$store.state.usuario;
-      },
       esAdministrador(){
         return this.$store.state.usuario && this.$store.state.usuario.rol == 'Administrador' 
-      },
-      esLector(){
-        return this.$store.state.usuario && this.$store.state.usuario.rol == 'Lector' 
       },
       esAsistSocial(){
         return this.$store.state.usuario && this.$store.state.usuario.rol == 'Asist_Social' 

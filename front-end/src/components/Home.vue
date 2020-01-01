@@ -84,7 +84,7 @@
                       Cancelar
                     </v-btn>
                     <v-btn  @click="guardar" color="green darken-1" text large >
-                      Guardar
+                      Ingresar
                     </v-btn>
                 </v-card-actions>
               </v-card>
@@ -100,7 +100,7 @@
           <v-menu bottom right>
             <template v-slot:activator="{ on }">
               <v-btn
-                outlined 
+                outlined
                 v-on="on"
               >
                 <span>{{ typeToLabel[type] }}</span>
@@ -152,21 +152,17 @@
               :color="selectedEvent.color"
               dark
             >
-            <!-- Item especifico OJOOOOOOOO0000 -->
-            <template>
               <v-btn icon>
-                <v-icon @click="console.log(selectedEvent)">mdi-pencil</v-icon>
+                <v-icon>mdi-pencil</v-icon>
               </v-btn>
-            </template>
-    
               <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
               <v-spacer></v-spacer>
               <v-btn icon>
-                <v-icon>delete</v-icon>
+                <v-icon>mdi-heart</v-icon>
               </v-btn>
-              <!-- <v-btn icon>
+              <v-btn icon>
                 <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn> -->
+              </v-btn>
             </v-toolbar>
             <v-card-text>
               <span v-html="selectedEvent.details"></span>
@@ -245,7 +241,9 @@
       //     __v: 0
       // }
       ],
-      
+      // name:'',
+      // details:'',
+      // color:'',
       colors: [
         {text: 'Azul', value:'blue'},
         {text:'Rojo', value:'red'},
@@ -258,6 +256,8 @@
       _id: '',
       name: '',
       details: '',
+      // start: new Date().toISOString().substr(0, 10),
+      // end: new Date().toISOString().substr(0, 10),
       start1 : new Date().toISOString().substr(0, 10),
       end1:new Date().toISOString().substr(0, 10),
       start: '', 
@@ -327,8 +327,8 @@
             '_id':this._id,
             'name':this.name, 
             'details': this.details,
-            'start': this.start1,
-            'end': this.end1,
+            'start': this.start,
+            'end': this.end,
             'color': this.color,
             
             },configuracion)
@@ -358,7 +358,7 @@
           });
         }
       },
-      getEvent(){ //obtiene los eventos de la coleccion ERROR oara ver eventos lectores
+      getEvent(){ //obtiene los eventos de la coleccion
         let me = this;
         let header = {"Token": this.$store.state.token};
         let configuracion = {headers:header}; //headers --> S
@@ -386,8 +386,8 @@
         this._id='';
         this.name='';
         this.details='';
-        this.start1='';
-        this.end1='';
+        this.start='';
+        this.end='';
         this.color='';
         this.valida=0;
         this.validaMensaje=[];
@@ -397,12 +397,12 @@
         this._id=item._id;
         this.name=item.name._id;
         this.details=item.details;
-        this.start1=item.start1; // OJO en estas lineas
-        this.end1=item.end1;
+        this.start=item.start;
+        this.end=item.end;
         this.color=item.color;
         
-        this.adModalEvent = 1;
-        this.editedIndex= -1;
+        this.dialog = true;
+        this.editedIndex=1;
       },
       viewDay ({ date }) {
         this.focus = date

@@ -1,25 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
 
-const CartaSchema = new Schema({
-    estado: {
-        type: Number, 
-        default: 1
-    }, 
-    envio: {
-        type: String
-    }, 
-    año: {
-        type: String, 
-        unique: true
-    }, 
-    fecha_envio: {
-        type: String
-    }
-});
-
-
-
-
 const ahijadoSchema = new Schema({
     proyecto: { type: Schema.ObjectId, ref:'proyecto', required: true },
     nombre: { type: String, maxlength: 60, required: true },
