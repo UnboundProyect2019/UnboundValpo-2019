@@ -32,6 +32,40 @@
 
 
 
+
+        <v-dialog v-model="dialog2" max-width="1000px">
+
+          <v-card class="mx-auto">
+            <v-card-title>
+              <span class="headline">Integrantes</span>
+            </v-card-title>
+
+            <v-card-text>
+              <v-container>
+                <template>
+                  <v-data-table
+                    :headers="cabeceraIntegrantes"
+                    :items="familias.integrantes"
+                    class="elevation-1"
+                  ></v-data-table>
+                </template>
+              </v-container>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="close2">Cancelar</v-btn>
+              <v-btn color="blue darken-1" text @click="guardar">Guardar</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+
+
+
+
+
+
         <v-dialog v-model="dialog" max-width="600px">
 
           <v-card class="mx-auto">
@@ -100,8 +134,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-      
-
+    
 
 
 
@@ -119,8 +152,13 @@
     <!-- FIN TEMPLATE ACTIONS -->
     
 
+
+
+
     <template v-slot:item.data="{ item }">
-      <v-btn>Integrantes</v-btn>
+
+        <v-btn @click="listarIntegrantes(item)">Integrantes</v-btn>
+
     </template>
 
     <template v-slot:no-data>
@@ -134,8 +172,10 @@
   export default {
     data: () => ({
       dialog: false,
+      dialog2: false,
       search:'',
       familias:[],
+      integrantes: [],
       headers: [
         { text: 'Acciones', value: 'action', sortable: false },
         { text: 'Nombre familia', value: 'nombre_familia', sortable: false },
@@ -144,6 +184,19 @@
         { text: 'Ahijado', value: 'ahijado.nombre',sortable: true  },
         { text: 'Ficha Familiar', value: 'ficha_familiar',sortable: false },
         { text: 'Integrantes familiares', value: 'data',sortable: false },
+
+        // { text: 'Carta Navidad', value: 'carta_navidad',sortable: false },
+        // { text: 'Carta Invierno', value: 'carta_invierno',sortable: false },
+        // { text: 'Datos', value: 'data',sortable: false },
+      ],
+      cabeceraIntegrantes: [
+        { text: 'Nombre completo', value: 'integrantes.nombre_completo', sortable: false }, 
+        { text: 'Parentesco', value: 'intengrantes.parentesco', sortable: false },
+        { text: 'Edad', value: 'integrantes.edad', sortable: false },
+        { text: 'Nivel educacional', value: 'integrantes.nivel_educacional', sortable: false },
+        { text: 'Ocupacion', value: 'integrantes.ocupacion', sortable: false },
+        { text: 'Ingresos', value: 'integrantes.ingresos', sortable: false },
+
 
         // { text: 'Carta Navidad', value: 'carta_navidad',sortable: false },
         // { text: 'Carta Invierno', value: 'carta_invierno',sortable: false },
@@ -337,6 +390,17 @@
         this.otro=item.otro;
         this.editedIndex=1;
         this.dialog = true;
+
+      },
+
+
+      listarIntegrantes(item){
+
+
+
+
+        this.editedIndex=1;
+        this.dialog2 = true;
 
       },
 
@@ -537,6 +601,9 @@
       },
       close () {
         this.dialog = false
+      },
+      close2 () {
+        this.dialog2 = false
       },
 
     },

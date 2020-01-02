@@ -6,7 +6,7 @@ const router = routerx();
  
 router.post('/add', auth.verifyAdministrador, proyectoController.add);
 router.get('/query', auth.verifyAdministrador,proyectoController.query);
-router.get('/list', auth.verifyAdministrador && auth.verifyAsistSocial && auth.verifyLector, proyectoController.list);
+router.get('/list', auth.verifyUsuario, proyectoController.list);
 router.put('/update', auth.verifyAdministrador, proyectoController.update);
 router.delete('/remove', auth.verifyAdministrador,proyectoController.remove);
 router.put('/activate', auth.verifyAdministrador, proyectoController.activate);
