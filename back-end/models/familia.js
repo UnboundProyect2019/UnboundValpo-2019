@@ -1,6 +1,5 @@
 import mongoose,{Schema} from 'mongoose';
 
-/*
 const IntegranteSchema = new Schema({
     nombre_completo: { type: Number, default: 1}, 
     parentesco: { type: String}, 
@@ -10,7 +9,6 @@ const IntegranteSchema = new Schema({
     ingresos: {type: String, unique: true}
 });
 
-*/
 const familiaSchema = new Schema({
 
     ahijado: { type: Schema.ObjectId, ref:'ahijado', required: true },
@@ -28,7 +26,7 @@ const familiaSchema = new Schema({
     movilizacion: { type: Number},
     otro: { type: Number},
     estado: { type: Number, default: 1},
-    /*integrante: [ IntegranteSchema ],*/
+    integrante: [ IntegranteSchema ],
 });
 const Familia = mongoose.model('familia', familiaSchema);
 

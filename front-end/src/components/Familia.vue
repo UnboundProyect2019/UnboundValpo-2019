@@ -27,8 +27,84 @@
         <v-text-field class="text-xs-center" v-model="search" append-icon="search"
           label="Busqueda" solo hide-details></v-text-field>
         <v-spacer></v-spacer>
-      
       </v-toolbar>
+
+
+
+
+        <v-dialog v-model="dialog" max-width="600px">
+
+          <v-card class="mx-auto">
+            <v-card-title>
+              <span class="headline">{{ formTitle }}</span>
+            </v-card-title>
+
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col cols="12" sm="12" md="12">
+                    <v-text-field v-model="ficha_familiar" label="Ficha familiar"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="12" md="12">
+                    <v-text-field v-model="nombre_familia" label="Nombre familia"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="padre" label="Nombre del padre"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="madre" label="Nombre de la madre"></v-text-field>
+                  </v-col>
+                  <v-divider></v-divider>
+                  <h3>Informacio de egreso*</h3>
+                  <v-col cols="12" sm="6" md="6">
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="arriendo" label="Arriendo"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="agua" label="Agua"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="luz" label="Luz"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="gas" label="gas"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="movilizacion" label="Movilizacion"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="otro" label="otro"></v-text-field>
+                  </v-col>
+
+                  <v-divider></v-divider>
+                  <h3>Totales*</h3>
+
+                  <v-col cols="12" sm="6" md="6">
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="ingreso" label="Ingreso"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="egreso" label="Egreso"></v-text-field>
+                  </v-col>
+                
+                </v-row>
+              </v-container>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="close">Cancelar</v-btn>
+              <v-btn color="blue darken-1" text @click="guardar">Guardar</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      
+
+
+
+
     </template>
     <!-- TEMPLATE ACTIONS -->
     <template v-slot:item.action="{ item }">
@@ -42,37 +118,9 @@
     </template>
     <!-- FIN TEMPLATE ACTIONS -->
     
-    
-    
-    <template v-slot:item.carta_agradecimiento="{ item }">
-      <div v-if="item.carta_agradecimiento">
-        <v-btn text small color="success" @click="activarDesactivarMostrarCA(2,item)">Entregada</v-btn>
-      </div>
-      <div v-else>
-        <v-btn text small color="error" @click="activarDesactivarMostrarCA(1,item)">No Entregada</v-btn>
-      </div>
-    </template>
-
-    <template v-slot:item.carta_navidad="{ item }">
-      <div v-if="item.carta_navidad">
-        <v-btn text small color="success" @click="activarDesactivarMostrarCN(2,item)">Entregada</v-btn>
-      </div>
-      <div v-else>
-        <v-btn text small color="error" @click="activarDesactivarMostrarCN(1,item)">No Entregada</v-btn>
-      </div>
-    </template>
-
-    <template v-slot:item.carta_invierno="{ item }">
-      <div v-if="item.carta_invierno">
-        <v-btn text small color="success" @click="activarDesactivarMostrarCI(2,item)">Entregada</v-btn>
-      </div>
-      <div v-else>
-        <v-btn text small color="error" @click="activarDesactivarMostrarCI(1,item)">No Entregada</v-btn>
-      </div>
-    </template>
 
     <template v-slot:item.data="{ item }">
-      <v-btn>datos</v-btn>
+      <v-btn>Integrantes</v-btn>
     </template>
 
     <template v-slot:no-data>
@@ -89,12 +137,14 @@
       search:'',
       familias:[],
       headers: [
+        { text: 'Acciones', value: 'action', sortable: false },
         { text: 'Nombre familia', value: 'nombre_familia', sortable: false },
         { text: 'Padre', value: 'padre',sortable: false }, 
         { text: 'Madre', value: 'madre', sortable: false },
         { text: 'Ahijado', value: 'ahijado.nombre',sortable: true  },
-        { text: 'Estado', value: 'ahijado.estado' ,sortable: true },
         { text: 'Ficha Familiar', value: 'ficha_familiar',sortable: false },
+        { text: 'Integrantes familiares', value: 'data',sortable: false },
+
         // { text: 'Carta Navidad', value: 'carta_navidad',sortable: false },
         // { text: 'Carta Invierno', value: 'carta_invierno',sortable: false },
         // { text: 'Datos', value: 'data',sortable: false },
@@ -130,7 +180,16 @@
 
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'Nuevo Ahijado' : 'Editar Ahijado'
+        return this.editedIndex === -1 ? 'Nuevo Familia' : 'Editar Familia'
+      },
+      esAdministrador(){
+        return this.$store.state.usuario && this.$store.state.usuario.rol == 'Administrador' 
+      },
+      esAsistSocial(){
+        return this.$store.state.usuario && this.$store.state.usuario.rol == 'Asist_Social' 
+      },
+      esLector(){
+        return this.$store.state.usuario && this.$store.state.usuario.rol == 'Lector' 
       },
     },
 
@@ -190,19 +249,25 @@
         let me = this;
         let header = {"Token": this.$store.state.token};
         let configuracion = {headers:header}; //headers --> S          
-        if (this.validar()) {
-          return;
-        }
+
         if (this.editedIndex > -1) {
           //editar los datos del regisro
-           axios.put('ahijado/update',{
-              '_id':this._id,
-              'proyecto':this.proyecto, 
-              'nombre': this.nombre,
-              'apellidos': this.apellidos,
-              'fecha_nacimiento': this.fecha_nacimiento,
-              'discapacidad': this.discapacidad,
-              'nivel_educacional': this.nivel_educacional
+           axios.put('familia/update',{
+
+             '_id':this._id,
+            'ficha_familiar':this.ficha_familiar, 
+            'nombre_familia':this.nombre_familia,
+            'padre':this.padre,
+            'madre':this.madre,
+            'ingresos':this.ingresos,
+            'total':this.total,
+            'alimentacion': this.alimentacion,
+            'arriendo': this.arriendo,
+            'luz': this.luz,
+            'agua': this.agua,
+            'gas': this.gas,
+            'movilizacion':this.movilizacion,
+            'otro':this.otro,
             
             },configuracion)
           .then(function (response) {
@@ -255,15 +320,24 @@
       },
 
       editItem (item) {
+
         this._id=item._id;
-        this.proyecto=item.proyecto._id;
-        this.nombre=item.nombre;
-        this.apellidos=item.apellidos;
-        this.fecha_nacimiento=item.fecha_nacimiento;
-        this.discapacidad=item.discapacidad;
-        this.nivel_educacional=item.nivel_educacional;
-        this.dialog = true;
+        this.ficha_familiar=item.ficha_familiar;
+        this.nombre_familia=item.nombre_familia;
+        this.padre=item.padre;
+        this.madre=item.madre;
+        this.ingresos=item.ingresos;
+        this.total=item.total;
+        this.alimentacion=item.alimentacion;
+        this.arriendo=item.arriendo;
+        this.luz=item.luz;
+        this.agua=item.agua;
+        this.gas=item.gas;
+        this.movilizacion=item.movilizacion;
+        this.otro=item.otro;
         this.editedIndex=1;
+        this.dialog = true;
+
       },
 
     activarDesactivarMostrar(accion,item){
