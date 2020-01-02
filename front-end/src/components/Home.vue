@@ -1,7 +1,7 @@
 <template>
   <v-row class="fill-height">
     <v-col>
-      <v-sheet height="64">
+      <v-sheet height="30">
         <v-toolbar flat color="white">
     
           <v-dialog v-model="adModalEvent" max-width="450">

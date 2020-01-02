@@ -213,94 +213,7 @@
           </v-card>
         </v-dialog>
         <!-- Fin modal cartas de invierno-->
-        <!-- Modal Datos de ahijados-->
-        <v-dialog v-model="adModalDATA" max-width="700">
-          <v-card>
-            <v-contanier>
-              <v-card-title class="display-1">
-                Informacion de {{adNombreDATA}}
-              </v-card-title>
-              <v-divider></v-divider>
-                  <v-card-text>
-                    <v-container>
-                      <v-btn>Agregar Familia</v-btn>
-                      <v-row>
-                        <v-col cols="12" sm="6" md="6">
-                          <div>
-                            <strong > - Id : </strong>{{adIdDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="6">
-                          <div>
-                            <strong > - Nombre : </strong>{{adNombreDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="6">
-                          <div>
-                            <strong> - Apellidos : </strong>{{adApellidosDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="6">
-                          <div>
-                            <strong> - Fecha de nacimiento : </strong>{{adFecha_nacimientoDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="6">
-                          <div>
-                            <strong> - Discapacidad : </strong>{{adDiscapacidadDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="6">
-                          <div>
-                            <strong> - Nivel educacional : </strong>{{adNivel_educacionalDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="6">
-                          <div>
-                            <strong> - Calle : </strong>{{adDireccion_calleDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="6">
-                          <div>
-                            <strong> - Numero : </strong>{{adDireccion_numeroDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="6">
-                          <div>
-                            <strong> - Sector : </strong>{{adDireccion_sectorDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="6">
-                          <div>
-                            <strong> - Tipo de cuenta : </strong>{{adInfo_pago_tipo_cuentaDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="6">
-                          <div>
-                            <strong> - N° de cuenta : </strong>{{adInfo_pago_numero_cuentaDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="6">
-                          <div>
-                            <strong> - Banco : </strong>{{adInfo_pago_bancoDATA}}
-                          </div>
-                        </v-col>
-                      </v-row> 
-                    </v-container>
-                  </v-card-text>
-                
-              
-              <v-divider></v-divider>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn @click="activarDesactivarCerrarDATA()" color="primary" text large >
-                Cerrar
-                </v-btn>
-              </v-card-actions>
-            </v-contanier>
-          </v-card>
-        </v-dialog>
-        <!-- Fin modal datos ahijados-->
+      
         <!-- FIN DIALOGS -->
       </v-toolbar>
     </template>
@@ -313,14 +226,14 @@
       >
         edit
       </v-icon>
-      <!-- Implementar el eliminar -->
-      <v-icon
+      <!-- Implementar el eliminar ----------------------------------------------------------------------------------->
+      <!-- <v-icon
         small
         class="mr-2"
         @click="deleteItem(item)"
       >
         delete
-      </v-icon>
+      </v-icon> -->
     </template>
     <!-- FIN TEMPLATE ACTIONS -->
     
@@ -528,17 +441,6 @@
       guardarAhijado(item){
         // console.log(item);
         this.$store.dispatch("obtenerAhijado",item);
-        
-        // let me = this;
-        // let header = {"Token": this.$store.state.token};
-        // let configuracion = {headers:header};
-        // axios.get('ahijado/query',{'_id':item._id},configuracion).then(data => {
-        //   console.log(data);
-        //   this.$store.dispatch("obtenerAhijado",data);
-        // }).catch(function(error){
-        //   console.log(error);
-        // });
-        
       },
       selectProyecto(){ 
         let me = this;
@@ -635,7 +537,7 @@
           });
         } else {
           //guardar un nuevo registro
-          axios.post('ahijado/add',{ //puse un punto para acceder al obreto direccion y infro pago del objeto
+          axios.post('ahijado/add',{ //con un punto para acceder al objeto direccion y infro pago del objeto
             'proyecto':this.proyecto, 
             'nombre': this.nombre,
             'apellidos': this.apellidos,
@@ -672,8 +574,32 @@
         if (this.apellidos < 1 || this.apellidos.length > 100) {
           this.validaMensaje.push('El apellido del ahijado debe tener entre 1 y 100 caracteres');
         }
-         if (this.fecha_nacimiento < 1) {
+        if (this.fecha_nacimiento < 1) {
           this.validaMensaje.push('La fecha de nacimiento es obligatoria');
+        }
+        if (this.discapacidad.length > 60) {
+          this.validaMensaje.push('El dato "Discapacidad" debe tener menos de 60 caracteres');
+        }
+        if (this.nivel_educacional.length > 60) {
+          this.validaMensaje.push('El campo nivel educacional debe tener menos de 60 caracteres');
+        }
+        if (this.direccion_calle.length > 30) {
+          this.validaMensaje.push('El campo "direccion calle" debe tener menos de 30 caracteres');
+        }
+        if (this.direccion_numero.length > 5) {
+          this.validaMensaje.push('El campo "direccion numero" debe tener menos de 5 caracteres');
+        }
+        if (this.direccion_sector.length > 60) {
+          this.validaMensaje.push('El campo "direccion sector" debe tener menos de 60 caracteres');
+        }
+        if (this.info_pago_tipo_cuenta.length > 30) {
+          this.validaMensaje.push('El campo "informacion de pago - tipo de cuenta" debe tener menos de 30 caracteres');
+        }
+        if (this.info_pago_numero_cuenta.length > 30) {
+          this.validaMensaje.push('El campo "informacion de pago - numero de cuenta" debe tener menos de 30 caracteres');
+        }
+        if (this.info_pago_banco.length > 30) {
+          this.validaMensaje.push('El campo "informacion de pago - banco" debe tener menos de 30 caracteres');
         }
         if (this.validaMensaje.length) {
           this.valida = 1;
@@ -769,22 +695,6 @@
       this.adInfo_pago_bancoDATA=item.info_pago_banco;
 
     }, 
-
-    mostrarDATA(){
-      let me = this;
-      let header = {"Token": this.$store.state.token};
-      let configuracion = {headers:header}; //headers --> S
-      axios.get('ahijado/query',{'_id':this.adIdDATA},configuracion)
-        .then(function (response) {
-          me.adModalDATA=0; //deberia mantenerse en 1 creo
-          // me.adAccion=0;
-          // me.adNombre='';
-          me.adIdDATA='';
-          me.listar();  
-        }).catch(function (error) {
-          console.log(error);
-        });
-    },
 
     activar(){
       let me = this;
@@ -930,9 +840,7 @@
         this.adModalCI=0;
       },
 
-      activarDesactivarCerrarDATA(){
-        this.adModalDATA=0;
-      },
+      
 
       close () {
         this.dialog = false
