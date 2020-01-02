@@ -1,7 +1,5 @@
 <template>
-
   <v-simple-table >
-
     <template v-slot:default>
       <thead>
         <v-container>
@@ -11,7 +9,7 @@
             <div class="text-center">
                 <v-dialog
                 v-model="dialog"
-                width="600"
+                width="600" 
                 >
                 <template v-slot:activator="{ on }" v-if="!esLector">
                     <v-btn

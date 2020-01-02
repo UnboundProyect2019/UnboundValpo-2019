@@ -49,7 +49,7 @@ export default {
 
                 ficha_familiar: req.body.ficha_familiar,
                 nombre_familia: req.body.nombre_familia,
-                padre: req-body.padre,
+                padre: req.body.padre,
                 madre: req.body.madre,
                 ingresos: req.body.ingresos,
                 egresos: req.body.egresos,
@@ -61,7 +61,6 @@ export default {
                 gas: req.body.gas,
                 movilizacion: req.body.movilizacion,
                 otro: req.body.otro,
-                estado: req.body.estado
 
             });
             res.status(200).json(reg);

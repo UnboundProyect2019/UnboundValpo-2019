@@ -9,6 +9,7 @@ import Egresado from '../components/Egresado.vue'
 import Home from '../components/Home.vue'
 import DatoAhijado from '../components/DatoAhijado'
 import Familia from '../components/Familia'
+import Integrante from '../components/Integrante'
 
 Vue.use(VueRouter)
 
@@ -77,6 +78,7 @@ const routes = [
       asist_social:true
     }
   },
+
   {
     path: '/familias',
     name: 'familia',
@@ -86,7 +88,17 @@ const routes = [
       lector:true,
       asist_social:true
     }
-  }
+  }, 
+  {
+    path: '/integrantes', 
+    name: 'integrantes', 
+    component: Integrante, 
+    meta: {
+      administrador: true, 
+      lector: true, 
+      asist_social: true
+    }
+  },
 ]
 
 const router = new VueRouter({
