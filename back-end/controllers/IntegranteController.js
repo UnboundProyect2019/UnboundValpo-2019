@@ -14,7 +14,7 @@ export default {
     },
     query: async (req, res, next) => {
         try {
-            const reg= await models.Integrante.find({familia:req.query._id}); //consulta de un documento (por un id)
+            const reg= await models.Integrante.find({familia:req.query.familia}); //consulta de un documento (por un id)
             if (!reg) { // si no encuentro el documento 
                 res.status(404).send({
                     message: 'El registro no existe'

@@ -10,5 +10,4 @@ router.get('/list', auth.verifyUsuario, integranteController.list);
 router.put('/update', auth.verifyUsuario, integranteController.update);
 router.delete('/remove', auth.verifyUsuario,integranteController.remove);
 
-
 export default router;

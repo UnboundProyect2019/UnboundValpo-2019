@@ -45,7 +45,6 @@
                     class="elevation-1"
                   ></v-data-table>
 
-
                 </template>
               </v-container>
             </v-card-text>
@@ -134,7 +133,7 @@
                     <v-text-field v-model="madre" label="Nombre de la madre"></v-text-field>
                   </v-col>
                   <v-divider></v-divider>
-                  <h3>Informacio de egreso*</h3>
+                  <h3>Informacion de egreso*</h3>
                   <v-col cols="12" sm="6" md="6">
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
@@ -237,12 +236,12 @@
         // { text: 'Datos', value: 'data',sortable: false },
       ],
       cabeceraIntegrantes: [
-        { text: 'Nombre completo', value: 'integrantes.nombre_completo', sortable: false }, 
-        { text: 'Parentesco', value: 'intengrantes.parentesco', sortable: false },
-        { text: 'Edad', value: 'integrantes.edad', sortable: false },
-        { text: 'Nivel educacional', value: 'integrantes.nivel_educacional', sortable: false },
-        { text: 'Ocupacion', value: 'integrantes.ocupacion', sortable: false },
-        { text: 'Ingresos', value: 'integrantes.ingresos', sortable: false },
+        { text: 'Nombre completo', value: 'nombre_completo', sortable: false }, 
+        { text: 'Parentesco', value: 'parentesco', sortable: false },
+        { text: 'Edad', value: 'edad', sortable: false },
+        { text: 'Nivel educacional', value: 'nivel_educacional', sortable: false },
+        { text: 'Ocupacion', value: 'ocupacion', sortable: false },
+        { text: 'Ingresos', value: 'ingresos', sortable: false },
 
 
         // { text: 'Carta Navidad', value: 'carta_navidad',sortable: false },
@@ -507,221 +506,37 @@
 
       },
 
-
       listarIntegrantes(item){
-
-        this.editedIndex = 1;
+        // this.editedIndex = 1;
         this._idFamilia = item._id;
         this.dialog2 = true;
-        // console.log(item);
-
         let me = this;
         let header = {"Token": this.$store.state.token};
         let configuracion = {headers:header}; //headers --> S
-        axios.get('integrante/query',{'_id':this._idFamilia},configuracion).then(function (response) { //error
-            // console.log(item);
-            me.integrantes = response.data;
-            limpiarIntegrante();
+        // ,{'familia':this._idFamilia} ,configuracion
+        axios.get('integrante/query',{params:{familia:this._idFamilia},configuracion}).then(function (response) { //error acaaaa
+          // console.log(item);
+          me.integrantes = response.data;
+          me.limpiarIntegrante();
         }).catch(function (error) {
           console.log(error);
         });
-
       },
 
-    activarDesactivarMostrar(accion,item){
-      this.adModal=1;
-      this.adNombre=item.nombre;
-      this.adId=item._id;
-      if (accion ==1) {
-        this.adAccion = 1;
-      } else if (accion == 2) {
-        this.adAccion = 2;
-      } else {
-        this.adModal=0;
-      }
-    }, 
-
-    activarDesactivarMostrarCA(accion,item){
-      this.adModalCA=1;
-      // this.adNombre=item.nombre;
-      this.adIdCA=item._id;
-      if (accion ==1) {
-        this.adAccionCA = 1;
-      } else if (accion == 2) {
-        this.adAccionCA = 2;
-      } else {
-        this.adModalCA=0;
-      }
-    }, 
-
-    activarDesactivarMostrarCN(accion,item){
-      this.adModalCN=1;
-      // this.adNombre=item.nombre;
-      this.adIdCN=item._id;
-      if (accion ==1) {
-        this.adAccionCN = 1;
-      } else if (accion == 2) {
-        this.adAccionCN = 2;
-      } else {
-        this.adModalCN=0;
-      }
-    }, 
-
-    activarDesactivarMostrarCI(accion,item){
-      this.adModalCI=1;
-      // this.adNombre=item.nombre;
-      this.adIdCI=item._id;
-      if (accion ==1) {
-        this.adAccionCI = 1;
-      } else if (accion == 2) {
-        this.adAccionCI = 2;
-      } else {
-        this.adModalCI=0;
-      }
-    }, 
-
-    activar(){
-      let me = this;
-      let header = {"Token": this.$store.state.token};
-      let configuracion = {headers:header}; //headers --> S
-      axios.put('ahijado/activate',{'_id':this.adId},configuracion)
-        .then(function (response) {
-          me.adModal=0;
-          me.adAccion=0;
-          me.adNombre='';
-          me.adId='';
-          me.listar();
-        }).catch(function (error) {
-          console.log(error);
-        });
-    },
- 
-    activate_carta_agradecimiento(){
-      let me = this;
-      let header = {"Token": this.$store.state.token};
-      let configuracion = {headers:header}; //headers --> S
-      axios.put('ahijado/activateca',{'_id':this.adIdCA},configuracion)
-      .then(function (response) {
-        me.adModalCA=0;
-        me.adAccionCA=0;
-        // me.adNombre='';
-        me.adIdCA='';
-        me.listar();
-      }).catch(function (error) {
-        console.log(error);
-      });
-    },
-
-    activate_carta_navidad(){
-      let me = this;
-      let header = {"Token": this.$store.state.token};
-      let configuracion = {headers:header}; //headers --> S
-      axios.put('ahijado/activatecn',{'_id':this.adIdCN},configuracion)
-      .then(function (response) {
-        me.adModalCN=0;
-        me.adAccionCN=0;
-        // me.adNombre='';
-        me.adIdCN='';
-        me.listar();
-      }).catch(function (error) {
-        console.log(error);
-      });
-    },
-
-    activate_carta_invierno(){
-      let me = this;
-      let header = {"Token": this.$store.state.token};
-      let configuracion = {headers:header}; //headers --> S
-      axios.put('ahijado/activateci',{'_id':this.adIdCI},configuracion)
-      .then(function (response) {
-        me.adModalCI=0;
-        me.adAccionCI=0;
-        // me.adNombre='';
-        me.adIdCI='';
-        me.listar();
-      }).catch(function (error) {
-        console.log(error);
-      });
-    },
-
-    desactivar(){
-      let me = this;
-      let header = {"Token": this.$store.state.token};
-      let configuracion = {headers:header}; //headers --> S
-      axios.put('ahijado/deactivate',{'_id':this.adId},configuracion)
-      .then(function (response) {
-        me.adModal=0;
-        me.adAccion=0;
-        me.adNombre='';
-        me.adId='';
-        me.listar();
-      }).catch(function (error) {
-        console.log(error);
-      });
-    },
-
-    deactivate_carta_agradecimiento(){
-      let me = this;
-      let header = {"Token": this.$store.state.token};
-      let configuracion = {headers:header}; //headers --> S
-      axios.put('ahijado/deactivateca',{'_id':this.adIdCA},configuracion)
-      .then(function (response) {
-        me.adModalCA=0;
-        me.adAccionCA=0;
-        // me.adNombre='';
-        me.adIdCA='';
-        me.listar();
-      }).catch(function (error) {
-        console.log(error);
-      });
-    },
-
-    deactivate_carta_navidad(){
-      let me = this;
-      let header = {"Token": this.$store.state.token};
-      let configuracion = {headers:header}; //headers --> S
-      axios.put('ahijado/deactivatecn',{'_id':this.adIdCN},configuracion)
-      .then(function (response) {
-        me.adModalCN=0;
-        me.adAccionCN=0;
-        // me.adNombre='';
-        me.adIdCN='';
-        me.listar();
-      }).catch(function (error) {
-        console.log(error);
-      });
-    },
-
-    deactivate_carta_invierno(){
-      let me = this;
-      let header = {"Token": this.$store.state.token};
-      let configuracion = {headers:header}; //headers --> S
-      axios.put('ahijado/deactivateci',{'_id':this.adIdCI},configuracion)
-      .then(function (response) {
-        me.adModalCI=0;
-        me.adAccionCI=0;
-        // me.adNombre='';
-        me.adIdCI='';
-        me.listar();
-      }).catch(function (error) {
-        console.log(error);
-      });
-    },
-
-      activarDesactivarCerrar(){
-        this.adModal=0;
-      },
-
-      activarDesactivarCerrarCA(){
-        this.adModalCA=0;
-      },
-
-      activarDesactivarCerrarCN(){
-        this.adModalCN=0;
-      },
-
-      activarDesactivarCerrarCI(){
-        this.adModalCI=0;
+      activar(){
+        let me = this;
+        let header = {"Token": this.$store.state.token};
+        let configuracion = {headers:header}; //headers --> S
+        axios.put('ahijado/activate',{'_id':this.adId},configuracion)
+          .then(function (response) {
+            me.adModal=0;
+            me.adAccion=0;
+            me.adNombre='';
+            me.adId='';
+            me.listar();
+          }).catch(function (error) {
+            console.log(error);
+          });
       },
       close () {
         this.dialog = false
