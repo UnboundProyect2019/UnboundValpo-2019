@@ -515,7 +515,7 @@
         let header = {"Token": this.$store.state.token};
         let configuracion = {headers:header}; //headers --> S
         // ,{'familia':this._idFamilia} ,configuracion  ?familia=`${_idFamilia}`  ,{params:{familia:this._idFamilia}}
-        axios.get('integrante/query?familia='+`${item._id}`,configuracion).then(function (response) { //error acaaaa
+        axios.get('integrante/query?familia='+`${item._id}`,configuracion).then(function (response) { //error 
           // console.log(item);
           me.integrantes = response.data;
           me.limpiarIntegrante();
