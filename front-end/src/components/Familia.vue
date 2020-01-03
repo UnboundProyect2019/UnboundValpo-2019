@@ -250,6 +250,7 @@
       ],
       editedIndex: -1,
       editedIntegrante: -1,
+      item:'', //ojo
       _id:'',
       proyecto:'',
       proyectos: [],
@@ -513,8 +514,8 @@
         let me = this;
         let header = {"Token": this.$store.state.token};
         let configuracion = {headers:header}; //headers --> S
-        // ,{'familia':this._idFamilia} ,configuracion
-        axios.get('integrante/query',{params:{familia:this._idFamilia},configuracion}).then(function (response) { //error acaaaa
+        // ,{'familia':this._idFamilia} ,configuracion  ?familia=`${_idFamilia}`  ,{params:{familia:this._idFamilia}}
+        axios.get('integrante/query?familia='+`${item._id}`,configuracion).then(function (response) { //error acaaaa
           // console.log(item);
           me.integrantes = response.data;
           me.limpiarIntegrante();

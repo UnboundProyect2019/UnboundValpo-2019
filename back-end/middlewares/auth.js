@@ -4,7 +4,7 @@ export default {
     verifyUsuario: async (req, res, next) => { //verificar si es un usuario autenticado
         if (!req.headers.token) { // si no entra aca, es por que el usuario envio el token
             res.status(404).send({
-                message: 'No token'
+                message: 'No tokenn' //entra aca
             })
         } 
         const response = await tokenService.decode(req.headers.token);
@@ -20,7 +20,7 @@ export default {
     verifyAdministrador: async (req, res, next) => { 
         if (!req.headers.token) { // si no entra aca, es por que el usuario envio el token
             res.status(404).send({
-                message: 'No token'
+                message: 'No tokenn'
             })
         }
         const response = await tokenService.decode(req.headers.token);
