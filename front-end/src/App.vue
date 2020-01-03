@@ -27,9 +27,9 @@
             <v-list-item link >
               
               <v-list-item-content>
-                  <v-list-item-title class="title">nombre del usuario</v-list-item-title>
+                  <v-list-item-title class="title">{{ usuario.email }}</v-list-item-title>
                   <v-list-item-title>Rol : {{ usuario.rol }}</v-list-item-title>
-                  <v-list-item-subtitle>{{ usuario.email }}</v-list-item-subtitle>
+                  <!-- <v-list-item-subtitle>{{ usuario.email }}</v-list-item-subtitle> -->
               </v-list-item-content>
 
               <v-list-item-action>

@@ -29,11 +29,7 @@
         <v-spacer></v-spacer>
       </v-toolbar>
 
-
-
-
-
-        <v-dialog v-model="dialog2" max-width="1000px">
+        <v-dialog v-model="dialog2" max-width="1000px"> <!-- Implementar datatable -->
 
           <v-card class="mx-auto">
             <v-card-title>
@@ -45,9 +41,11 @@
                 <template>
                   <v-data-table
                     :headers="cabeceraIntegrantes"
-                    :items="familias.integrantes"
+                    :items="integrantes"
                     class="elevation-1"
                   ></v-data-table>
+
+
                 </template>
               </v-container>
             </v-card-text>
@@ -55,16 +53,63 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="close2">Cancelar</v-btn>
-              <v-btn color="blue darken-1" text @click="guardar">Guardar</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
 
+       <v-dialog v-model="dialogintegrante" max-width="500px">
 
+          <v-card class="mx-auto">
+            <v-card-title>
+              <span class="headline">{{ formTitleIntegrante }}</span>
+            </v-card-title>
 
+            <v-card-text>
+              <v-container>
+                <!-- <template>
+                  <v-data-table
+                    :headers="cabeceraIntegrantes"
+                    :items="familias.integrantes"
+                    class="elevation-1"
+                  ></v-data-table>
+                </template>
+                 -->
+              <v-row>
+                <v-col cols="12" sm="12" md="12">
+                  <v-text-field v-model="nombre_completo" label="nombre del integranre" ></v-text-field>
+                </v-col>
 
+                <v-col cols="12" sm="6" md="6">
+                  <v-text-field v-model="parentesco" label="Parentesco" ></v-text-field>
+                </v-col>
 
+                <v-col cols="12" sm="6" md="6">
+                  <v-text-field v-model="edad" label="Edad" ></v-text-field>
+                </v-col>
 
+                <v-col cols="12" sm="6" md="6">
+                  <v-text-field v-model="nivel_educacional" label="nivel educacional" ></v-text-field>
+                </v-col>
+
+                <v-col cols="12" sm="6" md="6">
+                  <v-text-field v-model="ocupacion" label="Ocupacion" ></v-text-field>
+                </v-col>
+
+                <v-col cols="12" sm="12" md="12">
+                  <v-text-field v-model="ingresos" label="Ingresos" ></v-text-field>
+                </v-col>
+              </v-row>
+
+              </v-container>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="close3">Cancelar</v-btn>
+              <v-btn color="blue darken-1" text @click="guardarIntegrante(item)">Guardar</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
 
         <v-dialog v-model="dialog" max-width="600px">
 
@@ -114,14 +159,14 @@
                   <v-divider></v-divider>
                   <h3>Totales*</h3>
 
-                  <v-col cols="12" sm="6" md="6">
+                  <!-- <v-col cols="12" sm="6" md="6">
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field v-model="ingreso" label="Ingreso"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field v-model="egreso" label="Egreso"></v-text-field>
-                  </v-col>
+                  </v-col> -->
                 
                 </v-row>
               </v-container>
@@ -135,9 +180,6 @@
           </v-card>
         </v-dialog>
     
-
-
-
     </template>
     <!-- TEMPLATE ACTIONS -->
     <template v-slot:item.action="{ item }">
@@ -151,14 +193,15 @@
     </template>
     <!-- FIN TEMPLATE ACTIONS -->
     
-
-
-
-
     <template v-slot:item.data="{ item }">
+      <v-btn @click="listarIntegrantes(item)">Integrantes</v-btn>
+    </template>
 
-        <v-btn @click="listarIntegrantes(item)">Integrantes</v-btn>
-
+    <template v-slot:item.add_integrante="{ item }">
+      <!-- <v-btn color="green">Agregar Integrante</v-btn> -->
+      <v-btn class="mx-2" fab dark small color="green">
+        <v-icon dark @click="addIntegrante(item)">mdi-plus</v-icon>  <!-- en el item esta guardado el id de familia -->
+      </v-btn>
     </template>
 
     <template v-slot:no-data>
@@ -169,10 +212,13 @@
 </template>
 <script>
   import axios from 'axios';
+  // import { mapState,mapMutations,mapActions } from 'vuex';
+
   export default {
     data: () => ({
       dialog: false,
       dialog2: false,
+      dialogintegrante: false,
       search:'',
       familias:[],
       integrantes: [],
@@ -184,6 +230,7 @@
         { text: 'Ahijado', value: 'ahijado.nombre',sortable: true  },
         { text: 'Ficha Familiar', value: 'ficha_familiar',sortable: false },
         { text: 'Integrantes familiares', value: 'data',sortable: false },
+        { text: 'Agregar Integrantes', value: 'add_integrante',sortable: false },
 
         // { text: 'Carta Navidad', value: 'carta_navidad',sortable: false },
         // { text: 'Carta Invierno', value: 'carta_invierno',sortable: false },
@@ -203,6 +250,7 @@
         // { text: 'Datos', value: 'data',sortable: false },
       ],
       editedIndex: -1,
+      editedIntegrante: -1,
       _id:'',
       proyecto:'',
       proyectos: [],
@@ -217,23 +265,36 @@
       adAccion:0, //dice que accion deseo realizar, si es 1 activar, si es 2 desactivar
       adNombre:'',//el nombre del proyecto que deseo activar o desactivar
       adId:'', //obtengo el id del proyecto que deseo activar o desactivar
-      
-      adModalCA:0,
-      adAccionCA:'',
-      adIdCA:'',
+      _idFamilia:'',
+      nombre_completo:'',
+      parentesco:'',
+      edad:'',
+      nivel_educacional:'',
+      ocupacion:'',
+      ingresos:'',
 
-      adModalCN:0,
-      adAccionCN:'',
-      adIdCN:'',
-
-      adModalCI:0,
-      adAccionCI:'',
-      adIdCI:'',
+       ficha_familiar : '',
+        nombre_familia : '',
+        padre:'',
+        madre:'',
+        ingresos:0,
+        egresos:0,
+        total:0,
+        alimentacion:0,
+        arriendo : 0,
+        luz : 0,
+        agua : 0,
+        gas : 0,
+        movilizacion : 0,
+        otro : 0
     }),
 
     computed: {
       formTitle () {
         return this.editedIndex === -1 ? 'Nuevo Familia' : 'Editar Familia'
+      },
+      formTitleIntegrante () {
+        return this.editedIntegrante === -1 ? 'Nuevo Integrante' : 'Editar Integrante'
       },
       esAdministrador(){
         return this.$store.state.usuario && this.$store.state.usuario.rol == 'Administrador' 
@@ -254,24 +315,13 @@
 
     created () {
       this.listar();
-      this.selectProyecto();
+      // this.selectProyecto();
     },
 
     methods: {
-      selectProyecto(){ //hacer disponible para asist social
-        let me = this;
-        let proyectoArray =[];
-        let header = {"Token": this.$store.state.token};
-        let configuracion = {headers:header}; //headers --> S
-        axios.get('proyecto/list',configuracion).then(function (response) { //OJO
-            // console.log(response);
-            proyectoArray = response.data;
-            proyectoArray.map(function (x) {
-                me.proyectos.push({text:x.nombre_proyecto, value:x._id});
-            })
-        }).catch(function (error) {
-          console.log(error);
-        });
+      addIntegrante(item){ // hacer
+        this._idFamilia = item._id;
+        this.dialogintegrante = true;  
       },
       listar(){
         let me = this;
@@ -297,7 +347,71 @@
         this.validaMensaje=[];
         this.editedIndex=-1;
       },
+      limpiarIntegrante(){
+        this._idFamilia='';
+        this.nombre_completo='';
+        this.parentesco='';
+        this.edad='';
+        this.nivel_educacional='';
+        this.ocupacion='';
+        this.ingresos='';
+        this.valida=0;
+        this.validaMensaje=[];
+        this.editedIndex=-1;
+      },
+      guardarIntegrante(item){
+        let me = this;
+        let header = {"Token": this.$store.state.token};
+        let configuracion = {headers:header}; //headers --> S   
+        
+        if (this.editedIndex > -1) {
+          //editar los datos del regisro
+           axios.put('familia/update',{
 
+            '_id':this._id,
+            'ficha_familiar':this.ficha_familiar, 
+            'nombre_familia':this.nombre_familia,
+            'padre':this.padre,
+            'madre':this.madre,
+            'ingresos':this.ingresos,
+            'total':this.total,
+            'alimentacion': this.alimentacion,
+            'arriendo': this.arriendo,
+            'luz': this.luz,
+            'agua': this.agua,
+            'gas': this.gas,
+            'movilizacion':this.movilizacion,
+            'otro':this.otro,
+            
+            },configuracion)
+          .then(function (response) {
+            me.limpiar();
+            me.close();
+            me.listar();
+          }).catch(function (error) {
+            console.log(error);
+          });
+        } else {
+          //guardar un nuevo registro
+          axios.post('integrante/add',{
+            'familia':this._idFamilia,
+            'nombre_completo':this.nombre_completo, 
+            'parentesco': this.parentesco,
+            'edad': this.edad,
+            'nivel_educacional': this.nivel_educacional,
+            'ocupacion': this.ocupacion,
+            'ingresos': this.ingresos
+            
+            },configuracion)
+          .then(function (response) {
+            me.limpiarIntegrante();
+            me.close3();
+            // me.listar();
+          }).catch(function (error) {
+            console.log(error);
+          });
+        }
+      },
       guardar(){
         let me = this;
         let header = {"Token": this.$store.state.token};
@@ -396,11 +510,21 @@
 
       listarIntegrantes(item){
 
-
-
-
-        this.editedIndex=1;
+        this.editedIndex = 1;
+        this._idFamilia = item._id;
         this.dialog2 = true;
+        // console.log(item);
+
+        let me = this;
+        let header = {"Token": this.$store.state.token};
+        let configuracion = {headers:header}; //headers --> S
+        axios.get('integrante/query',{'_id':this._idFamilia},configuracion).then(function (response) { //error
+            // console.log(item);
+            me.integrantes = response.data;
+            limpiarIntegrante();
+        }).catch(function (error) {
+          console.log(error);
+        });
 
       },
 
@@ -605,6 +729,9 @@
       close2 () {
         this.dialog2 = false
       },
+      close3 (){
+        this.dialogintegrante = false
+      }
 
     },
   }

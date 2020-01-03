@@ -241,7 +241,9 @@
     </template>
 
     <template v-slot:item.data="{ item }">
-      <v-btn>datos</v-btn>
+      <v-list-item :to="{name:'datoahijado'}">
+        <v-btn  x-large @click="guardarAhijado(item)">datos</v-btn>
+      </v-list-item>
     </template>
 
     <template v-slot:no-data>
@@ -252,6 +254,8 @@
 </template>
 <script>
   import axios from 'axios';
+  import { mapState,mapMutations,mapActions } from 'vuex';
+
   export default {
     data: () => ({
       dialog: false,
@@ -318,6 +322,11 @@
     },
 
     methods: {
+      ...mapActions(['obtenerAhijado']),
+      guardarAhijado(item){
+        // console.log(item);
+        this.$store.dispatch("obtenerAhijado",item);
+      },
       selectProyecto(){ //hacer disponible para asist social
         let me = this;
         let proyectoArray =[];
