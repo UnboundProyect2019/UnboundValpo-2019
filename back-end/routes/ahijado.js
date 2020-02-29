@@ -5,7 +5,7 @@ import auth from '../middlewares/auth';
 const router = routerx();
 //ver error aca
 router.post('/add',auth.verifyAsistSocial ,ahijadoController.add);
-router.get('/query', auth.verifyAsistSocial , ahijadoController.query);
+router.get('/query', auth.verifyUsuario , ahijadoController.query);
 router.get('/listAhijados', auth.verifyUsuario, ahijadoController.listAhijados);
 router.get('/listEgresados', auth.verifyUsuario, ahijadoController.listEgresados);
 router.put('/update', auth.verifyAsistSocial , ahijadoController.update);

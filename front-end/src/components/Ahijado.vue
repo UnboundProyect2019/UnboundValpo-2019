@@ -11,7 +11,7 @@
           <v-tabs>
             <v-tab :to="{name:'ahijado'}">Ahijados</v-tab>
             <v-tab :to="{name:'egresado'}">Egresados</v-tab>
-            <v-tab :to="{name:'padrino'}">Padrinos</v-tab>
+            <v-tab :to="{name:'familia'}">Familias</v-tab>
           </v-tabs>
         </div>
       </template>
@@ -213,93 +213,7 @@
           </v-card>
         </v-dialog>
         <!-- Fin modal cartas de invierno-->
-        <!-- Modal Datos de ahijados-->
-        <v-dialog v-model="adModalDATA" max-width="700">
-          <v-card>
-            <v-contanier>
-              <v-card-title class="display-1">
-                Informacion de {{adNombreDATA}}
-              </v-card-title>
-              <v-divider></v-divider>
-                  <v-card-text>
-                    <v-container>
-                      <v-row>
-                        <v-col cols="12" sm="12" md="12">
-                          <div>
-                            <strong > - Nombre : </strong>{{adNombreDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="12" md="12">
-                          <div>
-                            <strong> - Apellidos : </strong>{{adApellidosDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="12" md="12">
-                          <div>
-                            <strong> - Fecha de nacimiento : </strong>{{adFecha_nacimientoDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="12" md="12">
-                          <div>
-                            <strong> - Discapacidad : </strong>{{adDiscapacidadDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="12" md="12">
-                          <div>
-                            <strong> - Nivel educacional : </strong>{{adNivel_educacionalDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="12" md="12">
-                          <div>
-                            <strong> - Calle : </strong>{{adDireccion_calleDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="12" md="12">
-                          <div>
-                            <strong> - Numero : </strong>{{adDireccion_numeroDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="12" md="12">
-                          <div>
-                            <strong> - Sector : </strong>{{adDireccion_sectorDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="12" md="12">
-                          <div>
-                            <strong> - Tipo de cuenta : </strong>{{adInfo_pago_tipo_cuentaDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="12" md="12">
-                          <div>
-                            <strong> - N° de cuenta : </strong>{{adInfo_pago_numero_cuentaDATA}}
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="12" md="12">
-                          <div>
-                            <strong> - Banco : </strong>{{adInfo_pago_bancoDATA}}
-                          </div>
-                        </v-col>
-                      </v-row> 
-                    </v-container>
-                    <!-- <p><strong>Nombre : </strong>{{adNombreDATA}}</p>
-                    <p><strong>Apellidos : </strong>{{adApellidosDATA}}</p>
-                    <p><strong>Fecha de nacimiento : </strong>{{adFecha_nacimientoDATA}}</p>
-                    <p><strong>Discapacidad : </strong>{{adDiscapacidadDATA}}</p>
-                    <p><strong>Nivel educacional : </strong>{{adNivel_educacionalDATA}}</p> -->
-                  </v-card-text>
-                
-              
-              <v-divider></v-divider>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn @click="activarDesactivarCerrarDATA()" color="primary" text large >
-                Cerrar
-                </v-btn>
-              </v-card-actions>
-            </v-contanier>
-          </v-card>
-        </v-dialog>
-        <!-- Fin modal datos ahijados-->
+      
         <!-- FIN DIALOGS -->
       </v-toolbar>
     </template>
@@ -312,48 +226,103 @@
       >
         edit
       </v-icon>
+      <!-- Implementar el eliminar ----------------------------------------------------------------------------------->
+      <!-- <v-icon
+        small
+        class="mr-2"
+        @click="deleteItem(item)"
+      >
+        delete
+      </v-icon> -->
     </template>
     <!-- FIN TEMPLATE ACTIONS -->
     
     <template v-slot:item.estado="{ item }">
-      <div v-if="item.estado">
-        <!-- <span class="green--text">Activo</span> -->
-        <v-btn small text color="success" @click="activarDesactivarMostrar(2,item)">Activo</v-btn>
-      </div>
-      <div v-else>
-        <v-btn small text color="error" @click="activarDesactivarMostrar(1,item)">Inactivo</v-btn>
-      </div>
+      <template v-if="esLector">
+        <div v-if="item.estado">
+          <span class="green--text">Activo</span>
+        </div>
+        <div v-else>
+          <span class="red--text">Egresado</span>
+        </div>
+      </template>
+      <template v-else>
+        <div v-if="item.estado">
+          <!-- <span class="green--text">Activo</span> -->
+          <v-btn small text color="success" @click="activarDesactivarMostrar(2,item)">Activo</v-btn>
+        </div>
+        <div v-else>
+          <v-btn small text color="error" @click="activarDesactivarMostrar(1,item)">Inactivo</v-btn>
+        </div>
+      </template>
+     
     </template> 
     
     <template v-slot:item.carta_agradecimiento="{ item }">
-      <div v-if="item.carta_agradecimiento">
-        <v-btn text small color="success" @click="activarDesactivarMostrarCA(2,item)">Entregada</v-btn>
-      </div>
-      <div v-else>
-        <v-btn text small color="error" @click="activarDesactivarMostrarCA(1,item)">No Entregada</v-btn>
-      </div>
+      <template v-if="esLector">
+          <div v-if="item.carta_agradecimiento">
+            <span class="green--text">Entregada</span>
+          </div>
+          <div v-else>
+            <span class="red--text">No entregada</span>
+          </div>
+      </template>
+      <template v-else>
+        <div v-if="item.carta_agradecimiento">
+          <v-btn text small color="success" @click="activarDesactivarMostrarCA(2,item)">Entregada</v-btn>
+        </div>
+        <div v-else>
+          <v-btn text small color="error" @click="activarDesactivarMostrarCA(1,item)">No Entregada</v-btn>
+        </div>
+      </template>
     </template>
 
     <template v-slot:item.carta_navidad="{ item }">
-      <div v-if="item.carta_navidad">
-        <v-btn text small color="success" @click="activarDesactivarMostrarCN(2,item)">Entregada</v-btn>
-      </div>
-      <div v-else>
-        <v-btn text small color="error" @click="activarDesactivarMostrarCN(1,item)">No Entregada</v-btn>
-      </div>
+      <template v-if="esLector">
+          <div v-if="item.carta_navidad">
+            <span class="green--text">Entregada</span>
+          </div>
+          <div v-else>
+            <span class="red--text">No entregada</span>
+          </div>
+      </template>
+      <template v-else>
+        <div v-if="item.carta_navidad">
+          <v-btn text small color="success" @click="activarDesactivarMostrarCA(2,item)">Entregada</v-btn>
+        </div>
+        <div v-else>
+          <v-btn text small color="error" @click="activarDesactivarMostrarCA(1,item)">No Entregada</v-btn>
+        </div>
+      </template>
     </template>
 
     <template v-slot:item.carta_invierno="{ item }">
-      <div v-if="item.carta_invierno">
-        <v-btn text small color="success" @click="activarDesactivarMostrarCI(2,item)">Entregada</v-btn>
-      </div>
-      <div v-else>
-        <v-btn text small color="error" @click="activarDesactivarMostrarCI(1,item)">No Entregada</v-btn>
-      </div>
+      <template v-if="esLector">
+          <div v-if="item.invierno">
+            <span class="green--text">Entregada</span>
+          </div>
+          <div v-else>
+            <span class="red--text">No entregada</span>
+          </div>
+      </template>
+      <template v-else>
+        <div v-if="item.invierno">
+          <v-btn text small color="success" @click="activarDesactivarMostrarCA(2,item)">Entregada</v-btn>
+        </div>
+        <div v-else>
+          <v-btn text small color="error" @click="activarDesactivarMostrarCA(1,item)">No Entregada</v-btn>
+        </div>
+      </template>
     </template>
 
     <template v-slot:item.data="{ item }">
-      <v-btn text small @click="activarDesactivarMostrarDATA(item)">datos</v-btn>
+      <!-- en este item esta los datos del ahijado que quiero mostrar en el componente -->
+      <!-- <v-btn text small @click="activarDesactivarMostrarDATA(item)">{{item._id}}</v-btn> -->
+      <v-list-item :to="{name:'datoahijado'}">
+        <v-btn  x-large @click="guardarAhijado(item)">datos</v-btn>
+      </v-list-item>
+      <!-- <v-btn text small :to="{name:'datoahijado'}" @click="guardarAhijado(item)">datos</v-btn> -->
+      <!-- :to="{name:'datoahijado'}" -->
     </template>
 
     <template v-slot:no-data>
@@ -364,6 +333,9 @@
 </template>
 <script>
   import axios from 'axios';
+  // import Vuex from 'vuex'
+  import { mapState,mapMutations,mapActions } from 'vuex';
+
   export default {
     data: () => ({
       dialog: false,
@@ -431,6 +403,8 @@
       adInfo_pago_tipo_cuentaDATA:'',
       adInfo_pago_numero_cuentaDATA:'',
       adInfo_pago_bancoDATA:'',
+
+      item2:{}
     }),
 
     computed: {
@@ -442,7 +416,10 @@
       },
       esAsistSocial(){
         return this.$store.state.usuario && this.$store.state.usuario.rol == 'Asist_Social' 
-      }
+      },
+      esLector(){
+        return this.$store.state.usuario && this.$store.state.usuario.rol == 'Lector' 
+      },
     },
 
     watch: {
@@ -458,8 +435,12 @@
     },
 
     methods: {
-      ejemplo(){
-        console.log('Funciona &&');
+      // ...mapMutations(['setAhijado']),
+      // ...mapState(['obtenerAhijado']),
+      ...mapActions(['obtenerAhijado']),
+      guardarAhijado(item){
+        // console.log(item);
+        this.$store.dispatch("obtenerAhijado",item);
       },
       selectProyecto(){ 
         let me = this;
@@ -530,7 +511,7 @@
           return;
         }
         if (this.editedIndex > -1) {
-          //editar los datos del regisro
+          //editar los datos del regisro -------------------> OJO CON EL NUEVO MODELO AHIJADO
            axios.put('ahijado/update',{
               '_id':this._id,
               'proyecto':this.proyecto, 
@@ -539,12 +520,12 @@
               'fecha_nacimiento': this.fecha_nacimiento,
               'discapacidad': this.discapacidad,
               'nivel_educacional': this.nivel_educacional,
-              'direccion_calle':this.direccion_calle,
-              'direccion_numero':this.direccion_numero,
-              'direccion_sector':this.direccion_sector,
-              'info_pago_tipo_cuenta':this.info_pago_tipo_cuenta,
-              'info_pago_numero_cuenta':this.info_pago_numero_cuenta,
-              'info_pago_banco':this.info_pago_banco
+              'direccion.calle':this.direccion_calle,
+              'direccion.numero':this.direccion_numero,
+              'direccion.sector':this.direccion_sector,
+              'info_pago.tipo_cuenta':this.info_pago_tipo_cuenta,
+              'info_pago.numero_cuenta':this.info_pago_numero_cuenta,
+              'info_pago.pago_banco':this.info_pago_banco
             
             },configuracion)
           .then(function (response) {
@@ -556,19 +537,19 @@
           });
         } else {
           //guardar un nuevo registro
-          axios.post('ahijado/add',{
+          axios.post('ahijado/add',{ //con un punto para acceder al objeto direccion y infro pago del objeto
             'proyecto':this.proyecto, 
             'nombre': this.nombre,
             'apellidos': this.apellidos,
             'fecha_nacimiento': this.fecha_nacimiento,
             'discapacidad': this.discapacidad,
             'nivel_educacional': this.nivel_educacional,
-            'direccion_calle':this.direccion_calle,
-            'direccion_numero':this.direccion_numero,
-            'direccion_sector':this.direccion_sector,
-            'info_pago_tipo_cuenta':this.info_pago_tipo_cuenta,
-            'info_pago_numero_cuenta':this.info_pago_numero_cuenta,
-            'info_pago_banco':this.info_pago_banco
+            'direccion.calle':this.direccion_calle,
+            'direccion.numero':this.direccion_numero,
+            'direccion.sector':this.direccion_sector,
+            'info_pago.tipo_cuenta':this.info_pago_tipo_cuenta,
+            'info_pago.numero_cuenta':this.info_pago_numero_cuenta,
+            'info_pago.pago_banco':this.info_pago_banco
             
             },configuracion)
           .then(function (response) {
@@ -593,8 +574,32 @@
         if (this.apellidos < 1 || this.apellidos.length > 100) {
           this.validaMensaje.push('El apellido del ahijado debe tener entre 1 y 100 caracteres');
         }
-         if (this.fecha_nacimiento < 1) {
+        if (this.fecha_nacimiento < 1) {
           this.validaMensaje.push('La fecha de nacimiento es obligatoria');
+        }
+        if (this.discapacidad.length > 60) {
+          this.validaMensaje.push('El dato "Discapacidad" debe tener menos de 60 caracteres');
+        }
+        if (this.nivel_educacional.length > 60) {
+          this.validaMensaje.push('El campo nivel educacional debe tener menos de 60 caracteres');
+        }
+        if (this.direccion_calle.length > 30) {
+          this.validaMensaje.push('El campo "direccion calle" debe tener menos de 30 caracteres');
+        }
+        if (this.direccion_numero.length > 5) {
+          this.validaMensaje.push('El campo "direccion numero" debe tener menos de 5 caracteres');
+        }
+        if (this.direccion_sector.length > 60) {
+          this.validaMensaje.push('El campo "direccion sector" debe tener menos de 60 caracteres');
+        }
+        if (this.info_pago_tipo_cuenta.length > 30) {
+          this.validaMensaje.push('El campo "informacion de pago - tipo de cuenta" debe tener menos de 30 caracteres');
+        }
+        if (this.info_pago_numero_cuenta.length > 30) {
+          this.validaMensaje.push('El campo "informacion de pago - numero de cuenta" debe tener menos de 30 caracteres');
+        }
+        if (this.info_pago_banco.length > 30) {
+          this.validaMensaje.push('El campo "informacion de pago - banco" debe tener menos de 30 caracteres');
         }
         if (this.validaMensaje.length) {
           this.valida = 1;
@@ -610,18 +615,18 @@
         this.fecha_nacimiento=item.fecha_nacimiento;
         this.discapacidad=item.discapacidad;
         this.nivel_educacional=item.nivel_educacional;
-        this.direccion_calle=item.direccion_calle;
-        this.direccion_numero=item.direccion_numero;
-        this.direccion_sector=item.direccion_sector;
-        this.info_pago_tipo_cuenta=item.info_pago_tipo_cuenta;
-        this.info_pago_numero_cuenta=item.info_pago_numero_cuenta;
-        this.info_pago_banco=item.info_pago_banco;
+        this.direccion_calle=item.direccion.calle;
+        this.direccion_numero=item.direccion.numero;
+        this.direccion_sector=item.direccion.sector;
+        this.info_pago_tipo_cuenta=item.info_pago.tipo_cuenta;
+        this.info_pago_numero_cuenta=item.info_pago.numero_cuenta;
+        this.info_pago_banco=item.info_pago.pago_banco;
 
         this.dialog = true;
         this.editedIndex=1;
       },
 
-    activarDesactivarMostrar(accion,item){
+     activarDesactivarMostrar(accion,item){
       this.adModal=1;
       this.adNombre=item.nombre;
       this.adId=item._id;
@@ -689,30 +694,7 @@
       this.adInfo_pago_numero_cuentaDATA=item.info_pago_numero_cuenta;
       this.adInfo_pago_bancoDATA=item.info_pago_banco;
 
-      // if (accion ==1) {
-      //   this.adAccionDATA = 1;
-      // } else if (accion == 2) {
-      //   this.adAccionDATA = 2;
-      // } else {
-      //   this.adModalDATA=0;
-      // }
     }, 
-
-    mostrarDATA(){
-      let me = this;
-      let header = {"Token": this.$store.state.token};
-      let configuracion = {headers:header}; //headers --> S
-      axios.get('ahijado/query',{'_id':this.adIdDATA},configuracion)
-        .then(function (response) {
-          me.adModalDATA=0; //deberia mantenerse en 1 creo
-          // me.adAccion=0;
-          // me.adNombre='';
-          me.adIdDATA='';
-          me.listar();  
-        }).catch(function (error) {
-          console.log(error);
-        });
-    },
 
     activar(){
       let me = this;
@@ -858,9 +840,7 @@
         this.adModalCI=0;
       },
 
-      activarDesactivarCerrarDATA(){
-        this.adModalDATA=0;
-      },
+      
 
       close () {
         this.dialog = false

@@ -7,8 +7,9 @@ import Usuario from '../components/Usuario.vue'
 import Ahijado from '../components/Ahijado.vue'
 import Egresado from '../components/Egresado.vue'
 import Home from '../components/Home.vue'
-import DataAhijado from '../components/DataAhijado'
-import Padrino from '../components/Padrino'
+import DatoAhijado from '../components/DatoAhijado'
+import Familia from '../components/Familia'
+import Integrante from '../components/Integrante'
 
 Vue.use(VueRouter)
 
@@ -68,25 +69,36 @@ const routes = [
     }
   },
   {
-    path: '/dataahijado',
-    name: 'dataahijado',
-    component: DataAhijado,
+    path: '/datoahijado',
+    name: 'datoahijado',
+    component: DatoAhijado,
     meta: {
       administrador:true,
       lector:true,
       asist_social:true
     }
   },
+
   {
-    path: '/padrino',
-    name: 'padrino',
-    component: Padrino,
+    path: '/familias',
+    name: 'familia',
+    component: Familia,
     meta: {
       administrador:true,
       lector:true,
       asist_social:true
     }
-  }
+  }, 
+  {
+    path: '/integrantes', 
+    name: 'integrantes', 
+    component: Integrante, 
+    meta: {
+      administrador: true, 
+      lector: true, 
+      asist_social: true
+    }
+  },
 ]
 
 const router = new VueRouter({

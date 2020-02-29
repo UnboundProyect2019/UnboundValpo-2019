@@ -14,8 +14,7 @@ export default {
     },
     query: async (req, res, next) => {
         try {
-            const reg = await models.Ahijado.findOne({ _id: req.query._id })
-            .populate('proyecto', { nombre_proyecto: 1 }); //consulta de un documento (por un id)
+            const reg = await models.Ahijado.findOne({ _id: req.query._id }); //consulta de un documento (por un id)
             if (!reg) { // si no encuentro el documento 
                 res.status(404).send({
                     message: 'El registro no existe'
@@ -74,6 +73,16 @@ export default {
                     direccion_calle: req.body.direccion_calle,
                     direccion_numero: req.body.direccion_numero,
                     direccion_sector: req.body.direccion_sector,
+                    // direccion : {
+                    //     calle: req.body.direccion_calle,
+                    //     numero: req.body.direccion_numero,
+                    //     sector: req.body.direccion_sector,
+                    // },
+                    // info_pago:{                        
+                    //     tipo_cuenta: req.body.info_pago_tipo_cuenta,
+                    //     numero_cuenta: req.body.info_pago_numero_cuenta,
+                    //     pago_banco: req.body.info_pago_banco,
+                    // },
                     info_pago_tipo_cuenta: req.body.info_pago_tipo_cuenta,
                     info_pago_numero_cuenta: req.body.info_pago_numero_cuenta,
                     info_pago_banco: req.body.info_pago_banco,
