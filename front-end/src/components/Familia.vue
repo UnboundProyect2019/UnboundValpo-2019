@@ -198,9 +198,17 @@
 
     <template v-slot:item.add_integrante="{ item }">
       <!-- <v-btn color="green">Agregar Integrante</v-btn> -->
-      <v-btn class="mx-2" fab dark small color="green">
-        <v-icon dark @click="addIntegrante(item)">mdi-plus</v-icon>  <!-- en el item esta guardado el id de familia -->
-      </v-btn>
+      <template v-if="esAdministrador">
+        <v-btn class="mx-2" fab dark small color="green">
+          <v-icon dark @click="addIntegrante(item)">mdi-plus</v-icon>  <!-- en el item esta guardado el id de familia -->
+        </v-btn>
+      </template>
+      <template v-else>
+        <v-btn class="mx-2" fab dark small color="grey">
+          <v-icon dark >mdi-plus</v-icon>  
+        </v-btn>
+      </template>
+      
     </template>
 
     <template v-slot:no-data>
@@ -273,20 +281,20 @@
       ocupacion:'',
       ingresos:'',
 
-       ficha_familiar : '',
-        nombre_familia : '',
-        padre:'',
-        madre:'',
-        ingresos:0,
-        egresos:0,
-        total:0,
-        alimentacion:0,
-        arriendo : 0,
-        luz : 0,
-        agua : 0,
-        gas : 0,
-        movilizacion : 0,
-        otro : 0
+      ficha_familiar : '',
+      nombre_familia : '',
+      padre:'',
+      madre:'',
+      ingresos:0,
+      egresos:0,
+      total:0,
+      alimentacion:0,
+      arriendo : 0,
+      luz : 0,
+      agua : 0,
+      gas : 0,
+      movilizacion : 0,
+      otro : 0
     }),
 
     computed: {
