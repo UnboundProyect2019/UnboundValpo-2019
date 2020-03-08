@@ -288,17 +288,17 @@
       </template>
       <template v-else>
         <div v-if="item.carta_navidad">
-          <v-btn text small color="success" @click="activarDesactivarMostrarCA(2,item)">Entregada</v-btn>
+          <v-btn text small color="success" @click="activarDesactivarMostrarCN(2,item)">Entregada</v-btn>
         </div>
         <div v-else>
-          <v-btn text small color="error" @click="activarDesactivarMostrarCA(1,item)">No Entregada</v-btn>
+          <v-btn text small color="error" @click="activarDesactivarMostrarCN(1,item)">No Entregada</v-btn>
         </div>
       </template>
     </template>
 
     <template v-slot:item.carta_invierno="{ item }">
       <template v-if="esLector">
-          <div v-if="item.invierno">
+          <div v-if="item.carta_invierno">
             <span class="green--text">Entregada</span>
           </div>
           <div v-else>
@@ -306,11 +306,11 @@
           </div>
       </template>
       <template v-else>
-        <div v-if="item.invierno">
-          <v-btn text small color="success" @click="activarDesactivarMostrarCA(2,item)">Entregada</v-btn>
+        <div v-if="item.carta_invierno">
+          <v-btn text small color="success" @click="activarDesactivarMostrarCI(2,item)">Entregada</v-btn>
         </div>
         <div v-else>
-          <v-btn text small color="error" @click="activarDesactivarMostrarCA(1,item)">No Entregada</v-btn>
+          <v-btn text small color="error" @click="activarDesactivarMostrarCI(1,item)">No Entregada</v-btn>
         </div>
       </template>
     </template>
@@ -678,23 +678,23 @@
       }
     }, 
 
-    activarDesactivarMostrarDATA(item){
-      this.adModalDATA=1;
-      // this.adNombre=item.nombre;
-      this.adIdDATA=item._id;
-      this.adNombreDATA=item.nombre;
-      this.adApellidosDATA=item.apellidos;
-      this.adFecha_nacimientoDATA=item.fecha_nacimiento;
-      this.adDiscapacidadDATA=item.discapacidad;
-      this.adNivel_educacionalDATA=item.nivel_educacional;
-      this.adDireccion_calleDATA=item.direccion_calle;
-      this.adDireccion_numeroDATA=item.direccion_numero;
-      this.adDireccion_sectorDATA=item.direccion_sector;
-      this.adInfo_pago_tipo_cuentaDATA=item.info_pago_tipo_cuenta;
-      this.adInfo_pago_numero_cuentaDATA=item.info_pago_numero_cuenta;
-      this.adInfo_pago_bancoDATA=item.info_pago_banco;
+    // activarDesactivarMostrarDATA(item){
+    //   this.adModalDATA=1;
+    //   // this.adNombre=item.nombre;
+    //   this.adIdDATA=item._id;
+    //   this.adNombreDATA=item.nombre;
+    //   this.adApellidosDATA=item.apellidos;
+    //   this.adFecha_nacimientoDATA=item.fecha_nacimiento;
+    //   this.adDiscapacidadDATA=item.discapacidad;
+    //   this.adNivel_educacionalDATA=item.nivel_educacional;
+    //   this.adDireccion_calleDATA=item.direccion_calle;
+    //   this.adDireccion_numeroDATA=item.direccion_numero;
+    //   this.adDireccion_sectorDATA=item.direccion_sector;
+    //   this.adInfo_pago_tipo_cuentaDATA=item.info_pago_tipo_cuenta;
+    //   this.adInfo_pago_numero_cuentaDATA=item.info_pago_numero_cuenta;
+    //   this.adInfo_pago_bancoDATA=item.info_pago_banco;
 
-    }, 
+    // }, 
 
     activar(){
       let me = this;
